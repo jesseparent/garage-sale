@@ -8,6 +8,10 @@ const productSchema = new Schema({
     required: true,
     trim: true
   },
+  createdAt: {
+      type: Date,
+      default: Date.now
+  },
   description: {
     type: String
   },
@@ -31,7 +35,7 @@ const productSchema = new Schema({
   },
   specification: {
     type: Schema.Types.ObjectId,
-    ref: 'Specifications',
+    ref: 'Specification',
     required: true
   },
   seller: {
