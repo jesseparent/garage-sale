@@ -35,7 +35,7 @@ const userSchema = new Schema({
 });
 
 userSchema.virtual('reviewCount').get(function() {
-  return this.revews.length;
+  return this.reviews.length;
 });
 
 userSchema.pre('save', async function(next) {
