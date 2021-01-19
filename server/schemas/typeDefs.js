@@ -15,7 +15,9 @@ const typeDefs = gql`
     quantity: Int
     price: Float
     category: Category
-    specification: Specification
+    age: String
+    condition: String
+    model: String
     seller: User
   }
 
@@ -37,14 +39,10 @@ const typeDefs = gql`
 
   type Review {
     _id: ID
+    seller: User
     reviewer: String
     reviewBody: String
     createdAt: String
-  }
-
-  type Specification {
-    _id: ID
-    type: String
   }
 
   type Auth {
