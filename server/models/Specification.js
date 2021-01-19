@@ -14,6 +14,6 @@ const specificationSchema = new Schema({
   }
 });
 
-const Category = mongoose.model('Specification', specificationSchema);
+const Specification = mongoose.model('Specification', specificationSchema);
 
 module.exports = Specification;
