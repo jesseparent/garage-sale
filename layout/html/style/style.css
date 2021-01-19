@@ -46,7 +46,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  body{
+  body {
     overflow-x: hidden;
   }
   .nav-links {
@@ -62,59 +62,57 @@
     transform: translate(100%);
     transition: transform 0.5s ease-in;
   }
-  .nav-links li{
+  .nav-links li {
     opacity: 0;
   }
-  .burger{
+  .burger {
     display: block;
   }
 }
 
-.nav-active{
+.nav-active {
   transform: translateX(0%);
 }
 
-@keyframes navLinkFade{
-  from{
+@keyframes navLinkFade {
+  from {
     opacity: 0;
     transform: translateX(50px);
   }
-  to{
+  to {
     opacity: 1;
     transform: translateX(0px);
   }
 }
 
-.toggle .line1{
-  transform: rotate(-70deg) translate(-5px,6px);
+.toggle .line1 {
+  transform: rotate(-70deg) translate(-5px, 6px);
 }
-.toggle .line2{
-opacity: 0;
+.toggle .line2 {
+  opacity: 0;
 }
-.toggle .line3{
-  transform: rotate(45deg) translate(-5px,-6px);
+.toggle .line3 {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Search Area CSS  */
 
 .search-container,
-.login-container{
+.login-container {
   width: 90%;
   height: 100px;
   border: 5px solid black;
   margin: 20px;
-  
 }
 .search-container,
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 /* featured container  */
-.featured-container{
+.featured-container {
   width: 90%;
   padding: 2%;
   background: rgb(97, 66, 66);
@@ -122,7 +120,7 @@ opacity: 0;
   display: flex;
   justify-content: center;
 }
-.featured-items{
+.featured-items {
   border: 2px solid black;
   width: 250px;
   height: 300px;
@@ -130,7 +128,12 @@ opacity: 0;
   margin: 0px 10px;
   transition: 1s;
 }
-.featured-items:hover{
+.featured-items:hover {
   transform: scale(1.2);
-  box-shadow: 3px 3px 3px rgb(rgb(72, 72, 72), green, blue);
+  box-shadow: 3px 3px 3px rgb(rgb(72, 72, 72));
+}
+/* featured cards */
+
+.item-img {
+  width: 100px;
 }
