@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  background: rgb(211, 210, 207);
+}
 /* NavBar CSS */
 .navbar {
   display: flex;
