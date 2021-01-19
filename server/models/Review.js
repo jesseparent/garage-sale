@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
+  seller: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   reviewer: {
     type: String,
     required: true,

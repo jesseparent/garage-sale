@@ -7,10 +7,16 @@ const { Schema } = mongoose;
 //category works for product.
 
 const specificationSchema = new Schema({
-  type: {
+  used: {
+    type: Boolean,
+    required: true
+  },
+  condition: {
     type: String,
     required: true,
-    trim: true
+  },
+  model: {
+    type: [String]
   }
 });
 
