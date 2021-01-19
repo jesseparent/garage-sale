@@ -26,8 +26,16 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
+  reviews: {
+    type: Schema.Types.ObjectId,
+    ref: 'Review'
+  },
   orders: [Order.schema],
   products: [Product.schema]
+});
+
+userSchema.virtual('reviewCount').get(function() {
+  return this.revews.length;
 });
 
 userSchema.pre('save', async function(next) {
