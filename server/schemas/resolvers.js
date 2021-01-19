@@ -1,7 +1,7 @@
 const { Authenticationerror, AuthenticationError } = require('apollo-server-express');
 const { async } = require('rxjs');
 const { User, Product, Category, Specifications, Order } = require('../models');
-const { signToken }  = require('../utils/auth');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
@@ -10,20 +10,20 @@ const resolvers = {
         },
         products: async (parent, { category, name }) => {
             const params = {};
-            if(category) {
+            if (category) {
                 params.category = category;
             };
-            if(name) {
+            if (name) {
                 params.name = {
-                    $regex:name
+                    $regex: name
                 };
             }
             return await Product.find(params).populate('category');
         },
         product: async (parent, { _id }) => {
             return await Product.findById(_id)
-            .populate('category')
-            .populate('user');
+                .populate('category')
+                .populate('user');
         },
         user: async (parent, args, context) => {
             if (context.user) {
@@ -35,14 +35,14 @@ const resolvers = {
                     populate: 'products',
                     populate: 'specification'
                 });
-                user.orders.sort((a,b) => b.purchaseDate - a.purchaseDate);
-                user.products.sort((a,b) => b.createdAt - a.createdAt);
+                user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+                user.products.sort((a, b) => b.createdAt - a.createdAt);
                 return user;
             }
             throw new AuthenticationError('Not logged in');
         },
-        order: async (parent, {_id }, context) => {
-            if(context.user) {
+        order: async (parent, { _id }, context) => {
+            if (context.user) {
                 const user = await (await User.findById(context.user._id)).populated({
                     path: 'orders.products',
                     populate: 'category'
@@ -51,21 +51,21 @@ const resolvers = {
             }
             throw new AuthenticationError('Not logged in');
         },
-        checkout: async (parent, args, context)=> {
+        checkout: async (parent, args, context) => {
             const url = new URL(context.headers.referer).origin;
-            const order = new Order({products: args.products});
+            const order = new Order({ products: args.products });
             const { products } = await order.populate('products').execPopulate();
             const line_items = [];
 
             //when we decide on our ecommerce solution, we need to update this
-        },
-        //we also need a session
-        Mutation: {
-            addUser: async (parent, args) => {
-                const user = await User.create(args);
-                const token = signToken(user);
-                return { token, user };
-            }
+        }
+    },
+    //we also need a session
+    Mutation: {
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToken(user);
+            return { token, user };
         }
     }
 }

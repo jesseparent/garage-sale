@@ -33,10 +33,16 @@ const productSchema = new Schema({
     ref: 'Category',
     required: true
   },
-  specification: {
-    type: Schema.Types.ObjectId,
-    ref: 'Specification',
+  age: {
+    type: String,
     required: true
+  },
+  condition: {
+    type: String,
+    required: true
+  },
+  model: {
+    type: String
   },
   seller: {
       type: Schema.Types.ObjectId,
