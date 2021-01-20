@@ -1,7 +1,8 @@
 const { Authenticationerror, AuthenticationError } = require('apollo-server-express');
-const { async } = require('rxjs');
-const { User, Product, Category, Specifications, Order } = require('../models');
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { User, Product, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
+
 
 const resolvers = {
     Query: {
@@ -23,17 +24,17 @@ const resolvers = {
         product: async (parent, { _id }) => {
             return await Product.findById(_id)
                 .populate('category')
-                .populate('user');
+                .populate('seller');
         },
         user: async (parent, args, context) => {
             if (context.user) {
                 const user = await User.findById(_id).populate({
                     path: 'orders.products',
                     populate: 'category'
+
                 }).populate({
                     path: 'seller.products',
-                    populate: 'products',
-                    populate: 'specification'
+                    populate: 'products'
                 });
                 user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
                 user.products.sort((a, b) => b.createdAt - a.createdAt);
@@ -57,15 +58,66 @@ const resolvers = {
             const { products } = await order.populate('products').execPopulate();
             const line_items = [];
 
-            //when we decide on our ecommerce solution, we need to update this
-        }
+            for (let i = 0; i<products.length; i++) {
+                const product = await stripe.products.create({
+                    name: products[i].name,
+                    description: products[i].description,
+                    images: [`${url}/images/${products[i].image}`]
+                });
+
+            const price = await stripe.prices.create({
+                product: product.id,
+                unit_amount: products[i].price * 100,
+                currency: 'usd'
+            });
+
+            line_items.push({
+                price: price.id,
+                quantity: 1
+            });
+            };
+
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items,
+                mode: 'payment',
+                success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${url}`
+            });
+            return { session: session.id };
+            }
     },
-    //we also need a session
+
     Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args);
             const token = signToken(user);
             return { token, user };
+        },
+        addOrder: async (parent, { products }, context) => {
+            if (context.user) {
+                const order = new Order({ products });
+                await User.findByIdAndUpdate(context.user._id, {$push: { orders: order }});
+                return order;
+            }
+            throw new AuthenticationError('Not logged in');
+        },
+        login: async (parent, { email, password })=> {
+            const user = await User.findOne({ email });
+            if(!user) {
+                throw new AuthenticationError('Incorrect credentials');
+            }
+            const correctPW = await user.isCorrectPassword(password);
+            if(!correctPW) {
+                throw new AuthenticationError('Incorrect credentials');
+            }
+            const token = signToken(user);
+            return {token, user};
+        },
+        updateProduct: async (parent, { _id, quantity }) => {
+            const decrement = Math.abs(quantity) * -1;
+            return await Product.findByIdAndUpdate(_id, {$inc: { quantity: decrement}}, { new: true});
+            //we will also need to allow for updating details like model and condition, etc.
         }
     }
 }
