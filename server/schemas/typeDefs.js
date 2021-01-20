@@ -35,6 +35,8 @@ const typeDefs = gql`
     orders: [Order]
     products: [Product]
     reviews: Review
+    emergency_name: String
+    emergency_number: String
   }
 
   type Review {

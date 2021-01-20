@@ -26,6 +26,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
+  emergency_name: {
+    type: String,
+    required: true
+  },
+  emergency_number: {
+    type: String,
+    required: true
+  },
   reviews: {
     type: Schema.Types.ObjectId,
     ref: 'Review'
