@@ -127,13 +127,6 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-        updateProduct: async (parent, { args }, context) => {
-            if(context.user) {
-                //not sure how to do this
-            return await Product.findByIdAndUpdate(_id, {$post: { args}}, { new: true});
-            }
-            throw new AuthenticationError('Incorrect credentials');
-        }, 
         addProduct: async (parent, args, context) => {
             if(context.user) {
                 const product = await Product.create(args);
@@ -145,6 +138,13 @@ const resolvers = {
         addCategory: async(parent, args) => {
             const category = await Category.create(args);
             return category;
+        },
+        updateProduct: async (parent, { _id, image }, context) => {
+            if (context.user) {
+            const product = await Product.findByIdAndUpdate(_id, image, {new:true});
+            return product;
+            }
+            throw new AuthenticationError('invalid credentials');
         }
     }
 }
