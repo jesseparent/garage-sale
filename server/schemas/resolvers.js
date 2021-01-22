@@ -141,9 +141,9 @@ const resolvers = {
         },
         updateProduct: async (parent, args, context) => {
             if (context.user) {
-                const image = args.image;
+                //const image = args.image;
             const product = await Product.findByIdAndUpdate(args._id,
-                {$push: {image: image}},
+                {$set: {image: args.image}},
                 {new: true}
             );
             return product;
