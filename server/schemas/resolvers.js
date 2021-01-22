@@ -127,10 +127,12 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-        updateProduct: async (parent, { _id, quantity }) => {
-            const decrement = Math.abs(quantity) * -1;
-            return await Product.findByIdAndUpdate(_id, {$inc: { quantity: decrement}}, { new: true});
-            //we will also need to allow for updating details like model and condition, etc.
+        updateProduct: async (parent, { args }, context) => {
+            if(context.user) {
+                //not sure how to do this
+            return await Product.findByIdAndUpdate(_id, {$update: { args}}, { new: true});
+            }
+            throw new AuthenticationError('Incorrect credentials');
         }, 
         addProduct: async (parent, { args }, context) => {
             if(context.user) {
