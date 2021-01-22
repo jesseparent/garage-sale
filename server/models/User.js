@@ -28,11 +28,11 @@ const userSchema = new Schema({
   },
   emergency_name: {
     type: String,
-    required: true
+    required: false
   },
   emergency_number: {
     type: String,
-    required: true
+    required: false
   },
   reviews: {
     type: Schema.Types.ObjectId,

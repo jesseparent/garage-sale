@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
+import ImageUpload from './pages/ImageUpload';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -20,7 +21,7 @@ const client = new ApolloClient({
     })
   },
   uri: '/graphql',
-})
+});
 
 function App() {
   return (
