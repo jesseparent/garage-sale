@@ -134,9 +134,9 @@ const resolvers = {
             }
             throw new AuthenticationError('Incorrect credentials');
         }, 
-        addProduct: async (parent, { args }, context) => {
+        addProduct: async (parent, args, context) => {
             if(context.user) {
-                const product = await Product.create({args});
+                const product = await Product.create(args);
                 await User.findByIdAndUpdate(context.user._id, {$push: { products: product}});
                 return product;
             }
