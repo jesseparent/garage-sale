@@ -139,7 +139,7 @@ const resolvers = {
             const category = await Category.create(args);
             return category;
         },
-        updateProduct: async (parent, {args}, context) => {
+        updateProduct: async (parent, args, context) => {
             if (context.user) {
                 const image = args.image;
             const product = await Product.findByIdAndUpdate(args._id,
