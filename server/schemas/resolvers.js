@@ -130,7 +130,7 @@ const resolvers = {
         updateProduct: async (parent, { args }, context) => {
             if(context.user) {
                 //not sure how to do this
-            return await Product.findByIdAndUpdate(_id, {$update: { args}}, { new: true});
+            return await Product.findByIdAndUpdate(_id, {$post: { args}}, { new: true});
             }
             throw new AuthenticationError('Incorrect credentials');
         }, 
