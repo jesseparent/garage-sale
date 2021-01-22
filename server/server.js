@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
@@ -6,6 +8,13 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
 
+// used for image upload 
+const cloudinary = require('cloudinary')
+const formData = require('express-form-data')
+const cors = require('cors')
+const { CLIENT_ORIGIN } = require('./config/config')
+// end of image upload required items
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
@@ -13,6 +22,30 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleware
 });
+
+// this is for image upload
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET
+})
+  
+app.use(cors({ 
+  origin: CLIENT_ORIGIN 
+})) 
+
+app.use(formData.parse())
+
+app.post('/image-upload', (req, res) => {
+
+  const values = Object.values(req.files)
+  const promises = values.map(image => cloudinary.uploader.upload(image.path))
+  
+  Promise
+    .all(promises)
+    .then(results => res.json(results))
+})
+// end of image upload
 
 server.applyMiddleware({ app });
 
