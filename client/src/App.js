@@ -22,6 +22,8 @@ const client = new ApolloClient({
   uri: '/graphql',
 })
 
+import ImageUpload from './pages/ImageUpload'
+
 function App() {
   return (
     <ApolloProvider client={client}>
