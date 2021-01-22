@@ -3,8 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  --navbar: rgb(33, 33, 70);
+  --lightText: rgb(213, 207, 207);
+
+}
 body {
   background: rgb(211, 210, 207);
+  
 }
 h2 {
   display: flex;
@@ -17,8 +23,8 @@ h2 {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: rgb(33, 33, 70);
-  color: rgb(213, 207, 207);
+  background-color: var(--navbar);
+  color: var(--lightText);
 }
 
 .nav-links {
@@ -144,4 +150,8 @@ h2 {
 
 .item-img {
   width: 100px;
+}
+
+.signup-container {
+ 
 }

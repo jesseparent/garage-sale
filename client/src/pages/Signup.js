@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -29,12 +33,57 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
+    <div className="signup-container my-1">
       <Link to="/login">
         ← Go to Login
       </Link>
 
       <h2>Signup</h2>
+      <Form>
+  <Form.Group as={Row} controlId="formHorizontalEmail">
+    <Form.Label column sm={2}>
+      Email
+    </Form.Label>
+    <Form.Col sm={10}>
+      <Form.Control type="email" placeholder="Email" />
+    </Form.Col>
+  </Form.Group>
+
+  <Form.Group as={Row} controlId="formHorizontalPassword">
+    <Form.Label column sm={2}>
+      Password
+    </Form.Label>
+    <Col sm={10}>
+      <Form.Control type="password" placeholder="Password" />
+    </Col>
+  </Form.Group>
+  <fieldset>
+    <Form.Group as={Row}>
+      <Form.Label as="legend" column sm={2}>
+        Radios
+      </Form.Label>
+      <Col sm={10}>
+        <Form.Check
+          type="radio"
+          label="first radio"
+          name="formHorizontalRadios"
+          id="formHorizontalRadios1"
+        />
+      </Col>
+    </Form.Group>
+  </fieldset>
+  <Form.Group as={Form.Row} controlId="formHorizontalCheck">
+    <Col sm={{ span: 10, offset: 2 }}>
+      <Form.Check label="Remember me" />
+    </Col>
+  </Form.Group>
+
+  <Form.Group as={Row}>
+    <Col sm={{ span: 10, offset: 2 }}>
+      <Button type="submit">Sign in</Button>
+    </Col>
+  </Form.Group>
+</Form>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
           <label htmlFor="firstName">First Name:</label>
@@ -77,9 +126,10 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row flex-end">
-          <button type="submit">
+        <Button variant="success" type="submit">Success</Button>{' '}
+          {/* <button type="submit">
             Submit
-          </button>
+          </button> */}
         </div>
       </form>
     </div>
