@@ -76,6 +76,7 @@ const typeDefs = gql`
     addReview(seller: ID!, reviewer: ID!, reviewBody: String!): Review
     updateProduct(_id: ID!): Product
     deleteProduct(_id: ID!): Product
+    addCategory(name: String!): Category
   }
 
 `;

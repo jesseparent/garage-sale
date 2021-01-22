@@ -141,6 +141,10 @@ const resolvers = {
                 return product;
             }
             throw new AuthenticationError('Incorrect credentials');
+        },
+        addCategory: async(parent, args) => {
+            const category = await Category.create(args);
+            return category;
         }
     }
 }
