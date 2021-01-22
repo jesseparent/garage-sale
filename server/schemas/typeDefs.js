@@ -35,6 +35,8 @@ const typeDefs = gql`
     orders: [Order]
     products: [Product]
     reviews: Review
+    emergency_name: String
+    emergency_number: String
   }
 
   type Review {
@@ -70,6 +72,7 @@ const typeDefs = gql`
     addProduct(category: String!, name: String!, , description: String, price: Int, age: String!, condition: String!, model: String, seller: ID!): Product
     addReview(seller: ID!, reviewer: ID!, reviewBody: String!): Review
     updateProduct(_id: ID!, quantity: Int! ): Product
+    deleteProduct(_id: ID!): Product
   }
 
 `;
