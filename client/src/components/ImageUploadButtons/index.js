@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faImage } from '@fortawesome/free-solid-svg-icons'
 
 
-const ImageUploadShowImage = (props) => {
+const ImageUploadButtons = (props) => {
   return (
     <div className='buttons fadein'>
       <div className='button'>
@@ -24,4 +24,4 @@ const ImageUploadShowImage = (props) => {
   );
 };
 
-export default ImageUploadShowImage;
+export default ImageUploadButtons;

@@ -21,3 +21,10 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+
+// export const UPDATE_PRODUCT = gql`
+//   mutation updateProducts($productId: ID!, $imageName: String) {
+    
+//   }
+// `;

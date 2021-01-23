@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import ImageUpload from './pages/ImageUpload';
+import GetImage from './components/GetImage'
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -37,6 +38,8 @@ function App() {
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
+          <ImageUpload />
+          <GetImage />
         </div>
       </Router>
     </ApolloProvider>
