@@ -77,6 +77,7 @@ const typeDefs = gql`
     deleteProduct(_id: ID!): Product
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
+    updateUser(_id: ID!, emergency_name: String!, emergency_number: String!): User
   }
 
 `;

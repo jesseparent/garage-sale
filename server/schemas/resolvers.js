@@ -149,6 +149,16 @@ const resolvers = {
             return product;
             }
             throw new AuthenticationError('invalid credentials');
+        },
+        updateUser: async (parent, args, context) => {
+            if(context.user) {
+                const user = await User.findByIdAndUpdate(args._id, 
+                    {$set: {emergency_name: args.emergency_name}},
+                    {$set: {emergency_number: args.emergency_number}},
+                    {new: true});
+                    return user;
+            }
+            throw new AuthenticationError('invalid credentials');
         }
     }
 }
