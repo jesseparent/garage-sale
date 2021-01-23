@@ -55,6 +55,11 @@ function Login(props) {
           </Col>
         </Form>
       </Container>
+      {
+          error ? <div>
+            <p className="error-text" >The provided credentials are incorrect</p>
+          </div> : null
+        }
     </div>
   );
 }
