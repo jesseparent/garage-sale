@@ -43,6 +43,13 @@ const resolvers = {
             }
             throw new AuthenticationError('Not logged in');
         },
+        users: async () => {
+            return User.find()
+                // .select('-__v -password')
+                .populate('orders')
+                .populate('reviews')
+                .populate('products')
+        },
         order: async (parent, { _id }, context) => {
             if (context.user) {
                 const user = await (await User.findById(context.user._id)).populated({
@@ -53,29 +60,34 @@ const resolvers = {
             }
             throw new AuthenticationError('Not logged in');
         },
+        orders: async () => {
+            return Order.find()
+                .populate('products')
+                .populate('seller')
+        },
         checkout: async (parent, args, context) => {
             const url = new URL(context.headers.referer).origin;
             const order = new Order({ products: args.products });
             const { products } = await order.populate('products').execPopulate();
             const line_items = [];
 
-            for (let i = 0; i<products.length; i++) {
+            for (let i = 0; i < products.length; i++) {
                 const product = await stripe.products.create({
                     name: products[i].name,
                     description: products[i].description,
                     images: [`${url}/images/${products[i].image}`]
                 });
 
-            const price = await stripe.prices.create({
-                product: product.id,
-                unit_amount: products[i].price * 100,
-                currency: 'usd'
-            });
+                const price = await stripe.prices.create({
+                    product: product.id,
+                    unit_amount: products[i].price * 100,
+                    currency: 'usd'
+                });
 
-            line_items.push({
-                price: price.id,
-                quantity: 1
-            });
+                line_items.push({
+                    price: price.id,
+                    quantity: 1
+                });
             };
 
             const session = await stripe.checkout.sessions.create({
@@ -86,7 +98,7 @@ const resolvers = {
                 cancel_url: `${url}`
             });
             return { session: session.id };
-            }
+        }
     },
 
     Mutation: {
@@ -98,27 +110,40 @@ const resolvers = {
         addOrder: async (parent, { products }, context) => {
             if (context.user) {
                 const order = new Order({ products });
-                await User.findByIdAndUpdate(context.user._id, {$push: { orders: order }});
+                await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
                 return order;
             }
             throw new AuthenticationError('Not logged in');
         },
-        login: async (parent, { email, password })=> {
+        login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-            if(!user) {
+            if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
             const correctPW = await user.isCorrectPassword(password);
-            if(!correctPW) {
+            if (!correctPW) {
                 throw new AuthenticationError('Incorrect credentials');
             }
             const token = signToken(user);
-            return {token, user};
+            return { token, user };
         },
-        updateProduct: async (parent, { _id, quantity }) => {
-            const decrement = Math.abs(quantity) * -1;
-            return await Product.findByIdAndUpdate(_id, {$inc: { quantity: decrement}}, { new: true});
-            //we will also need to allow for updating details like model and condition, etc.
+        updateProduct: async (parent, { args }, context) => {
+            if (context.user) {
+                //not sure how to do this
+                return await Product.findByIdAndUpdate(_id, { $post: { args } }, { new: true });
+            }
+            throw new AuthenticationError('Incorrect credentials');
+        },
+        addProduct: async (parent, args, context) => {
+            console.log(args)
+            const product = await Product.create(args);
+            await User.findByIdAndUpdate(context.user._id, { $push: { products: product } });
+            return product;
+
+        },
+        addCategory: async (parent, args) => {
+            const category = await Category.create(args);
+            return category;
         }
     }
 }
