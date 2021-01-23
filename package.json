@@ -14,7 +14,10 @@
     "author": "Jesse, Asher, Jeremy & Jani",
     "license": "ISC",
     "dependencies": {
-        "if-env": "^1.0.4"
+        "bootstrap": "^4.6.0",
+        "if-env": "^1.0.4",
+        "react-bootstrap": "^1.4.3",
+        "react-router-dom": "^5.2.0"
     },
     "devDependencies": {
         "concurrently": "^5.3.0",

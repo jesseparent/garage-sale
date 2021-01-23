@@ -127,23 +127,28 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        updateProduct: async (parent, { args }, context) => {
+        addProduct: async (parent, args, context) => {
             if (context.user) {
-                //not sure how to do this
-                return await Product.findByIdAndUpdate(_id, { $post: { args } }, { new: true });
+                const product = await Product.create(args);
+                await User.findByIdAndUpdate(context.user._id, { $push: { products: product } });
+                return product;
             }
             throw new AuthenticationError('Incorrect credentials');
-        },
-        addProduct: async (parent, args, context) => {
-            console.log(args)
-            const product = await Product.create(args);
-            await User.findByIdAndUpdate(context.user._id, { $push: { products: product } });
-            return product;
-
         },
         addCategory: async (parent, args) => {
             const category = await Category.create(args);
             return category;
+        },
+        updateProduct: async (parent, args, context) => {
+            if (context.user) {
+                //const image = args.image;
+                const product = await Product.findByIdAndUpdate(args._id,
+                    { $set: { image: args.image } },
+                    { new: true }
+                );
+                return product;
+            }
+            throw new AuthenticationError('invalid credentials');
         }
     }
 }

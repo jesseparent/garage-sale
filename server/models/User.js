@@ -32,6 +32,9 @@ const userSchema = new Schema({
   emergency_number: {
     type: String
   },
+  emergency_number: {
+    type: String,
+  },
   reviews: {
     type: Schema.Types.ObjectId,
     ref: 'Review'

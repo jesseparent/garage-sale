@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button, Form, Row, Col, Container, Card } from "react-bootstrap";
+
 
 const Home = () => {
   return (
