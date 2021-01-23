@@ -27,19 +27,23 @@ const userSchema = new Schema({
     minlength: 5
   },
   emergency_name: {
-    type: String,
-    required: false
+    type: String
+  },
+  emergency_number: {
+    type: String
   },
   emergency_number: {
     type: String,
-    required: false
   },
   reviews: {
     type: Schema.Types.ObjectId,
     ref: 'Review'
   },
+  products: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
+  },
   orders: [Order.schema],
-  products: [Product.schema]
 });
 
 userSchema.virtual('reviewCount').get(function () {

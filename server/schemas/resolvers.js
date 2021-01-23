@@ -43,6 +43,13 @@ const resolvers = {
             }
             throw new AuthenticationError('Not logged in');
         },
+        users: async () => {
+            return User.find()
+           // .select('-__v -password')
+            .populate('orders')
+            .populate('reviews')
+            .populate('products')
+        },
         order: async (parent, { _id }, context) => {
             if (context.user) {
                 const user = await (await User.findById(context.user._id)).populated({
@@ -52,6 +59,11 @@ const resolvers = {
                 return user.orders._id(_id);
             }
             throw new AuthenticationError('Not logged in');
+        },
+        orders: async () => {
+            return Order.find()
+            .populate('products')
+            .populate('seller')
         },
         checkout: async (parent, args, context) => {
             const url = new URL(context.headers.referer).origin;
@@ -115,10 +127,28 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
-        updateProduct: async (parent, { _id, quantity }) => {
-            const decrement = Math.abs(quantity) * -1;
-            return await Product.findByIdAndUpdate(_id, {$inc: { quantity: decrement}}, { new: true});
-            //we will also need to allow for updating details like model and condition, etc.
+        addProduct: async (parent, args, context) => {
+            if(context.user) {
+                const product = await Product.create(args);
+                await User.findByIdAndUpdate(context.user._id, {$push: { products: product}});
+                return product;
+            }
+            throw new AuthenticationError('Incorrect credentials');
+        },
+        addCategory: async(parent, args) => {
+            const category = await Category.create(args);
+            return category;
+        },
+        updateProduct: async (parent, args, context) => {
+            if (context.user) {
+                //const image = args.image;
+            const product = await Product.findByIdAndUpdate(args._id,
+                {$set: {image: args.image}},
+                {new: true}
+            );
+            return product;
+            }
+            throw new AuthenticationError('invalid credentials');
         }
     }
 }
