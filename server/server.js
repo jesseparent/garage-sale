@@ -25,9 +25,9 @@ const server = new ApolloServer({
 
 // Chat Server
 
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-
+// const http = require("http").createServer(app);
+// const io = require("socket.io")(http);
+const io = require('socket.io')(5000);
 io.on('connection', socket => {
   const id = socket.handshake.query.id
   socket.join(id)
@@ -84,7 +84,7 @@ app.get('*', (req, res) => {
 });
 
 db.once('open', () => {
-  http.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
