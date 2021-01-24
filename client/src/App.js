@@ -10,7 +10,7 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import ChatApp from "./chat/components/ChatApp";
 import { StoreProvider } from "./utils/GlobalState";
-import AddProduct from './pages/addProduct';
+import AddProduct from './pages/AddProduct';
 // import ImageUpload from './pages/ImageUpload';
 // import ItemCard from './componets/ItemCard';
 
