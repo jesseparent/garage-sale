@@ -13,6 +13,7 @@ export function ConversationsProvider({ id, children }) {
   const [conversations, setConversations] = useLocalStorage('conversations', [])
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0)
   const { contacts } = useContacts()
+  const { createContact } = useContacts()
   const socket = useSocket()
 
   function createConversation(recipients) {
@@ -21,10 +22,10 @@ export function ConversationsProvider({ id, children }) {
     })
   }
 
-  const addMessageToConversation = useCallback(({ recipients, text, sender }) => {
+  const addMessageToConversation = useCallback(({ recipients, text, sender, senderName }) => {
     setConversations(prevConversations => {
       let madeChange = false
-      const newMessage = { sender, text }
+      const newMessage = { sender, text, senderName }
       const newConversations = prevConversations.map(conversation => {
         if (arrayEquality(conversation.recipients, recipients)) {
           madeChange = true
@@ -36,6 +37,14 @@ export function ConversationsProvider({ id, children }) {
 
         return conversation
       })
+
+      // Create the sender as a contact if they aren't already (as long as the logged in user isn't the sender)
+      let obj = contacts.find(o => o.id === sender);
+      console.log(senderName);
+      if (!obj && senderName) {
+        createContact(sender, senderName);
+      }
+
 
       if (madeChange) {
         return newConversations
@@ -57,7 +66,8 @@ export function ConversationsProvider({ id, children }) {
   }, [socket, addMessageToConversation])
 
   function sendMessage(recipients, text) {
-    socket.emit('send-message', { recipients, text })
+    let senderName = localStorage.getItem('name_user');
+    socket.emit('send-message', { recipients, text, senderName })
 
     addMessageToConversation({ recipients, text, sender: id })
   }
@@ -67,7 +77,7 @@ export function ConversationsProvider({ id, children }) {
       const contact = contacts.find(contact => {
         return contact.id === recipient
       })
-      const name = (contact && contact.name) || recipient
+      const name = (contact && contact.name) || 'A Buyer';//recipient
       return { id: recipient, name }
     })
 
@@ -79,7 +89,7 @@ export function ConversationsProvider({ id, children }) {
       const fromMe = id === message.sender
       return { ...message, senderName: name, fromMe }
     })
-    
+
     const selected = index === selectedConversationIndex
     return { ...conversation, messages, recipients, selected }
   })

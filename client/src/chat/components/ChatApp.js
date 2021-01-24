@@ -6,9 +6,8 @@ import { ContactsProvider } from '../contexts/ContactsProvider'
 import { ConversationsProvider } from '../contexts/ConversationsProvider';
 import { SocketProvider } from '../contexts/SocketProvider';
 
-function App() {
+function ChatApp() {
   const [id, setId] = useLocalStorage('id')
-
   const dashboard = (
     <SocketProvider id={id}>
       <ContactsProvider>
@@ -24,4 +23,4 @@ function App() {
   )
 }
 
-export default App;
+export default ChatApp;
