@@ -69,5 +69,17 @@ mutation($_id: ID!, $image: String!) {
 }
 `;
 
+export const ADD_REVIEW = gql`
+mutation addReview($sellerId: ID!,$reviewBody: String!) {
+  addReview(sellerId: $sellerId, reviewBody: $reviewBody) {
+    _id
+    reviews {
+      reviewBody
+      reviewer
+    }
+  }
+}
+`;
+
 
 
