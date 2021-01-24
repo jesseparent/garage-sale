@@ -15,7 +15,6 @@ function AddProduct(props) {
     model: '',
   });
 
-  // const [addUser] = useMutation(ADD_PRODUCT);
   const [addProduct] = useMutation(ADD_PRODUCT);
 
   const handleFormSubmit = async event => {
@@ -28,15 +27,14 @@ function AddProduct(props) {
         price: parseInt(formState.price),
         age: formState.age,
         condition: formState.condition,
-        model: formState.model,
-        // seller: context.user._id
+        model: formState.model
       }
     });
     if (mutationResponse) {
       console.log('it worked! The returned data is the line below.')
       console.log(mutationResponse);
     }
-    
+
   };
 
   const handleChange = event => {
@@ -45,7 +43,6 @@ function AddProduct(props) {
       ...formState,
       [name]: value
     });
-    // console.log(formState);
   };
 
   return (
