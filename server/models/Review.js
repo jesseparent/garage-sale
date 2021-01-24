@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
-  seller: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
   reviewer: {
     type: String,
     required: true,
@@ -22,6 +18,6 @@ const reviewSchema = new Schema({
   }
 });
 
-const Category = mongoose.model('Review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

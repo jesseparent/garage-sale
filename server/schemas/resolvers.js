@@ -29,13 +29,13 @@ const resolvers = {
         },
         user: async (parent, args, context) => {
             if (context.user) {
-                const user = await User.findById(_id).populate({
+                const user = await User.findById(context.user._id).populate({
                     path: 'orders.products',
                     populate: 'category'
-
                 }).populate({
                     path: 'seller.products',
-                    populate: 'products'
+                    populate: 'products',
+                    populate:'reviews'
                 });
                 user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
                 user.products.sort((a, b) => b.createdAt - a.createdAt);
@@ -147,6 +147,18 @@ const resolvers = {
                     { new: true }
                 );
                 return product;
+            }
+            throw new AuthenticationError('invalid credentials');
+        },
+        addReview: async (parent, {sellerId, reviewBody}, context) => {
+            if (context.user) {
+              const updatedUser = await User.findOneAndUpdate(
+                { _id: sellerId },
+                { $push: { reviews: { reviewBody, reviewer: context.user.firstName + " " + context.user.lastName } } },
+                { new: true, runValidators: true }
+              );
+      
+              return updatedUser;
             }
             throw new AuthenticationError('invalid credentials');
         }
