@@ -23,16 +23,36 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
+// Chat Server
+
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+
+io.on('connection', socket => {
+  const id = socket.handshake.query.id
+  socket.join(id)
+
+  socket.on('send-message', ({ recipients, text }) => {
+    recipients.forEach(recipient => {
+      const newRecipients = recipients.filter(r => r !== recipient)
+      newRecipients.push(id)
+      socket.broadcast.to(recipient).emit('receive-message', {
+        recipients: newRecipients, sender: id, text
+      })
+    })
+  })
+})
+
 // this is for image upload
-cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.API_KEY, 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 })
-  
-app.use(cors({ 
-  origin: CLIENT_ORIGIN 
-})) 
+
+app.use(cors({
+  origin: CLIENT_ORIGIN
+}))
 
 app.use(formData.parse())
 
@@ -40,7 +60,7 @@ app.post('/image-upload', (req, res) => {
 
   const values = Object.values(req.files)
   const promises = values.map(image => cloudinary.uploader.upload(image.path))
-  
+
   Promise
     .all(promises)
     .then(results => res.json(results))
@@ -64,7 +84,7 @@ app.get('*', (req, res) => {
 });
 
 db.once('open', () => {
-  app.listen(PORT, () => {
+  http.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
