@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "chat": "node chatserver.js",
     "watch": "nodemon"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "express-form-data": "^2.0.14",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
+    "socket.io": "^2.4.1",
     "stripe": "^8.131.1"
   },
   "devDependencies": {

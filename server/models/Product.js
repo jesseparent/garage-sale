@@ -9,8 +9,8 @@ const productSchema = new Schema({
     trim: true
   },
   createdAt: {
-      type: Date,
-      default: Date.now
+    type: Date,
+    default: Date.now
   },
   description: {
     type: String
@@ -45,9 +45,9 @@ const productSchema = new Schema({
     type: String
   },
   seller: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 });
 

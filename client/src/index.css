@@ -3,8 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  background: rgb(211, 210, 207);
+:root {
+  --navbar: rgb(164, 80, 80);
+  --lightText: rgb(229, 230, 227);
+  --background-color: rgb(228, 184, 107);
+
+}
+html {
+  background: var(--background-color);
+  
 }
 h2 {
   display: flex;
@@ -17,8 +24,12 @@ h2 {
   justify-content: space-around;
   align-items: center;
   min-height: 8vh;
-  background-color: rgb(33, 33, 70);
-  color: rgb(213, 207, 207);
+  background-color: var(--navbar);
+  color: var(--lightText);
+} 
+
+.navbar a {
+  color: black;
 }
 
 .nav-links {
@@ -106,18 +117,7 @@ h2 {
 /* Search Area CSS  */
 
 .search-container,
-.login-container {
-  width: 90%;
-  height: 100px;
-  border: 5px solid black;
-  margin: 20px;
-}
-.search-container,
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 /* featured container  */
 .featured-container {
@@ -144,4 +144,9 @@ h2 {
 
 .item-img {
   width: 100px;
+}
+
+.signup-container,
+.login-container  {
+ background: var(--background-color);
 }
