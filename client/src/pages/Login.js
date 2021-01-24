@@ -40,23 +40,18 @@ function Login(props) {
             <Col>
               <Form.Group controlId="email">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  placeholder="youremail@test.com"
+                <Form.Control placeholder="youremail@test.com"
                   name="email"
                   type="email"
                   id="email"
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  placeholder="******"
+                <Form.Control placeholder="******"
                   name="password"
                   type="password"
-                  id="pwd"
-                  onChange={handleChange}
-                />
+                  id="pwd" onChange={handleChange} />
               </Form.Group>
             </Col>
           </Row>
@@ -67,11 +62,11 @@ function Login(props) {
           </Col>
         </Form>
       </Container>
-      {error ? (
-        <div>
-          <p className="error-text">The provided credentials are incorrect</p>
-        </div>
-      ) : null}
+      {
+        error ? <div>
+          <p className="error-text" >The provided credentials are incorrect</p>
+        </div> : null
+      }
     </div>
   );
 }

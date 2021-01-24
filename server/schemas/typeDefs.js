@@ -5,7 +5,6 @@ const typeDefs = gql`
     _id: ID
     name: String
   }
-
   type Product {
     _id: ID
     name: String
@@ -20,13 +19,11 @@ const typeDefs = gql`
     model: String
     seller: User
   }
-
   type Order {
     _id: ID
     purchaseDate: String
     products: [Product]
   }
-
   type User {
     _id: ID
     firstName: String
@@ -38,7 +35,6 @@ const typeDefs = gql`
     emergency_name: String
     emergency_number: String
   }
-
   type Review {
     _id: ID
     seller: User
@@ -46,16 +42,13 @@ const typeDefs = gql`
     reviewBody: String
     createdAt: String
   }
-
   type Auth {
     token: ID
     user: User
   }
-
   type Checkout {
     session: ID
   }
-
   type Query {
     categories: [Category]
     products(category: ID, name: String): [Product]
@@ -67,7 +60,6 @@ const typeDefs = gql`
     orders: [Order]
     checkout(products: [ID]!): Checkout
   }
-
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
@@ -78,7 +70,6 @@ const typeDefs = gql`
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
   }
-
 `;
 
 module.exports = typeDefs;
