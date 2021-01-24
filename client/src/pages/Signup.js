@@ -36,26 +36,50 @@ function Signup(props) {
       <Link to="/login">← Go to Login</Link>
       <Container fluid="md">
         <h2>Signup</h2>
-        <Form>
+        <Form onSubmit={handleFormSubmit}>
           <Row>
             <Col>
               <Form.Group controlId="firstName">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  type="text"
+                  placeholder="First"
+                  name="firstName"
+                  id="firstName"
+                  onChange={handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="lastName">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                  type="text"
+                  placeholder="Last"
+                  name="lastName"
+                  id="lastName"
+                  onChange={handleChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="email">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" />
+                <Form.Control
+                  placeholder="youremail@test.com"
+                  name="email"
+                  type="email"
+                  id="email"
+                  onChange={handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" />
+                <Form.Control
+                  placeholder="******"
+                  name="password"
+                  type="password"
+                  id="pwd"
+                  onChange={handleChange}
+                />
               </Form.Group>
             </Col>
           </Row>
