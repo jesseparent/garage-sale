@@ -41,25 +41,6 @@ function Signup(props) {
             <Col>
               <Form.Group controlId="firstName">
                 <Form.Label>First Name</Form.Label>
-<<<<<<< HEAD
-                <Form.Control
-                  type="text"
-                  placeholder="First"
-                  name="firstName"
-                  id="firstName"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Last"
-                  name="lastName"
-                  id="lastName"
-                  onChange={handleChange}
-                />
-=======
                 <Form.Control type="text"
                   placeholder="First"
                   name="firstName"
@@ -73,27 +54,16 @@ function Signup(props) {
                   name="lastName"
                   id="lastName"
                   onChange={handleChange} />
->>>>>>> feature/chat
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="email">
                 <Form.Label>Email</Form.Label>
-<<<<<<< HEAD
-                <Form.Control
-                  placeholder="youremail@test.com"
-                  name="email"
-                  type="email"
-                  id="email"
-                  onChange={handleChange}
-                />
-=======
                 <Form.Control placeholder="youremail@test.com"
                   name="email"
                   type="email"
                   id="email"
                   onChange={handleChange} />
->>>>>>> feature/chat
               </Form.Group>
               <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
@@ -102,12 +72,7 @@ function Signup(props) {
                   name="password"
                   type="password"
                   id="pwd"
-<<<<<<< HEAD
-                  onChange={handleChange}
-                />
-=======
                   onChange={handleChange} />
->>>>>>> feature/chat
               </Form.Group>
             </Col>
           </Row>
