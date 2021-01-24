@@ -10,8 +10,9 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import ChatApp from "./chat/components/ChatApp";
 import { StoreProvider } from "./utils/GlobalState";
-// import { SocketProvider } from './chat/contexts/SocketProvider';
-import ImageUpload from './pages/ImageUpload';
+import AddProduct from './pages/addProduct';
+// import ImageUpload from './pages/ImageUpload';
+// import ItemCard from './componets/ItemCard';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -38,6 +39,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/chat" component={ChatApp} />
+              <Route exact path="/add" component={AddProduct} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
