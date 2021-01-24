@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import ImageUpload from './pages/ImageUpload';
+// import ItemCard from './componets/ItemCard';
 
 const client = new ApolloClient({
   request: (operation) => {
