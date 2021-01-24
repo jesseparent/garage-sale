@@ -129,6 +129,7 @@ const resolvers = {
         },
         addProduct: async (parent, args, context) => {
             if (context.user) {
+                args['seller'] = context.user._id;
                 const product = await Product.create(args);
                 await User.findByIdAndUpdate(context.user._id, { $push: { products: product } });
                 return product;
