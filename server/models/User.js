@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const Order = require('./Order');
 const Product = require('./Product');
+const Review = require('./Review');
 
 const userSchema = new Schema({
   firstName: {
@@ -35,14 +36,8 @@ const userSchema = new Schema({
   emergency_number: {
     type: String,
   },
-  reviews: {
-    type: Schema.Types.ObjectId,
-    ref: 'Review'
-  },
-  products: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
-  },
+  reviews: [Review.schema],
+  products: [Product.schema],
   orders: [Order.schema],
 });
 
