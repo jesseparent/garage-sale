@@ -7,11 +7,9 @@ import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
-<<<<<<< HEAD
 import ChatApp from "./chat/components/ChatApp";
-=======
-import DetailBrief from './components/DetailBrief'
->>>>>>> develop
+import DetailBrief from './components/DetailBrief';
+import AddProduct from './pages/AddProduct';
 import { StoreProvider } from "./utils/GlobalState";
 
 // import ImageUpload from './pages/ImageUpload';
