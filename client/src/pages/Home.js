@@ -9,7 +9,7 @@ const Home = () => {
       <Container className="searchContainer">
         <SearchBar />
         <h2>Featured Items</h2>
-        <div class="featured-container">
+        <div className="featured-container">
           <div className="featured-items">
             <DetailBrief />
             </div>
