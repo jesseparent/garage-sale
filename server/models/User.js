@@ -39,6 +39,9 @@ const userSchema = new Schema({
   reviews: [Review.schema],
   products: [Product.schema],
   orders: [Order.schema],
+  contacts: {
+    type: String,
+  },
 });
 
 userSchema.virtual('reviewCount').get(function () {

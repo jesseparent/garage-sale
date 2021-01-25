@@ -6,6 +6,8 @@ export const LOGIN = gql`
       token
       user {
         _id
+        firstName
+        lastName
       }
     }
   }
@@ -81,5 +83,27 @@ mutation addReview($sellerId: ID!,$reviewBody: String!) {
 }
 `;
 
+export const ADD_CONVERSATION = gql`
+mutation addConversation($user:ID!, $withUser:ID!, $messages: String!) {
+  addConversation(user: $user, withUser: $withUser, messages: $messages) {
+    _id
+    user{
+      _id
+    }
+    withUser {
+      _id
+    }
+    messages
+  }
+}
+`;
 
+export const ADD_CONTACTS = gql`
+mutation ($contacts: String!) {
+  addContacts(contacts: $contacts) {
+    _id   
+    contacts
+  }
+}
+`;
 
