@@ -9,7 +9,7 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import DetailBrief from './components/DetailBrief'
 import { StoreProvider } from "./utils/GlobalState";
-
+import AddProduct from './pages/AddProduct';
 // import ImageUpload from './pages/ImageUpload';
 // import GitImage from 'components/GetImage';
 
@@ -39,6 +39,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
+              <Route exact path="/add" component={AddProduct} />
               <Route exact path="/product" component={Detail} />
               <Route exact path="/navCard" component={DetailBrief} />
               <Route component={NoMatch} />
