@@ -7,7 +7,7 @@ import { useStoreContext } from "../utils/GlobalState";
 import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
 import { idbPromise } from '../utils/helpers';
 
-import { useMutation } from '@apollo/react-hooks';
+// import { useMutation } from '@apollo/react-hooks';
 import { useQuery } from '@apollo/react-hooks';
 import { ADD_PRODUCT } from "../utils/mutations";
 import { Form, Button, Container } from "react-bootstrap";
