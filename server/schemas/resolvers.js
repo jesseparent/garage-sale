@@ -98,6 +98,12 @@ const resolvers = {
                 cancel_url: `${url}`
             });
             return { session: session.id };
+        },
+        conversations: async (parent, args, context) => {
+            if (context.user) {
+                return await Conversation.find({ user: context.user._id });
+            }
+            throw new AuthenticationError('Not logged in');
         }
     },
 
@@ -163,10 +169,10 @@ const resolvers = {
             }
             throw new AuthenticationError('invalid credentials');
         },
-        addConversation: async (parent, { withUser, messages }, context) => {
+        addConversation: async (parent, { user, withUser, messages }, context) => {
             if (context.user) {
                 const conversation = await Conversation.findOneAndUpdate(
-                    { user: context.user._id, withUser },
+                    { user, withUser },
                     { messages },
                     { new: true, upsert: true }
                 );

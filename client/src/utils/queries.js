@@ -68,3 +68,14 @@ export const QUERY_CHECKOUT = gql`
     }
   }
 `;
+
+export const QUERY_CONVERSATIONS = gql`
+  query conversations {
+    conversations {
+      withUser{
+        _id
+      }
+      messages
+    }
+  }
+`;

@@ -2,8 +2,9 @@ import React, { useContext, useState, useEffect, useCallback } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useContacts } from './ContactsProvider';
 import { useSocket } from './SocketProvider';
+import { QUERY_CONVERSATIONS } from "../../utils/queries";
 import { ADD_CONVERSATION } from '../../utils/mutations';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 
 const ConversationsContext = React.createContext()
 
@@ -12,6 +13,7 @@ export function useConversations() {
 }
 
 export function ConversationsProvider({ id, children }) {
+  const { loading, data } = useQuery(QUERY_CONVERSATIONS);
   const [addConversation, { error }] = useMutation(ADD_CONVERSATION);
   const [conversations, setConversations] = useLocalStorage('conversations', [])
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0)
@@ -34,12 +36,14 @@ export function ConversationsProvider({ id, children }) {
           madeChange = true;
           // Write messages to server
           let messages = JSON.stringify([...conversation.messages, newMessage]);
-          addConversation({
-            variables: { withUser: sender, messages }
-          });
-          addConversation({
-            variables: { withUser: id, messages }
-          });
+          if (sender != id) {
+            addConversation({
+              variables: { user: id, withUser: sender, messages }
+            });
+            addConversation({
+              variables: { user: sender, withUser: id, messages }
+            });
+          }
 
           return {
             ...conversation,
@@ -48,12 +52,14 @@ export function ConversationsProvider({ id, children }) {
         }
         // Write messages to server
         let messages = JSON.stringify([...conversation.messages]);
-        addConversation({
-          variables: { withUser: sender, messages }
-        });
-        addConversation({
-          variables: { withUser: id, messages }
-        });
+        if (sender != id) {
+          addConversation({
+            variables: { user: id, withUser: sender, messages }
+          });
+          addConversation({
+            variables: { user: sender, withUser: id, messages }
+          });
+        }
 
         return conversation
       })
@@ -76,6 +82,22 @@ export function ConversationsProvider({ id, children }) {
       }
     })
   }, [setConversations])
+
+  useEffect(() => {
+    let dbConversations = [];
+    if (data && data.conversations) {
+      console.log(data)
+
+      for (let i = 0; i < data.conversations.length; i++) {
+
+        let recipients = [data.conversations[i].withUser._id];
+        let messages = JSON.parse(data.conversations[i].messages);
+        let conversationObj = { recipients, messages };
+        dbConversations.push(conversationObj);
+      }
+      setConversations(dbConversations);
+    }
+  }, [data, setConversations]);
 
   useEffect(() => {
     if (socket == null) return

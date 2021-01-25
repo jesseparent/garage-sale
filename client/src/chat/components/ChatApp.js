@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Login from './Login'
 import useLocalStorage from '../hooks/useLocalStorage';
 import Dashboard from './Dashboard'
@@ -8,6 +8,7 @@ import { SocketProvider } from '../contexts/SocketProvider';
 
 function ChatApp() {
   const [id, setId] = useLocalStorage('id')
+
   const dashboard = (
     <SocketProvider id={id}>
       <ContactsProvider>

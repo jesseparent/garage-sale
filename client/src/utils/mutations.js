@@ -84,8 +84,8 @@ mutation addReview($sellerId: ID!,$reviewBody: String!) {
 `;
 
 export const ADD_CONVERSATION = gql`
-mutation addConversation($withUser:ID!, $messages: String!) {
-  addConversation(withUser: $withUser, messages: $messages) {
+mutation addConversation($user:ID!, $withUser:ID!, $messages: String!) {
+  addConversation(user: $user, withUser: $withUser, messages: $messages) {
     _id
     user{
       _id
