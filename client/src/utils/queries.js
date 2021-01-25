@@ -57,6 +57,7 @@ export const QUERY_USER = gql`
         image
       }
     }
+    contacts
   }
 }
 `;
@@ -65,6 +66,17 @@ export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
     checkout(products: $products) {
       session
+    }
+  }
+`;
+
+export const QUERY_CONVERSATIONS = gql`
+  query conversations {
+    conversations {
+      withUser{
+        _id
+      }
+      messages
     }
   }
 `;

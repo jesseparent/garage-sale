@@ -27,16 +27,24 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  login(idToken) {
+  getUserId() {
+    // Retrieves the user token from localStorage
+    return localStorage.getItem('id_user');
+  }
+
+  login(idToken, userId, userName) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken);
-
+    localStorage.setItem('id_user', userId);
+    localStorage.setItem('name_user', userName);
+    localStorage.setItem('garage-sale-chat-id', `"${userId}"`);
     window.location.assign('/');
   }
 
   logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    localStorage.clear();
+
     // this will reload the page and reset the state of the application
     window.location.assign('/');
   }
