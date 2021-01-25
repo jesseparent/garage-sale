@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
+
+import { useStoreContext } from "../utils/GlobalState";
+import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
+import { idbPromise } from '../utils/helpers';
+
+import { useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { ADD_PRODUCT } from "../utils/mutations";
+import { QUERY_CATEGORIES } from "../utils/queries";
+
 
 function AddProduct(props) {
+  const [state, dispatch] = useStoreContext();
+
+  const { categories } = state;
+
   const [formState, setFormState] = useState({
     category: '',
     name: '',
@@ -15,8 +27,34 @@ function AddProduct(props) {
     model: '',
   });
 
-  // const [addUser] = useMutation(ADD_PRODUCT);
   const [addProduct] = useMutation(ADD_PRODUCT);
+
+  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
+
+  useEffect(() => {
+
+    // console.log(data)
+    console.log(categoryData)
+
+
+
+    if (categoryData) {
+      dispatch({
+        type: UPDATE_CATEGORIES,
+        categories: categoryData.categories
+      });
+      categoryData.categories.forEach(category => {
+        idbPromise('categories', 'put', category);
+      });
+    } else if (!loading) {
+      idbPromise('categories', 'get').then(categories => {
+        dispatch({
+          type: UPDATE_CATEGORIES,
+          categories: categories
+        });
+      });
+    }
+  }, [categoryData, loading, dispatch]);
 
   const handleFormSubmit = async event => {
     event.preventDefault();
@@ -35,8 +73,11 @@ function AddProduct(props) {
     if (mutationResponse) {
       console.log('it worked! The returned data is the line below.')
       console.log(mutationResponse);
+      console.log(mutationResponse.data.addProduct._id)
+
+      props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
     }
-    
+
   };
 
   const handleChange = event => {
@@ -50,8 +91,8 @@ function AddProduct(props) {
 
   return (
     <div className="container my-1">
-      {/* <Link to="/login">
-        ← Go to Login
+      {/* <Link to="/">
+        ← Go to Home
       </Link> */}
 
       <h2>Item To Sell</h2>
@@ -66,12 +107,25 @@ function AddProduct(props) {
             onChange={handleChange}
           />
         </div>
-        <label for="category">Choose a category:</label>
-        <select id="category" name="category" onChange={handleChange}>
-          <option value="600d09e0c006b06e3817a3e7">tech</option>
-          <option value="600d09e9c006b06e3817a3e8">art</option>
-          <option value="600d09f7c006b06e3817a3e9">clothing</option>
-        </select>
+
+        {/* load categories and populate the category dropdown */}
+      {state.categories.length ? (
+        <div>
+          <label for="category">Choose a category:</label>
+          <select id="category" name="category" onChange={handleChange}>
+              
+                {state.categories.map(category => (
+                  <option value={category._id}>{category.name}</option>
+                ))}
+            
+            </select>
+        </div>
+      ) : (
+        <h3>You haven't added any products yet!</h3>
+      )}
+      { loading ? 
+      <h3>loading...</h3>: null}
+
         <div className="flex-row space-between my-2">
           <label htmlFor="description">Description:</label>
           <input
