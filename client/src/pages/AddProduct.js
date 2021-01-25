@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import Auth from "../utils/auth";
+
+import { useStoreContext } from "../utils/GlobalState";
+import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
+import { idbPromise } from '../utils/helpers';
+
+import { useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { ADD_PRODUCT } from "../utils/mutations";
 import { Form, Button, Container } from "react-bootstrap";
 
 function AddProduct(props) {
+  const [state, dispatch] = useStoreContext();
+
+  const { categories } = state;
+
   const [formState, setFormState] = useState({
     category: "",
     name: "",
@@ -34,6 +45,9 @@ function AddProduct(props) {
     if (mutationResponse) {
       console.log("it worked! The returned data is the line below.");
       console.log(mutationResponse);
+      console.log(mutationResponse.data.addProduct._id)
+
+      props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
     }
   };
 
