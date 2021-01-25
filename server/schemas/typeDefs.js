@@ -30,14 +30,13 @@ const typeDefs = gql`
     lastName: String
     email: String
     orders: [Order]
-    products: Product
-    reviews: Review
+    products: [Product]
+    reviews: [Review]
     emergency_name: String
     emergency_number: String
   }
   type Review {
     _id: ID
-    seller: User
     reviewer: String
     reviewBody: String
     createdAt: String
@@ -53,7 +52,7 @@ const typeDefs = gql`
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
-    user: User
+    user(_id: ID!): User
     users: [User]
     reviews: [Review]
     order(_id: ID!): Order
@@ -64,8 +63,8 @@ const typeDefs = gql`
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addOrder(products: [ID]!): Order
-    addProduct(category: String!, name: String!, description: String, price: Int, age: String!, condition: String!, model: String, seller: ID!): Product
-    addReview(seller: ID!, reviewer: ID!, reviewBody: String!): Review
+    addProduct(category: String!, name: String!, description: String, price: Int, age: String!, condition: String!, model: String): Product
+    addReview(sellerId: ID!, reviewBody: String!): User
     deleteProduct(_id: ID!): Product
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
