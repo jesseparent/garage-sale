@@ -34,6 +34,7 @@ const typeDefs = gql`
     reviews: [Review]
     emergency_name: String
     emergency_number: String
+    contacts: String
   }
   type Review {
     _id: ID
@@ -64,7 +65,7 @@ const typeDefs = gql`
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
-    user(_id: ID!): User
+    user(_id: ID): User
     users: [User]
     reviews: [Review]
     order(_id: ID!): Order
@@ -82,6 +83,7 @@ const typeDefs = gql`
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
     addConversation(user: ID!, withUser: ID!, messages: String): Conversation
+    addContacts(contacts: String!): User
   }
 `;
 

@@ -86,8 +86,6 @@ export function ConversationsProvider({ id, children }) {
   useEffect(() => {
     let dbConversations = [];
     if (data && data.conversations) {
-      console.log(data)
-
       for (let i = 0; i < data.conversations.length; i++) {
 
         let recipients = [data.conversations[i].withUser._id];

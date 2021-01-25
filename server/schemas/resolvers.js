@@ -179,6 +179,18 @@ const resolvers = {
                 return conversation;
             }
             throw new AuthenticationError('invalid credentials');
+        },
+        addContacts: async (parent, { contacts }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { contacts },
+                    { new: true, runValidators: true }
+                );
+
+                return updatedUser;
+            }
+            throw new AuthenticationError('invalid credentials');
         }
     }
 }

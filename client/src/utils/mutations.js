@@ -98,3 +98,12 @@ mutation addConversation($user:ID!, $withUser:ID!, $messages: String!) {
 }
 `;
 
+export const ADD_CONTACTS = gql`
+mutation ($contacts: String!) {
+  addContacts(contacts: $contacts) {
+    _id   
+    contacts
+  }
+}
+`;
+
