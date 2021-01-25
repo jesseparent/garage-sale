@@ -164,10 +164,7 @@ const resolvers = {
             throw new AuthenticationError('invalid credentials');
         },
         addConversation: async (parent, { withUser, messages }, context) => {
-            console.log(context.user)
             if (context.user) {
-                console.log(withUser)
-                console.log(messages)
                 const conversation = await Conversation.findOneAndUpdate(
                     { user: context.user._id, withUser },
                     { messages },

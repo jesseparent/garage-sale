@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect, useCallback } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useContacts } from './ContactsProvider';
 import { useSocket } from './SocketProvider';
+import { ADD_CONVERSATION } from '../../utils/mutations';
+import { useMutation } from '@apollo/react-hooks';
 
 const ConversationsContext = React.createContext()
 
@@ -10,6 +12,7 @@ export function useConversations() {
 }
 
 export function ConversationsProvider({ id, children }) {
+  const [addConversation, { error }] = useMutation(ADD_CONVERSATION);
   const [conversations, setConversations] = useLocalStorage('conversations', [])
   const [selectedConversationIndex, setSelectedConversationIndex] = useState(0)
   const { contacts } = useContacts()
@@ -28,12 +31,29 @@ export function ConversationsProvider({ id, children }) {
       const newMessage = { sender, text, senderName }
       const newConversations = prevConversations.map(conversation => {
         if (arrayEquality(conversation.recipients, recipients)) {
-          madeChange = true
+          madeChange = true;
+          // Write messages to server
+          let messages = JSON.stringify([...conversation.messages, newMessage]);
+          addConversation({
+            variables: { withUser: sender, messages }
+          });
+          addConversation({
+            variables: { withUser: id, messages }
+          });
+
           return {
             ...conversation,
             messages: [...conversation.messages, newMessage]
           }
         }
+        // Write messages to server
+        let messages = JSON.stringify([...conversation.messages]);
+        addConversation({
+          variables: { withUser: sender, messages }
+        });
+        addConversation({
+          variables: { withUser: id, messages }
+        });
 
         return conversation
       })
@@ -69,8 +89,7 @@ export function ConversationsProvider({ id, children }) {
     let senderName = localStorage.getItem('name_user');
     socket.emit('send-message', { recipients, text, senderName })
 
-    let conversations = addMessageToConversation({ recipients, text, sender: id });
-    console.log(id);
+    addMessageToConversation({ recipients, text, sender: id });
   }
 
   const formattedConversations = conversations.map((conversation, index) => {
