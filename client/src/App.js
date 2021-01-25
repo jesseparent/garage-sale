@@ -7,16 +7,14 @@ import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
+import DetailBrief from './components/DetailBrief'
 import { StoreProvider } from "./utils/GlobalState";
-<<<<<<< HEAD
-import ImageUpload from './pages/ImageUpload';
+
+// import ImageUpload from './pages/ImageUpload';
+// import GitImage from 'components/GetImage';
+
 // import ItemCard from './components/ItemCard';
 import Detail from './pages/Detail';
-=======
-import AddProduct from './pages/AddProduct';
-// import ImageUpload from './pages/ImageUpload';
-// import ItemCard from './componets/ItemCard';
->>>>>>> main
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -41,11 +39,8 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
-<<<<<<< HEAD
               <Route exact path="/product" component={Detail} />
-=======
-              <Route exact path="/add" component={AddProduct} />
->>>>>>> main
+              <Route exact path="/navCard" component={DetailBrief} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>

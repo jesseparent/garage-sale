@@ -7,11 +7,9 @@
   --navbar: rgb(164, 80, 80);
   --lightText: rgb(229, 230, 227);
   --background-color: rgb(228, 184, 107);
-
 }
 html {
   background: var(--background-color);
-  
 }
 h2 {
   display: flex;
@@ -26,7 +24,7 @@ h2 {
   min-height: 8vh;
   background-color: var(--navbar);
   color: var(--lightText);
-} 
+}
 
 .navbar a {
   color: black;
@@ -116,8 +114,9 @@ h2 {
 
 /* Search Area CSS  */
 
-.search-container,
-
+.searchContainer {
+  padding: 40px;
+}
 
 /* featured container  */
 .featured-container {
@@ -147,6 +146,9 @@ h2 {
 }
 
 .signup-container,
-.login-container  {
- background: var(--background-color);
+.login-container,
+.searchContainer,
+.mainContainer {
+  background: var(--background-color);
+  width: 100%;
 }
