@@ -11,11 +11,9 @@ import ChatApp from "./chat/components/ChatApp";
 import DetailBrief from './components/DetailBrief';
 import { StoreProvider } from "./utils/GlobalState";
 import AddProduct from './pages/AddProduct';
-// import ImageUpload from './pages/ImageUpload';
-// import GitImage from 'components/GetImage';
-
-// import ItemCard from './components/ItemCard';
 import Detail from './pages/Detail';
+import ImageUpload from './pages/ImageUpload';
+// import ItemCard from './componets/ItemCard';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -45,6 +43,8 @@ function App() {
               <Route exact path="/add" component={AddProduct} />
               <Route exact path="/product" component={Detail} />
               <Route exact path="/navCard" component={DetailBrief} />
+              <Route exact path="/addproduct" component={AddProduct} />
+              <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
