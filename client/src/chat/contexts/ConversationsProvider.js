@@ -39,13 +39,13 @@ export function ConversationsProvider({ id, children }) {
       })
 
       // Create the sender as a contact if they aren't already (as long as the logged in user isn't the sender)
-      let obj = contacts.find(o => o.id === sender);
-      console.log(senderName);
-      if (!obj && senderName) {
+      let contactExists = contacts.find(o => o.id === sender);
+
+      if (!contactExists && senderName) {
         createContact(sender, senderName);
       }
 
-
+      // Return the conversations
       if (madeChange) {
         return newConversations
       } else {
@@ -69,7 +69,8 @@ export function ConversationsProvider({ id, children }) {
     let senderName = localStorage.getItem('name_user');
     socket.emit('send-message', { recipients, text, senderName })
 
-    addMessageToConversation({ recipients, text, sender: id })
+    let conversations = addMessageToConversation({ recipients, text, sender: id });
+    console.log(id);
   }
 
   const formattedConversations = conversations.map((conversation, index) => {

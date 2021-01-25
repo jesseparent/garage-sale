@@ -48,6 +48,18 @@ const typeDefs = gql`
   type Checkout {
     session: ID
   }
+  type Message {
+    sender: String
+    text: String
+    senderName: String
+  }
+  type Conversation {
+    _id: ID
+    user: User
+    withUser: User
+    messages: String
+  }
+
   type Query {
     categories: [Category]
     products(category: ID, name: String): [Product]
@@ -68,6 +80,7 @@ const typeDefs = gql`
     deleteProduct(_id: ID!): Product
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
+    addConversation(withUser: ID!, messages: String): Conversation
   }
 `;
 

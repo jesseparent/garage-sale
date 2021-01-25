@@ -25,16 +25,14 @@ const server = new ApolloServer({
 
 // Chat Server
 
-// const http = require("http").createServer(app);
-// const io = require("socket.io")(http);
-const io = require('socket.io')(5000);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+// const io = require('socket.io')(5000);
 io.on('connection', socket => {
   const id = socket.handshake.query.id
   socket.join(id)
 
   socket.on('send-message', (data) => {
-    console.log(data)
-    console.log(socket.handshake.query)
     let { recipients, text, senderName } = data;
     recipients.forEach(recipient => {
       const newRecipients = recipients.filter(r => r !== recipient)
@@ -87,7 +85,7 @@ app.get('*', (req, res) => {
 });
 
 db.once('open', () => {
-  app.listen(PORT, () => {
+  http.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });

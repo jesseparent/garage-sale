@@ -12,6 +12,9 @@ export function ContactsProvider({ children }) {
 
   function createContact(id, name) {
     setContacts(prevContacts => {
+      for (let i = 0; i < prevContacts.length; i++) {
+        if (prevContacts[i].id === id) return [...prevContacts];
+      }
       return [...prevContacts, { id, name }]
     })
   }

@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 //need actual test account for stripe
-const { User, Product, Category, Order } = require('../models');
+const { User, Product, Category, Order, Conversation } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
@@ -35,7 +35,7 @@ const resolvers = {
                 }).populate({
                     path: 'seller.products',
                     populate: 'products',
-                    populate:'reviews'
+                    populate: 'reviews'
                 });
                 user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
                 user.products.sort((a, b) => b.createdAt - a.createdAt);
@@ -151,15 +151,29 @@ const resolvers = {
             }
             throw new AuthenticationError('invalid credentials');
         },
-        addReview: async (parent, {sellerId, reviewBody}, context) => {
+        addReview: async (parent, { sellerId, reviewBody }, context) => {
             if (context.user) {
-              const updatedUser = await User.findOneAndUpdate(
-                { _id: sellerId },
-                { $push: { reviews: { reviewBody, reviewer: context.user.firstName + " " + context.user.lastName } } },
-                { new: true, runValidators: true }
-              );
-      
-              return updatedUser;
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: sellerId },
+                    { $push: { reviews: { reviewBody, reviewer: context.user.firstName + " " + context.user.lastName } } },
+                    { new: true, runValidators: true }
+                );
+
+                return updatedUser;
+            }
+            throw new AuthenticationError('invalid credentials');
+        },
+        addConversation: async (parent, { withUser, messages }, context) => {
+            console.log(context.user)
+            if (context.user) {
+                console.log(withUser)
+                console.log(messages)
+                const conversation = await Conversation.findOneAndUpdate(
+                    { user: context.user._id, withUser },
+                    { messages },
+                    { new: true, upsert: true }
+                );
+                return conversation;
             }
             throw new AuthenticationError('invalid credentials');
         }
