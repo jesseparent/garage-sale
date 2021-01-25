@@ -9,9 +9,8 @@ import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import ChatApp from "./chat/components/ChatApp";
 import DetailBrief from './components/DetailBrief';
-import AddProduct from './pages/AddProduct';
 import { StoreProvider } from "./utils/GlobalState";
-
+import AddProduct from './pages/AddProduct';
 // import ImageUpload from './pages/ImageUpload';
 // import GitImage from 'components/GetImage';
 
