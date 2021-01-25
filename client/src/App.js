@@ -2,17 +2,23 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-
 import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
+<<<<<<< HEAD
 import ChatApp from "./chat/components/ChatApp";
+=======
+import DetailBrief from './components/DetailBrief'
+>>>>>>> develop
 import { StoreProvider } from "./utils/GlobalState";
-import AddProduct from './pages/AddProduct';
+
 // import ImageUpload from './pages/ImageUpload';
-// import ItemCard from './componets/ItemCard';
+// import GitImage from 'components/GetImage';
+
+// import ItemCard from './components/ItemCard';
+import Detail from './pages/Detail';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -40,6 +46,8 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/chat" component={ChatApp} />
               <Route exact path="/add" component={AddProduct} />
+              <Route exact path="/product" component={Detail} />
+              <Route exact path="/navCard" component={DetailBrief} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
