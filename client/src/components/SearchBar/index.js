@@ -22,14 +22,14 @@ function SearchItems() {
     console.log("Searchtype = " + e);
   }
   const handleTextChange = (d) => {
-    setValue(d);
+    setText(d);
     searchTerm = d;
     console.log("SearchTerm = " + d);
   } 
 
   return (
     <div>
-      <Form>
+      <Form className = "center">
         <Form.Row>
           <Col xs = "auto" className = "my-1">
             <Form.Label className = "mr-sm-2" htmlFor ="inlineFormCustomerSelect" srOnly>
@@ -51,7 +51,7 @@ function SearchItems() {
             <Form.Label className = "mr-sm-2" htmlFor = "inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
-            <Form.Control as="textarea" rows={1}
+            <Form.Control as="textarea" rows={1} placeholder = "Search Term"
             onChange={d=>handleTextChange(d.target.value)}></Form.Control>
           </Col>
         </Form.Row>
