@@ -80,3 +80,11 @@ export const QUERY_CONVERSATIONS = gql`
     }
   }
 `;
+
+export const QUERY_SPECIFIC_PRODUCTS = gql`
+  query specificProducts {
+    
+
+  }
+
+`;
