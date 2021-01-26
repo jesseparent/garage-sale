@@ -113,6 +113,15 @@ h2 {
 }
 
 /* Search Area CSS  */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input.form-control {
+  width: 300px !important;
+}
 
 .searchContainer {
   /* padding: 40px; */
