@@ -115,8 +115,11 @@ h2 {
 /* Search Area CSS  */
 
 .searchContainer {
-  padding: 40px;
+  /* padding: 40px; */
   /* display: block; */
+}
+.SearchItems {
+  padding-top: 50px;
 }
 
 /* featured container  */
@@ -130,13 +133,14 @@ h2 {
   justify-content: center;
 }
 .featured-items {
+  padding-top: 10px;
   font-size: 50%;
   display: flex;
   border: 2px solid black;
   width: 250px;
   height: 100%;
   background: rgb(116, 101, 72);
-  margin: 0px 10px;
+  margin: 10px 10px;
   transition: 1s;
 }
 .featured-items:hover {

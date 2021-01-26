@@ -10,8 +10,8 @@ import {
 
 function SearchItems() {
   return (
-    <div className="Search_items">
-      <InputGroup className="mb-3">
+    <div className="SearchItems">
+      <InputGroup>
         <DropdownButton
           as={InputGroup.Prepend}
           variant="outline-dark rounded-0"

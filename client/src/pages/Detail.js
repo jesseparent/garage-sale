@@ -4,12 +4,12 @@ import { useQuery } from "@apollo/react-hooks";
 
 // import Cart from "../components/Cart";
 import { useStoreContext } from "../utils/GlobalState";
-import {
-  REMOVE_FROM_CART,
-  UPDATE_CART_QUANTITY,
-  ADD_TO_CART,
-  UPDATE_PRODUCTS,
-} from "../utils/actions";
+// import {
+//   REMOVE_FROM_CART,
+//   UPDATE_CART_QUANTITY,
+//   ADD_TO_CART,
+//   UPDATE_PRODUCTS,
+// } from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
 // import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
@@ -32,11 +32,11 @@ function Detail() {
       setCurrentProduct(products.find((product) => product._id === id));
     }
     // retrieved from server
-    else if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
+    // else if (data) {
+    //   dispatch({
+    //     type: UPDATE_PRODUCTS,
+    //     products: data.products,
+    //   });
 
       // data.products.forEach((product) => {
       //   idbPromise("products", "put", product);
@@ -82,8 +82,8 @@ function Detail() {
 
     // idbPromise("cart", "delete", { ...currentProduct });
   };
-  const baseUrl = "https://res.cloudinary.com/toomanyphotos/image/upload/";
-  const imgFileName = "zudjnabovuixrkkeym0r.jpg";
+  // const baseUrl = "https://res.cloudinary.com/toomanyphotos/image/upload/";
+  // const imgFileName = "zudjnabovuixrkkeym0r.jpg";
   return (
     <>
       {currentProduct && cart ? (
@@ -94,26 +94,26 @@ function Detail() {
             <Card style={{ width: "40rem" }}>
               <Card.Img
                 variant="top"
-                // src={currentProduct.image}
-                src={baseUrl + imgFileName}
+                src={currentProduct.image}
+                // src={baseUrl + imgFileName}
                 alt={currentProduct.name}
               />
               <Card.Body>
-                {/* <Card.Title>{currentProduct.name}</Card.Title> */}
-                <Card.Title>Pretty Sunset</Card.Title>
-                {/* <Card.Text>{currentProduct.description}</Card.Text> */}
-                <Card.Text>
+                <Card.Title>{currentProduct.name}</Card.Title>
+                {/* <Card.Title>Pretty Sunset</Card.Title> */}
+                <Card.Text>{currentProduct.description}</Card.Text>
+                {/* <Card.Text>
                   This one is a pretty sunset that you can purchase. It isn't in
                   a picture form or anything like that. It is just the view.{" "}
-                </Card.Text>
+                </Card.Text> */}
               </Card.Body>
-              <ListGroup className="list-group-flush">
+              <ListGroup className="">
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
-                <ListGroupItem>Quantity</ListGroupItem>
-                <ListGroupItem>Category:</ListGroupItem>
-                <ListGroupItem>Age:</ListGroupItem>
-                <ListGroupItem>Condition</ListGroupItem>
-                <ListGroupItem>Model</ListGroupItem>
+                <ListGroupItem>Quantity:{currentProduct.quantity}</ListGroupItem>
+                <ListGroupItem>Category:{currentProduct.category}</ListGroupItem>
+                <ListGroupItem>Age:{currentProduct.age}</ListGroupItem>
+                <ListGroupItem>Condition:{currentProduct.condition}</ListGroupItem>
+                <ListGroupItem>Model:{currentProduct.model}</ListGroupItem>
                 <ListGroupItem>
                   <Card.Link onClick={""}>Seller Info</Card.Link>
                 </ListGroupItem>

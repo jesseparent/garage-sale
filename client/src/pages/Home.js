@@ -8,18 +8,19 @@ const Home = () => {
     <div className="mainContainer">
       <Container className="searchContainer">
         <SearchBar />
+      </Container>
+      <Container>
         <h2>Featured Items</h2>
         <div className="featured-container">
-          <div className="featured-items" >
+          <div className="featured-items">
             <DetailBrief />
-            </div>
-            <div className="featured-items">
+          </div>
+          <div className="featured-items">
             <DetailBrief />
-            </div>
-            <div className="featured-items">
+          </div>
+          <div className="featured-items">
             <DetailBrief />
-            </div>
-          
+          </div>
         </div>
       </Container>
 
