@@ -40,6 +40,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
+              <Route exact path="/chat/:chatWithUserId" component={ChatApp} />
               <Route exact path="/chat" component={ChatApp} />
               <Route exact path="/product/:id" component={Detail} />
               <Route exact path="/navCard" component={DetailBrief} />

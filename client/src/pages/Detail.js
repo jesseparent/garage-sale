@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
 import {
-  UPDATE_PRODUCTS,
+  UPDATE_PRODUCTS
 } from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
 
@@ -45,7 +45,7 @@ function Detail() {
         price: targetProduct.price,
         sellerFirst: targetProduct.seller.firstName,
         sellerLast: targetProduct.seller.lastName,
-        sellerId: targetProduct.seller.sellerId
+        sellerId: targetProduct.seller._id
       });
     }
     // retrieved from server
@@ -69,6 +69,10 @@ function Detail() {
       });
     }
   }, [products, data, loading, dispatch, id]);
+
+  const chatWithSeller = () => {
+    window.location = '/chat/' + currentProduct.sellerId;
+  };
 
   // const addToCart = () => {
   //   const itemInCart = cart.find((cartItem) => cartItem._id === id);
@@ -136,7 +140,7 @@ function Detail() {
                 </ListGroupItem>
               </ListGroup>
               <Card.Body>
-                <Card.Link onClick={""}>Chat With Seller</Card.Link>
+                <Card.Link onClick={chatWithSeller}>Chat With Seller</Card.Link>
               </Card.Body>
             </Card>
           </Container>
