@@ -21,7 +21,7 @@ function Signup(props) {
     });
     const token = mutationResponse.data.addUser.token;
     const userId = mutationResponse.data.addUser.user._id
-    const userName = mutationResponse.data.login.user.firstName + " " + mutationResponse.data.login.user.lastName;
+    const userName = mutationResponse.data.addUser.user.firstName + " " + mutationResponse.data.addUser.user.lastName;
     Auth.login(token, userId, userName);
   };
 
