@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Auth from "../utils/auth";
+// import { Link } from "react-router-dom";
+// import Auth from "../utils/auth";
 
 import { useStoreContext } from "../utils/GlobalState";
 import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
