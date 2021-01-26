@@ -6,7 +6,7 @@ const Nav = () => {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul class="nav-links">
+        <ul className="nav-links">
           <li>
             <a href="#">Sell</a>
           </li>
@@ -17,7 +17,7 @@ const Nav = () => {
       );
     } else {
       return (
-        <ul class="nav-links">
+        <ul className="nav-links">
           <li>
             <a href="/signup">Sign Up</a>
           </li>
@@ -30,14 +30,14 @@ const Nav = () => {
   }
 
   return (
-    <nav class="navbar">
-      <h1 class="page-title"><a href="/">Garage Sale</a></h1>
-      <h3 class="title-description">Your one stop to buy and sell locally!</h3>
+    <nav className="navbar">
+      <h1 className="page-title"><a href="/">Garage Sale</a></h1>
+      <h3 className="title-description">Your one stop to buy and sell locally!</h3>
       {showNavigation()}
-      <div class="burger">
-        <div class="line-1"></div>
-        <div class="line-2"></div>
-        <div class="line-3"></div>
+      <div className="burger">
+        <div className="line-1"></div>
+        <div className="line-2"></div>
+        <div className="line-3"></div>
       </div>
     </nav>
   )

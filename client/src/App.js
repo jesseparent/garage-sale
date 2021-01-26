@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-boost";
 import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
@@ -17,14 +17,14 @@ import ImageUpload from './pages/ImageUpload';
 
 const client = new ApolloClient({
   request: (operation) => {
-    const token = localStorage.getItem('id_token')
+    const token = localStorage.getItem("id_token");
     operation.setContext({
       headers: {
-        authorization: token ? `Bearer ${token}` : ''
-      }
-    })
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    });
   },
-  uri: '/graphql',
+  uri: "/graphql",
 });
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/chat" component={ChatApp} />
               <Route exact path="/add" component={AddProduct} />
-              <Route exact path="/product" component={Detail} />
+              <Route exact path="/product/:id" component={Detail} />
               <Route exact path="/navCard" component={DetailBrief} />
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
@@ -51,7 +51,6 @@ function App() {
         </div>
       </Router>
     </ApolloProvider>
-
   );
 }
 

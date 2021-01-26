@@ -11,6 +11,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { ADD_PRODUCT } from "../utils/mutations";
 import { QUERY_CATEGORIES } from "../utils/queries";
 
+import { Form, Button, Container } from "react-bootstrap";
+
 
 function AddProduct(props) {
   const [state, dispatch] = useStoreContext();
@@ -66,7 +68,8 @@ function AddProduct(props) {
         price: parseInt(formState.price),
         age: formState.age,
         condition: formState.condition,
-        model: formState.model
+        model: formState.model,
+        // seller: context.user._id
       }
     });
     if (mutationResponse) {
@@ -85,102 +88,108 @@ function AddProduct(props) {
       ...formState,
       [name]: value
     });
+    // console.log(formState);
   };
 
   return (
-    <div className="container my-1">
-      {/* <Link to="/">
-        ← Go to Home
-      </Link> */}
+    <div className="mainContainer">
+      <Container>
+        <h2>Item To Sell</h2>
+        <Form onSubmit={handleFormSubmit}>
+          <Form.Group>
+            <Form.Label>Item Name:</Form.Label>
+            <Form.Control
+              placeholder="Item to sell"
+              name="name"
+              type="text"
+              id="name"
+              onChange={handleChange}
+            />
+          </Form.Group>
 
-      <h2>Item To Sell</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="name">Item Name:</label>
-          <input
-            placeholder="Item to sell"
-            name="name"
-            type="text"
-            id="name"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* load categories and populate the category dropdown */}
+            {/* load categories and populate the category dropdown */}
       {state.categories.length ? (
-        <div>
-          <label for="category">Choose a category:</label>
-          <select id="category" name="category" onChange={handleChange}>
+        <Form.Group>
+          <Form.Label>Choose a category:</Form.Label>
+          <Form.Control
+              as="select"
+              id="category"
+              name="category"
+              onChange={handleChange}
+            >
               
                 {state.categories.map(category => (
                   <option value={category._id}>{category.name}</option>
                 ))}
             
-            </select>
-        </div>
+            </Form.Control>
+            </Form.Group>
       ) : (
         <h3>You haven't added any products yet!</h3>
       )}
       { loading ? 
       <h3>loading...</h3>: null}
 
-        <div className="flex-row space-between my-2">
-          <label htmlFor="description">Description:</label>
-          <input
-            placeholder="Made of stainless steel. Blocky. Cool."
-            name="description"
-            type="text"
-            id="description"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="price">Price:</label>
-          <input
-            placeholder="88"
-            name="price"
-            type="number"
-            id="price"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="age">Age:</label>
-          <input
-            placeholder="41 years"
-            name="age"
-            type="text"
-            id="age"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="condition">Condition:</label>
-          <input
-            placeholder="Good condition with minor wear"
-            name="condition"
-            type="text"
-            id="condition"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="model">Model:</label>
-          <input
-            placeholder="DMC-12"
-            name="model"
-            type="text"
-            id="model"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Description:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Made of stainless steel. Blocky. Cool."
+              name="description"
+              type="text"
+              id="description"
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Price: </Form.Label>
+            <Form.Control
+              placeholder="88"
+              name="price"
+              type="number"
+              id="price"
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Age: </Form.Label>
+            <Form.Control
+              placeholder="41 years"
+              name="age"
+              type="text"
+              id="age"
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Condition:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Good condition with minor wear"
+              name="condition"
+              type="text"
+              id="condition"
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Model:</Form.Label>
+            <Form.Control
+              placeholder="DMC-12"
+              name="model"
+              type="text"
+              id="model"
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>
+          <Button variant="dark rounded-0" type="submit">
             Submit
-          </button>
-        </div>
-      </form>
-    </div>
+           </Button>
+        </Form>
+      </Container>
+    </div >
   );
 
 }
