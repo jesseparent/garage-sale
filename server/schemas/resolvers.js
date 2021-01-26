@@ -29,7 +29,9 @@ const resolvers = {
         },
         user: async (parent, args, context) => {
             if (context.user) {
-                const user = await User.findById(context.user._id).populate({
+                console.log(args)
+                let userId = (args._id) ? args._id : context.user._id;
+                const user = await User.findById(userId).populate({
                     path: 'orders.products',
                     populate: 'category'
                 }).populate({
@@ -106,20 +108,20 @@ const resolvers = {
             throw new AuthenticationError('Not logged in');
         },
         specificProducts: async (parent, args) => {
-           const { search = null, page = 1, limit= 20 } = args;
+            const { search = null, page = 1, limit = 20 } = args;
             const searchQuery = {
                 $or: [
-                { name: { $regex: search, $options: 'i'}},
-                { description: { $regex: search, $options: 'i' }},
-                { model: { $regex: search, $options: 'i'}}
+                    { name: { $regex: search, $options: 'i' } },
+                    { description: { $regex: search, $options: 'i' } },
+                    { model: { $regex: search, $options: 'i' } }
                 ]
             };
             console.log(search);
 
-            const products =  await Product.find(searchQuery)
-            .limit(limit)
-            .skip((page-1) * limit)
-            .lean();
+            const products = await Product.find(searchQuery)
+                .limit(limit)
+                .skip((page - 1) * limit)
+                .lean();
 
             const count = await Product.countDocuments(searchQuery);
 
