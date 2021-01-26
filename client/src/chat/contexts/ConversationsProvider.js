@@ -34,14 +34,15 @@ export function ConversationsProvider({ id, children }) {
       const newConversations = prevConversations.map(conversation => {
         if (arrayEquality(conversation.recipients, recipients)) {
           madeChange = true;
+
           // Write messages to server
           let messages = JSON.stringify([...conversation.messages, newMessage]);
-          if (sender != id) {
+          if (sender !== recipients[0]) {
             addConversation({
-              variables: { user: id, withUser: sender, messages }
+              variables: { user: recipients[0], withUser: sender, messages }
             });
             addConversation({
-              variables: { user: sender, withUser: id, messages }
+              variables: { user: sender, withUser: recipients[0], messages }
             });
           }
 
@@ -50,14 +51,15 @@ export function ConversationsProvider({ id, children }) {
             messages: [...conversation.messages, newMessage]
           }
         }
+
         // Write messages to server
-        let messages = JSON.stringify([...conversation.messages]);
-        if (sender != id) {
+        let messages = JSON.stringify([...conversation.messages, newMessage]);
+        if (sender !== recipients[0]) {
           addConversation({
-            variables: { user: id, withUser: sender, messages }
+            variables: { user: recipients[0], withUser: sender, messages }
           });
           addConversation({
-            variables: { user: sender, withUser: id, messages }
+            variables: { user: sender, withUser: recipients[0], messages }
           });
         }
 
@@ -108,7 +110,6 @@ export function ConversationsProvider({ id, children }) {
   function sendMessage(recipients, text) {
     let senderName = localStorage.getItem('name_user');
     socket.emit('send-message', { recipients, text, senderName })
-
     addMessageToConversation({ recipients, text, sender: id });
   }
 

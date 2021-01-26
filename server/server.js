@@ -28,6 +28,13 @@ const server = new ApolloServer({
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 // const io = require('socket.io')(5000);
+// Heroku won't actually allow us to use WebSockets
+// so we have to setup polling instead.
+// https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
+// io.configure(function () {
+//   io.set("transports", ["xhr-polling"]);
+//   io.set("polling duration", 10);
+// });
 io.on('connection', socket => {
   const id = socket.handshake.query.id
   socket.join(id)
