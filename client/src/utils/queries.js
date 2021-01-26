@@ -82,9 +82,17 @@ export const QUERY_CONVERSATIONS = gql`
 `;
 
 export const QUERY_SPECIFIC_PRODUCTS = gql`
-  query specificProducts {
-    
+  query specificProducts($search: String!, $page: Int, $limit:Int) {
+  specificProducts(search:$search, page: $page, limit: $limit) {
+    currentPage
+    products {
+      name
+      description
+      age
+      image
+    }
 
   }
+}
 
 `;
