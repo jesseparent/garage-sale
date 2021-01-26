@@ -113,9 +113,17 @@ h2 {
 }
 
 /* Search Area CSS  */
+.search-area {
+  display: inline;
+}
+.search-by {
+  width: 48px;
+  margin-right: 20px;
+}
 
-.searchContainer {
-  padding: 40px;
+.search-input {
+  margin-left: 20px;
+
 }
 
 /* featured container  */
