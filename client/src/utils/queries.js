@@ -9,8 +9,17 @@ export const QUERY_PRODUCTS = gql`
       price
       quantity
       image
+      age
+      condition
+      model
       category {
         _id
+        name
+      }
+      seller{
+        _id
+        firstName
+        lastName
       }
     }
   }
@@ -79,4 +88,20 @@ export const QUERY_CONVERSATIONS = gql`
       messages
     }
   }
+`;
+
+export const QUERY_SPECIFIC_PRODUCTS = gql`
+  query specificProducts($search: String!, $page: Int, $limit:Int) {
+  specificProducts(search:$search, page: $page, limit: $limit) {
+    currentPage
+    products {
+      name
+      description
+      age
+      image
+    }
+
+  }
+}
+
 `;

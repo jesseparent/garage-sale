@@ -61,6 +61,12 @@ const typeDefs = gql`
     messages: String
   }
 
+  type ProductResult {
+    products: [Product]
+    currentPage: Int
+    totalPages: Int
+  }
+
   type Query {
     categories: [Category]
     products(category: ID, name: String): [Product]
@@ -72,6 +78,7 @@ const typeDefs = gql`
     orders: [Order]
     checkout(products: [ID]!): Checkout
     conversations: [Conversation]
+    specificProducts(search: String!, page: Int, limit: Int): ProductResult
   }
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth

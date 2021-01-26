@@ -104,6 +104,30 @@ const resolvers = {
                 return await Conversation.find({ user: context.user._id });
             }
             throw new AuthenticationError('Not logged in');
+        },
+        specificProducts: async (parent, args) => {
+           const { search = null, page = 1, limit= 20 } = args;
+            const searchQuery = {
+                $or: [
+                { name: { $regex: search, $options: 'i'}},
+                { description: { $regex: search, $options: 'i' }},
+                { model: { $regex: search, $options: 'i'}}
+                ]
+            };
+            console.log(search);
+
+            const products =  await Product.find(searchQuery)
+            .limit(limit)
+            .skip((page-1) * limit)
+            .lean();
+
+            const count = await Product.countDocuments(searchQuery);
+
+            return {
+                products,
+                totalPages: Math.ceil(count / limit),
+                currentPage: page
+            }
         }
     },
 
