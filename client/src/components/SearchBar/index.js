@@ -56,7 +56,7 @@ function SearchItems() {
             onChange={d=>handleTextChange(d.target.value)}></Form.Control>
           </Col>
           <Col xs="auto" className = "my-1">
-          <Button type="submit" className="mb-2" variant="outline-dark rounded-0">
+          <Button type="submit" className="mb-2">
               Submit
           </Button>
           </Col>
