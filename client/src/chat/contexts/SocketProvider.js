@@ -11,8 +11,10 @@ export function SocketProvider({ id, children }) {
   const [socket, setSocket] = useState()
 
   useEffect(() => {
+    let host = window.location.hostname;
+    host += (window.location.port === '3000' ? ':3001' : '');
     const newSocket = io(
-      'http://localhost:3001',
+      host,
       { query: { id } }
     )
     setSocket(newSocket)
