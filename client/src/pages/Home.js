@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Row, Col, Container, Card } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import DetailBrief from "../components/DetailBrief";
 
@@ -10,7 +10,7 @@ const Home = () => {
         <SearchBar />
         <h2>Featured Items</h2>
         <div className="featured-container">
-          <div className="featured-items">
+          <div className="featured-items" >
             <DetailBrief />
             </div>
             <div className="featured-items">

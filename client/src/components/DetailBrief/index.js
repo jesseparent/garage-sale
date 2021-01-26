@@ -38,9 +38,9 @@ function Detail() {
   return (
     <>
       {currentProduct && cart ? (
-        <div className="mainContainer">
-          <Container>
-            <Card >
+        // <div className="mainContainer mh-100">
+          <Container className="mh-100">
+            <Card>
               {/* This will be changed later */}
               <Card.Img
                 variant="top"
@@ -52,12 +52,12 @@ function Detail() {
                 {/* <Card.Title>{currentProduct.name}</Card.Title> */}
                 <Card.Title>Pretty Sunset</Card.Title>
                 {/* <Card.Text>{currentProduct.description}</Card.Text> */}
-                <Card.Text>
+                <Card.Text variant="">
                   This one is a pretty sunset that you can purchase. It isn't in
                   a picture form or anything like that. It is just the view.{" "}
                 </Card.Text>
               </Card.Body>
-              <ListGroup className="list-group-flush">
+              <ListGroup className="">
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
                 <ListGroupItem>Category:</ListGroupItem>
                 <ListGroupItem>Model</ListGroupItem>
@@ -67,7 +67,7 @@ function Detail() {
               </ListGroup>
             </Card>
           </Container>
-        </div>
+        // </div>
       ) : null}
       {/* {loading ? <img src={spinner} alt="loading" /> : null} */}
     </>
