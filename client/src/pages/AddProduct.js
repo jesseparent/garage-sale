@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Auth from "../utils/auth";
+// import { Link } from "react-router-dom";
+// import Auth from "../utils/auth";
 
 import { useStoreContext } from "../utils/GlobalState";
 import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
@@ -125,7 +125,7 @@ function AddProduct(props) {
             </Form.Control>
             </Form.Group>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>There are no categories!!! This wont work without this.</h3>
       )}
       { loading ? 
       <h3>loading...</h3>: null}
