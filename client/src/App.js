@@ -41,7 +41,7 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/chat" component={ChatApp} />
               <Route exact path="/add" component={AddProduct} />
-              <Route exact path="/product" component={Detail} />
+              <Route exact path="/product/:id" component={Detail} />
               <Route exact path="/navCard" component={DetailBrief} />
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />

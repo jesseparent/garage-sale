@@ -9,7 +9,7 @@ import '../imageUpload.css'
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_PRODUCT } from "../utils/mutations";
 
-function ImageUpload() {
+function ImageUpload(props) {
 
   const [imageState, setImageState] = useState({
     uploading: false,
@@ -58,12 +58,14 @@ function ImageUpload() {
           }
         });
 
-        setImageState({
-          uploading: false,
-          images: images
-        })
+        props.history.push('/product/' + id);
 
-        console.log('successfully uploaded')
+        // setImageState({
+        //   uploading: false,
+        //   images: images
+        // })
+
+        // console.log('successfully uploaded')
       })
   }
 
