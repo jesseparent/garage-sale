@@ -119,14 +119,8 @@ h2 {
   align-items: center;  
 }
 
-.search-by {
-  width: 48px;
-  margin-right: 20px;
-}
-
-.search-input {
-  margin-left: 20px;
-
+input.form-control {
+  width: 300px !important;
 }
 
 /* featured container  */

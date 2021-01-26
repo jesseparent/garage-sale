@@ -7,7 +7,8 @@ import {
   DropdownButton,
   FormControl,
   Form,
-  Col
+  Col,
+  Button
 } from "react-bootstrap";
 
 function SearchItems() {
@@ -29,7 +30,7 @@ function SearchItems() {
 
   return (
     <div>
-      <Form className = "center">
+      <Form className = "center search-items">
         <Form.Row>
           <Col xs = "auto" className = "my-1">
             <Form.Label className = "mr-sm-2" htmlFor ="inlineFormCustomerSelect" srOnly>
@@ -41,7 +42,7 @@ function SearchItems() {
             className = "mr-sm-2"
             id="inlineFormCustomSelect"
             custom>
-              <option value = "Choose">Select...</option>
+              <option value = "Choose">Search By...</option>
               <option value = "Products">Products</option>
               <option value = "Categories">Categories</option>
               <option value = "Users">Users</option>
@@ -51,34 +52,19 @@ function SearchItems() {
             <Form.Label className = "mr-sm-2" htmlFor = "inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
-            <Form.Control as="textarea" rows={1} placeholder = "Search Term"
+            <Form.Control as="input" rows={1} className = "search-input" placeholder = "Search For" 
             onChange={d=>handleTextChange(d.target.value)}></Form.Control>
+          </Col>
+          <Col xs="auto" className = "my-1">
+          <Button type="submit" className="mb-2" variant="outline-dark rounded-0">
+              Submit
+          </Button>
           </Col>
         </Form.Row>
       </Form>
     </div>
 
   );
-
-  /* return (
-
-    <div className = "Search_items">
-      <Form.Group controlId="searchBy" width="48px">
-        <Form.Label>Search By</Form.Label>
-        <Form.Control as= "select" 
-        value = {value}
-        onChange={e=>{console.log(e.target.value);handleOptionSelect(e.target.value)}} 
-        className="search-by">
-          <option>Products</option>
-          <option>Categories</option>
-          <option>Users</option>
-          </Form.Control>
-        </Form.Group>
-      <Form.Label>Search Text</Form.Label>
-      <Form.Control as="textarea" rows={1}
-      onChange={d=>handleTextChange(d.target.value)}></Form.Control>
-      </div>
-  ); */
 
   /* return (
     <div className="Search_items">
