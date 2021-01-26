@@ -9,8 +9,17 @@ export const QUERY_PRODUCTS = gql`
       price
       quantity
       image
+      age
+      condition
+      model
       category {
         _id
+        name
+      }
+      seller{
+        _id
+        firstName
+        lastName
       }
     }
   }
