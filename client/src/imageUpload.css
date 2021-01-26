@@ -1,18 +1,18 @@
-body {
+/* body {
   font-family: Roboto, sans-serif;
   background: #f2f2f2;
   color: #757575;
   margin: 0px;
-}
+} */
 
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: space-around;
-}
+} */
 
-.buttons {
+/* .buttons {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -69,10 +69,10 @@ img {
   max-width: 420px;
   padding: 10px;
   border: 1px dashed #999;
-}
+} */
 
 /* Loading */
-.loading-wrapper, .loading {
+/* .loading-wrapper, .loading {
   display: flex;
   align-items: center;
   justify-content: center; 
@@ -105,10 +105,10 @@ img {
 
 #notification-wrapper {
   position: absolute;
-}
+} */
 
 /* Footer */
-footer {
+/* footer {
   display: flex;
   justify-content: space-between;
   width: 96vw;
@@ -150,10 +150,10 @@ footer .small-button.medium {
     background: #6762a6;
     border: 3px solid #c9c3e6;
   }
-}
+} */
 
 /* Animations */
-.fadein {
+/* .fadein {
   animation: fadein 2s;
 }
 
@@ -206,4 +206,4 @@ footer .small-button.medium {
   to {
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.55);
   }
-}
+} */

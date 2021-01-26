@@ -6,16 +6,19 @@ import {
   Dropdown,
   DropdownButton,
   FormControl,
+  Button
 } from "react-bootstrap";
 
 function SearchItems() {
+
+  
   return (
-    <div className="Search_items">
-      <InputGroup className="mb-3">
+    <div className="SearchItems">
+      <InputGroup>
         <DropdownButton
           as={InputGroup.Prepend}
           variant="outline-dark rounded-0"
-          title="Search"
+          title="Category"
           id="input-group-dropdown-1"
         >
           <Dropdown.Item href="#">Products</Dropdown.Item>
@@ -27,6 +30,7 @@ function SearchItems() {
           aria-describedby="searchInput"
           placeholder="this needs to be linked up"
         />
+        <Button variant="dark" className="rounded-0">Search</Button>
       </InputGroup>
     </div>
   );
