@@ -9,7 +9,6 @@ import {
   Button,
   Form,
   Col
-  Button
 } from "react-bootstrap";
 
 function SearchItems() {
@@ -17,8 +16,8 @@ function SearchItems() {
   let searchTerm;
   const [value, setValue] = useState('Products');
   const [text, setText] = useState('');
-  const handleOptionSelect=(e) => {
-  setValue(e);
+  const handleOptionSelect = (e) => {
+    setValue(e);
     searchType = e;
     console.log(e);
     console.log("Searchtype = " + e);
@@ -27,37 +26,37 @@ function SearchItems() {
     setText(d);
     searchTerm = d;
     console.log("SearchTerm = " + d);
-  } 
+  }
 
   return (
     <div>
-      <Form className = "center search-items">
+      <Form className="center search-items">
         <Form.Row>
-          <Col xs = "auto" className = "my-1">
-            <Form.Label className = "mr-sm-2" htmlFor ="inlineFormCustomerSelect" srOnly>
+          <Col xs="auto" className="my-1">
+            <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSelect" srOnly>
               Search By
             </Form.Label>
             <Form.Control
-            as="select"
-            onChange={e=>{console.log(e.target.value);handleOptionSelect(e.target.value)}} 
-            className = "mr-sm-2"
-            id="inlineFormCustomSelect"
-            custom>
-              <option value = "Choose">Search By...</option>
-              <option value = "Products">Products</option>
-              <option value = "Categories">Categories</option>
-              <option value = "Users">Users</option>
+              as="select"
+              onChange={e => { console.log(e.target.value); handleOptionSelect(e.target.value) }}
+              className="mr-sm-2"
+              id="inlineFormCustomSelect"
+              custom>
+              <option value="Choose">Search By...</option>
+              <option value="Products">Products</option>
+              <option value="Categories">Categories</option>
+              <option value="Users">Users</option>
             </Form.Control>
           </Col>
-          <Col xs="auto" className = "my-1">
-            <Form.Label className = "mr-sm-2" htmlFor = "inlineFormCustomerSearch" srOnly>
+          <Col xs="auto" className="my-1">
+            <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
-            <Form.Control as="input" rows={1} className = "search-input" placeholder = "Search For" 
-            onChange={d=>handleTextChange(d.target.value)}></Form.Control>
+            <Form.Control as="input" rows={1} className="search-input" placeholder="Search For"
+              onChange={d => handleTextChange(d.target.value)}></Form.Control>
           </Col>
-          <Col xs="auto" className = "my-1">
-          <Button type="submit" className="mb-2">
+          <Col xs="auto" className="my-1">
+            <Button type="submit" className="mb-2">
               Submit
           </Button>
           </Col>
