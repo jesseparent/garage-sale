@@ -8,6 +8,9 @@ const Nav = () => {
       return (
         <ul className="nav-links">
           <li>
+            <a href="/chat">Messages</a>
+          </li>
+          <li>
             <a href="/addproduct">Sell</a>
           </li>
           <li>

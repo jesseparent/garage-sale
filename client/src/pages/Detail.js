@@ -3,7 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
-import { UPDATE_PRODUCTS } from "../utils/actions";
+import {
+  UPDATE_PRODUCTS
+} from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
 
 import { idbPromise } from "../utils/helpers";
@@ -41,7 +43,7 @@ function Detail() {
         price: targetProduct.price,
         sellerFirst: targetProduct.seller.firstName,
         sellerLast: targetProduct.seller.lastName,
-        sellerId: targetProduct.seller.sellerId,
+        sellerId: targetProduct.seller._id
       });
     }
     // retrieved from server
@@ -65,6 +67,42 @@ function Detail() {
       });
     }
   }, [products, data, loading, dispatch, id]);
+
+  const chatWithSeller = () => {
+    window.location = '/chat/' + currentProduct.sellerId;
+  };
+
+  // const addToCart = () => {
+  //   const itemInCart = cart.find((cartItem) => cartItem._id === id);
+  //   if (itemInCart) {
+  //     dispatch({
+  //       type: UPDATE_CART_QUANTITY,
+  //       _id: id,
+  //       purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+  //     });
+  //     idbPromise("cart", "put", {
+  //       ...itemInCart,
+  //       purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+  //     });
+  //   } else {
+  //     dispatch({
+  //       type: ADD_TO_CART,
+  //       product: { ...currentProduct, purchaseQuantity: 1 },
+  //     });
+  //     idbPromise("cart", "put", { ...currentProduct, purchaseQuantity: 1 });
+  //   }
+  // };
+
+  // const removeFromCart = () => {
+  //   dispatch({
+  //     type: REMOVE_FROM_CART,
+  //     _id: currentProduct._id,
+  //   });
+
+  //   idbPromise("cart", "delete", { ...currentProduct });
+  // };
+
+
 
   return (
     <>
@@ -107,7 +145,7 @@ function Detail() {
                 </ListGroupItem>
               </ListGroup>
               <Card.Body>
-                <Card.Link onClick={""}>Chat With Seller</Card.Link>
+                <Card.Link onClick={chatWithSeller}>Chat With Seller</Card.Link>
               </Card.Body>
             </Card>
           </Container>
