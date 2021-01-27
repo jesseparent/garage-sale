@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 
 let searchType;
-  let searchTerm;
+let searchTerm;
 
 function SearchItems() {
 
