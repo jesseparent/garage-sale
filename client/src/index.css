@@ -71,13 +71,14 @@ h2 {
     right: 0px;
     height: 92vh;
     top: 8vh;
-    background-color: rgb(33, 33, 70);
+    background-color: var(--navbar);
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 30%;
     transform: translate(100%);
     transition: transform 0.5s ease-in;
+    z-index: 6;
   }
   .nav-links li {
     opacity: 0;
@@ -117,19 +118,17 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 }
 
 input.form-control {
   width: 300px !important;
 }
 
-.searchContainer {
-  /* padding: 40px; */
-  /* display: block; */
-}
-.SearchItems {
+
+/* .SearchItems {
   padding-top: 50px;
-}
+} */
 
 /* featured container  */
 .featured-container {

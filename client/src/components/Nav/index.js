@@ -8,7 +8,7 @@ const Nav = () => {
       return (
         <ul className="nav-links">
           <li>
-            <a href="#">Sell</a>
+            <a href="/addproduct">Sell</a>
           </li>
           <li>
             <a href="/" onClick={() => Auth.logout()}>Logout</a>

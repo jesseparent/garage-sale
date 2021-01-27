@@ -3,15 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
-import {
-  UPDATE_PRODUCTS,
-} from "../utils/actions";
+import { UPDATE_PRODUCTS } from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
 
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
 import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
-
 
 function Detail() {
   const [state, dispatch] = useStoreContext();
@@ -24,13 +21,12 @@ function Detail() {
   const { products } = state;
 
   useEffect(() => {
-
     // already in global store
     if (products.length) {
-      const targetProduct = products.find((product) => product._id === id)
+      const targetProduct = products.find((product) => product._id === id);
 
-      console.log('targetProduct')
-      console.log(targetProduct)
+      console.log("targetProduct");
+      console.log(targetProduct);
 
       setCurrentProduct({
         _id: targetProduct._id,
@@ -45,7 +41,7 @@ function Detail() {
         price: targetProduct.price,
         sellerFirst: targetProduct.seller.firstName,
         sellerLast: targetProduct.seller.lastName,
-        sellerId: targetProduct.seller.sellerId
+        sellerId: targetProduct.seller.sellerId,
       });
     }
     // retrieved from server
@@ -69,38 +65,6 @@ function Detail() {
       });
     }
   }, [products, data, loading, dispatch, id]);
-
-  // const addToCart = () => {
-  //   const itemInCart = cart.find((cartItem) => cartItem._id === id);
-  //   if (itemInCart) {
-  //     dispatch({
-  //       type: UPDATE_CART_QUANTITY,
-  //       _id: id,
-  //       purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-  //     });
-  //     idbPromise("cart", "put", {
-  //       ...itemInCart,
-  //       purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-  //     });
-  //   } else {
-  //     dispatch({
-  //       type: ADD_TO_CART,
-  //       product: { ...currentProduct, purchaseQuantity: 1 },
-  //     });
-  //     idbPromise("cart", "put", { ...currentProduct, purchaseQuantity: 1 });
-  //   }
-  // };
-
-  // const removeFromCart = () => {
-  //   dispatch({
-  //     type: REMOVE_FROM_CART,
-  //     _id: currentProduct._id,
-  //   });
-
-  //   idbPromise("cart", "delete", { ...currentProduct });
-  // };
-
-
 
   return (
     <>
@@ -127,11 +91,18 @@ function Detail() {
               </Card.Body>
               <ListGroup className="">
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
-                <ListGroupItem>Quantity: {currentProduct.quantity}</ListGroupItem>
-                <ListGroupItem>Category: {currentProduct.categoryName}</ListGroupItem>
+                <ListGroupItem>
+                  Quantity: {currentProduct.quantity}
+                </ListGroupItem>
+                <ListGroupItem>
+                  Category: {currentProduct.categoryName}
+                </ListGroupItem>
                 <ListGroupItem>Age: {currentProduct.age}</ListGroupItem>
-                <ListGroupItem>Condition: {currentProduct.condition}</ListGroupItem>
-                <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>                <ListGroupItem>
+                <ListGroupItem>
+                  Condition: {currentProduct.condition}
+                </ListGroupItem>
+                <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
+                <ListGroupItem>
                   <Card.Link onClick={""}>Seller Info</Card.Link>
                 </ListGroupItem>
               </ListGroup>
