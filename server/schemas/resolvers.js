@@ -29,7 +29,7 @@ const resolvers = {
         },
         user: async (parent, args, context) => {
             if (context.user) {
-                console.log(args)
+                // console.log(args)
                 let userId = (args._id) ? args._id : context.user._id;
                 const user = await User.findById(userId).populate({
                     path: 'orders.products',

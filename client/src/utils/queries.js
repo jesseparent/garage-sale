@@ -71,6 +71,28 @@ export const QUERY_USER = gql`
 }
 `;
 
+export const QUERY_PRODUCT_USER = gql`
+query user($_id: ID)
+{
+  user(_id: $_id) {
+    _id
+    firstName
+    lastName
+    products {
+      _id
+      name
+      image
+      description
+      price
+      quantity
+      category {
+        name
+      }
+    }
+  }
+}
+`;
+
 export const QUERY_CHAT_USER = gql`
 query user($_id: ID)
 {
