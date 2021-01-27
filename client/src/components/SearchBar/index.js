@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { SET_SELECTED_PRODUCTS, SET_SELECTED_USER } from '../../utils/actions';
+import { useStoreContext } from '../../utils/GlobalState';
+import { QUERY_SPECIFIC_PRODUCTS } from '../../utils/queries';
+import { idbPromise } from '../../utils/helpers';
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import {
@@ -11,9 +15,11 @@ import {
   Col
 } from "react-bootstrap";
 
-function SearchItems() {
-  let searchType;
+let searchType;
   let searchTerm;
+
+function SearchItems() {
+
   const [value, setValue] = useState('Products');
   const [text, setText] = useState('');
   const handleOptionSelect = (e) => {
@@ -22,11 +28,17 @@ function SearchItems() {
     console.log(e);
     console.log("Searchtype = " + e);
   }
+
   const handleTextChange = (d) => {
     setText(d);
     searchTerm = d;
     console.log("SearchTerm = " + d);
   }
+  const { loading, error, data } = useQuery(QUERY_SPECIFIC_PRODUCTS, {
+    variables: {search: searchTerm, page: 1, limit: 10}
+  });
+
+  console.log(searchTerm, data);
 
   return (
     <div>
@@ -56,7 +68,8 @@ function SearchItems() {
               onChange={d => handleTextChange(d.target.value)}></Form.Control>
           </Col>
           <Col xs="auto" className="my-1">
-            <Button type="submit" className="mb-2">
+            <Button type="submit" className="mb-2"
+            >
               Submit
           </Button>
           </Col>

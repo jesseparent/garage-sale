@@ -8,7 +8,9 @@ import {
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
-  TOGGLE_CART
+  TOGGLE_CART,
+  GET_SELECTED_USER,
+  GET_SELECTED_PRODUCTS
 } from './actions';
 
 export const reducer = (state, action) => {
@@ -81,6 +83,18 @@ export const reducer = (state, action) => {
         ...state,
         cartOpen: !state.cartOpen
       };
+
+      case GET_SELECTED_USER:
+        return {
+          ...state,
+          selectedUser: action.selectedUser
+        };
+
+        case GET_SELECTED_PRODUCTS:
+          return {
+            ...state,
+            selectedProducts: action.selectedProducts
+          };
 
     // if it's none of these actions, do not update state at all and keep things the same!
     default:
