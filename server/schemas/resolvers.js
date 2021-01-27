@@ -31,14 +31,21 @@ const resolvers = {
             if (context.user) {
                 console.log(args)
                 let userId = (args._id) ? args._id : context.user._id;
-                const user = await User.findById(userId).populate({
-                    path: 'orders.products',
-                    populate: 'category'
-                }).populate({
-                    path: 'seller.products',
-                    populate: 'products',
-                    populate: 'reviews'
-                });
+                const user = await User.findById(userId)
+                    .populate('products')
+                // .populate({
+                //     path: 'products',
+                //     populate: 'category'
+                // })
+                // .populate({
+                //     path: 'orders.products',
+                //     populate: 'category'
+                // }).populate({
+                //     path: 'seller.products',
+                //     populate: 'products',
+                //     populate: 'reviews'
+                // });
+
                 user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
                 user.products.sort((a, b) => b.createdAt - a.createdAt);
                 return user;

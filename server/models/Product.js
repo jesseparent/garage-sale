@@ -12,10 +12,13 @@ const productSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  description: {
+  image: {
     type: String
   },
-  image: {
+  picture: {
+    type: String
+  },
+  description: {
     type: String
   },
   price: {
@@ -51,7 +54,7 @@ const productSchema = new Schema({
   }
 });
 
-productSchema.index({'$**': 'text'});
+productSchema.index({ '$**': 'text' });
 
 const Product = mongoose.model('Product', productSchema);
 

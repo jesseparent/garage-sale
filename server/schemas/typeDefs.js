@@ -18,6 +18,7 @@ const typeDefs = gql`
     condition: String
     model: String
     seller: User
+    picture: String
   }
   type Order {
     _id: ID
