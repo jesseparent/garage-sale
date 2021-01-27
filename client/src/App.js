@@ -15,6 +15,7 @@ import Detail from './pages/Detail';
 import ImageUpload from './pages/ImageUpload';
 import UserItem from './pages/UserItems';
 import SellerInfo from './pages/SellerInfo';
+import EditItem from './pages/EditItem';
 
 
 const client = new ApolloClient({
@@ -48,7 +49,9 @@ function App() {
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
-              <Route exact path="/sellerInfo/:id" component={SellerInfo} />
+              <Route exact path="/sellerinfo/:id" component={SellerInfo} />
+              {/* for now edititem has no id for testing purposes to be changed later! */}
+              <Route exact path="/edititem" componet={EditItem} />
 
               <Route component={NoMatch} />
             </Switch>

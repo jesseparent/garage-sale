@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
-import { Button, Form, Row, Col, Container, Card } from "react-bootstrap";
+import { Button, Form, Row, Col, Container } from "react-bootstrap";
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: "", password: "" });
