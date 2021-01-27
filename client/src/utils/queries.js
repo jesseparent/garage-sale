@@ -81,6 +81,7 @@ query user($_id: ID)
     products {
       _id
       name
+      image
       description
       price
       quantity

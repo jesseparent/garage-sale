@@ -36,7 +36,7 @@ function DetailBrief(props) {
         setCurrentProduct({
           _id: targetProduct._id,
           age: targetProduct.age,
-          categoryName: targetProduct.category?.name,
+          categoryName: targetProduct.category.name,
           quantity: targetProduct.quantity,
           condition: targetProduct.condition,
           description: targetProduct.description,

@@ -3,28 +3,29 @@ import { useParams } from "react-router-dom";
 import DetailBrief from "../components/DetailBrief";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_PRODUCT_USER } from "../utils/queries";
+// import { QUERY_PRODUCTS } from "../utils/queries";
 import { useStoreContext } from "../utils/GlobalState";
 
-import { Container } from "react-bootstrap";
-import { idbPromise } from "../utils/helpers";
+import { Container, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+// import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
 import { defaultTypeResolver } from "graphql";
 
 const UserItems = () => {
-  const [state, dispatch] = useStoreContext();
+  // const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({products:[]});
 
-  const { loading, data } = useQuery(QUERY_PRODUCT_USER);
+  const { loading, data } = useQuery(QUERY_PRODUCT_USER, {
+    variables: { _id: id },
+  });
 
-  
-  
   useEffect(() => {
-    
-    if (data && data.user && data.user.length) {
-      let user = data.user;
-      const targetUser = user.find((user) => user._id === id);
+    console.log(data);
+
+    if (!loading && data && data.user) {
+      const targetUser = data.user;
       console.log("targetUser");
       console.log(targetUser);
 
@@ -33,39 +34,54 @@ const UserItems = () => {
         _id: targetUser._id,
         firstName: targetUser.firstName,
         lastName: targetUser.lastName,
-        productId: targetUser.products._id,
-        productName: targetUser.products.name,
-        productDescription: targetUser.products.description,
-        productPrice: targetUser.products.price,
-        productQuantity: targetUser.products.quantity,
-        
+        products: targetUser.products,
 
         // Contacts?????
       });
-    } else if (data) {
-      dispatch({
-        type: QUERY_PRODUCT_USER,
-        user: data.user,
-      });
-      
-        // idbPromise("user", "put", data.user);
-      
-    } else if (!loading) {
-      idbPromise("user", "get").then((indexeduser) => {
-        dispatch({
-          type: QUERY_PRODUCT_USER,
-          user: indexeduser,
-        });
-      });
+      console.log("currentUser");
+      console.log(currentUser);
+      console.log("setCurrentUser");
+      console.log(setCurrentUser);
     }
-  }, [ data, loading, dispatch, id]);
+  }, [data, id, loading, setCurrentUser]);
   return (
     <>
       {currentUser ? (
-        
         <div className="mainContainer">
           <Container>
-            <DetailBrief />
+            <Container className="mh-100">
+            
+            {currentUser.products.map(product => (
+              <Card>
+                {/* This will be changed later */}
+                {/* <Card.Img
+              variant="top"
+              src={targetUser.image}
+              // src={baseUrl + imgFileName}
+              alt={targetUser.name}
+            /> */}
+                <Card.Body>
+                  <Card.Title>{product.name}</Card.Title>
+                  {/* <Card.Title>Pretty Sunset</Card.Title> */}
+                  <Card.Text>{product.description}</Card.Text>
+                  {/* <Card.Text variant="">
+                This one is a pretty sunset that you can purchase. It isn't in a
+                picture form or anything like that. It is just the view.{" "}
+              </Card.Text> */}
+                </Card.Body>
+                <ListGroup className="">
+                  <ListGroupItem>Price: ${product.price}</ListGroupItem>
+                  <ListGroupItem>Category: {product.category.name}</ListGroupItem>
+                  
+                  <ListGroupItem>Model {product.model}</ListGroupItem>
+                  <ListGroupItem> {product.model}</ListGroupItem>
+                  <ListGroupItem>
+                    <Card.Link onClick={""}>Seller Info</Card.Link>
+                  </ListGroupItem>
+                </ListGroup>
+              </Card>
+            ))}
+            </Container>
           </Container>
         </div>
       ) : null}
