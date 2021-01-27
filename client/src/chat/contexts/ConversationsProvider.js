@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useContacts } from './ContactsProvider';
 import { useSocket } from './SocketProvider';
-import { QUERY_CONVERSATIONS } from "../../utils/queries";
+import { QUERY_CONVERSATIONS, QUERY_CHAT_USER } from "../../utils/queries";
 import { ADD_CONVERSATION } from '../../utils/mutations';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
@@ -12,7 +12,7 @@ export function useConversations() {
   return useContext(ConversationsContext)
 }
 
-export function ConversationsProvider({ id, children }) {
+export function ConversationsProvider({ id, chatWithUserId, children }) {
   const { loading, data } = useQuery(QUERY_CONVERSATIONS);
   const [addConversation, { error }] = useMutation(ADD_CONVERSATION);
   const [conversations, setConversations] = useLocalStorage('conversations', [])
@@ -20,6 +20,7 @@ export function ConversationsProvider({ id, children }) {
   const { contacts } = useContacts()
   const { createContact } = useContacts()
   const socket = useSocket()
+  const { loading: chatLoading, data: chatUserData } = useQuery(QUERY_CHAT_USER, { variables: { _id: chatWithUserId } });
 
   function createConversation(recipients) {
     setConversations(prevConversations => {
@@ -83,21 +84,54 @@ export function ConversationsProvider({ id, children }) {
         ]
       }
     })
-  }, [setConversations])
+  }, [setConversations, addConversation, contacts, createContact])
+
+  // Handle data for user you are chatting with
+  useEffect(() => {
+    // Don't create conversation with yourself
+    if (chatUserData && chatUserData.user && id !== chatUserData.user._id) {
+      createContact(chatUserData.user._id, chatUserData.user.firstName + ' ' + chatUserData.user.lastName);
+      // Don't create a duplicate conversation with the seller
+      let conversationDoesntExist = true;
+      for (let i = 0; i < conversations.length; i++) {
+        if (conversations[i].recipients.includes(chatWithUserId)) {
+          conversationDoesntExist = false;
+          break;
+        }
+      }
+      if (conversationDoesntExist) createConversation([chatUserData.user._id])
+    }
+  }, [chatUserData, id]);
 
   useEffect(() => {
     let dbConversations = [];
+    let foundSeller = false;
+
     if (data && data.conversations) {
       for (let i = 0; i < data.conversations.length; i++) {
-
+        console.log(data.conversations[i].withUser._id)
+        console.log(chatWithUserId)
+        if (chatWithUserId === data.conversations[i].withUser._id) foundSeller = true;
+        console.log(foundSeller)
         let recipients = [data.conversations[i].withUser._id];
         let messages = JSON.parse(data.conversations[i].messages);
         let conversationObj = { recipients, messages };
         dbConversations.push(conversationObj);
       }
+
+      // Don't delete the new conversation with the seller
+      if (chatWithUserId && !foundSeller) {
+        console.log('preserve conversation')
+        for (let i = 0; i < conversations.length; i++) {
+          if (conversations[i].recipients.includes(chatWithUserId)) {
+            dbConversations.push(conversations[i]);
+            break;
+          }
+        }
+      }
       setConversations(dbConversations);
     }
-  }, [data, setConversations]);
+  }, [data, setConversations, chatWithUserId]);
 
   useEffect(() => {
     if (socket == null) return

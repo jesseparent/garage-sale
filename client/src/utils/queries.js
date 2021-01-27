@@ -9,8 +9,17 @@ export const QUERY_PRODUCTS = gql`
       price
       quantity
       image
+      age
+      condition
+      model
       category {
         _id
+        name
+      }
+      seller{
+        _id
+        firstName
+        lastName
       }
     }
   }
@@ -62,6 +71,17 @@ export const QUERY_USER = gql`
 }
 `;
 
+export const QUERY_CHAT_USER = gql`
+query user($_id: ID)
+{
+  user(_id: $_id) {
+    _id
+    firstName
+    lastName
+  }
+}
+`;
+
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
     checkout(products: $products) {
@@ -79,4 +99,20 @@ export const QUERY_CONVERSATIONS = gql`
       messages
     }
   }
+`;
+
+export const QUERY_SPECIFIC_PRODUCTS = gql`
+  query specificProducts($search: String!, $page: Int, $limit:Int) {
+  specificProducts(search:$search, page: $page, limit: $limit) {
+    currentPage
+    products {
+      name
+      description
+      age
+      image
+    }
+
+  }
+}
+
 `;
