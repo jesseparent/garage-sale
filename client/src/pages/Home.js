@@ -18,7 +18,7 @@ const Home = () => {
       <Container className="searchContainer">
         <SearchBar />
       </Container>
-      <Container>
+      <Container className="brief-container">
         <h2>Featured Items</h2>
         <div className="featured-container">
           <div className="featured-items">

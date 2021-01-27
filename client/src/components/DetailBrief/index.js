@@ -20,7 +20,6 @@ function DetailBrief(props) {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   const { products } = state;
-  
 
   useEffect(() => {
     // console.log(id);
@@ -72,39 +71,33 @@ function DetailBrief(props) {
     }
   }, [products, data, loading, dispatch]);
 
-  // const baseUrl = "https://res.cloudinary.com/toomanyphotos/image/upload/";
-  // const imgFileName = "zudjnabovuixrkkeym0r.jpg";
   return (
     <>
       {currentProduct ? (
         // <div className="mainContainer mh-100">
-        <Container className="mh-100">
-          <Card>
-            {/* This will be changed later */}
-            <Card.Img
-              variant="top"
-              src={currentProduct.image}
-              // src={baseUrl + imgFileName}
-              alt={currentProduct.name}
-            />
-            <Card.Body>
-              <Card.Title>{currentProduct.name}</Card.Title>
-              {/* <Card.Title>Pretty Sunset</Card.Title> */}
-              <Card.Text>{currentProduct.description}</Card.Text>
-              {/* <Card.Text variant="">
-                This one is a pretty sunset that you can purchase. It isn't in a
-                picture form or anything like that. It is just the view.{" "}
-              </Card.Text> */}
-            </Card.Body>
-            <ListGroup className="">
-              <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
-              <ListGroupItem>Category:</ListGroupItem>
-              <ListGroupItem>Model</ListGroupItem>
-              <ListGroupItem>
-                <Card.Link onClick={""}>Seller Info</Card.Link>
-              </ListGroupItem>
-            </ListGroup>
-          </Card>
+        <Container className="brief-container">
+          <Link to={`/product/${currentProduct._id}`}>
+            <Card>
+              <Card.Img
+                className="brief-img"
+                variant="top"
+                src={currentProduct.image}
+                alt={currentProduct.name}
+              />
+              <Card.Body>
+                <Card.Title>{currentProduct.name}</Card.Title>
+
+                <Card.Text>{currentProduct.description}</Card.Text>
+              </Card.Body>
+              <ListGroup className="">
+                <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
+                <ListGroupItem>
+                  Category: {currentProduct.categoryName}
+                </ListGroupItem>
+                <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>
+              </ListGroup>
+            </Card>
+          </Link>
         </Container>
       ) : // </div>
       null}

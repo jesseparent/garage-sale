@@ -5,7 +5,7 @@ import { useStoreContext } from "../utils/GlobalState";
 
 import { UPDATE_PRODUCTS } from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
-import SellerInfo from '../pages/SellerInfo';
+import SellerInfo from "../pages/SellerInfo";
 
 import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
@@ -87,12 +87,8 @@ function Detail() {
               />
               <Card.Body>
                 <Card.Title>{currentProduct.name}</Card.Title>
-                {/* <Card.Title>Pretty Sunset</Card.Title> */}
+
                 <Card.Text>{currentProduct.description}</Card.Text>
-                {/* <Card.Text>
-                  This one is a pretty sunset that you can purchase. It isn't in
-                  a picture form or anything like that. It is just the view.{" "}
-                </Card.Text> */}
               </Card.Body>
               <ListGroup className="">
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
@@ -108,7 +104,9 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
                 <ListGroupItem>
-                  <Card.Link onClick={SellerInfo}>Seller Info</Card.Link>
+                  <Card.Link onClick={`/sellerinfo/${currentProduct.sellerId}`}>
+                    Seller Info
+                  </Card.Link>
                 </ListGroupItem>
               </ListGroup>
               <Card.Body>

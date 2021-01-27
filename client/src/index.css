@@ -141,14 +141,15 @@ input.form-control {
   justify-content: center;
 }
 .featured-items {
+  
   padding-top: 10px;
   font-size: 50%;
   display: flex;
   border: 2px solid black;
   width: 250px;
-  height: 100%;
+  /* height: 100%; */
   background: rgb(116, 101, 72);
-  margin: 10px 10px;
+  margin: 5px 5px;
   transition: 1s;
 }
 .featured-items:hover {
@@ -159,7 +160,14 @@ input.form-control {
 
 .item-img {
   width: 100px;
+  
 }
+.brief-img {
+  width: 200px;
+  height: 180px;
+  object-fit: cover;
+}
+
 
 .signup-container,
 .login-container,
