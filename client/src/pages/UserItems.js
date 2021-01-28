@@ -40,7 +40,6 @@ const UserItems = () => {
       });
       console.log("currentUser");
       console.log(currentUser);
-      
     }
   }, [data, id, loading, setCurrentUser]);
   return (
@@ -71,9 +70,11 @@ const UserItems = () => {
                     <ListGroupItem>
                       Condition: {product.condition}
                     </ListGroupItem>
-                    <ListGroupItem>Quantity: {product.quantity}</ListGroupItem>
+
                     <ListGroupItem>
-                      <Card.Link onClick={`/sellerinfo/${currentUser._id}`}>{currentUser.firstName}{currentUser.lastName}</Card.Link>
+                      <Card.Link onClick={`/sellerinfo/${currentUser._id}`}>
+                        {currentUser.firstName} {currentUser.lastName}
+                      </Card.Link>
                     </ListGroupItem>
                   </ListGroup>
                 </Card>

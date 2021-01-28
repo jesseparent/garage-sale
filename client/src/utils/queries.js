@@ -80,6 +80,9 @@ query user($_id: ID)
     lastName
     products {
       _id
+      age
+      model
+      condition
       name
       image
       description
