@@ -1,5 +1,27 @@
 import gql from 'graphql-tag';
 
+export const QUERY_PRODUCT = gql`
+  query product($_id: ID!)
+  {
+    product(_id: $_id) {
+        image
+        _id
+        name
+        description
+        model
+        category {
+          name
+          _id
+        }
+      seller {
+        _id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
 export const QUERY_PRODUCTS = gql`
   query getProducts($category: ID) {
     products(category: $category) {

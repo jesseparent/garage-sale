@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 //need actual test account for stripe
-const { User, Product, Category, Order, Conversation } = require('../models');
+const { User, Product, Category, Order, Conversation, Meeting } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
@@ -130,6 +130,21 @@ const resolvers = {
                 totalPages: Math.ceil(count / limit),
                 currentPage: page
             }
+        },
+        meetings: async () => {
+            return await Meeting.find();
+        },
+        meeting: async (parent, args, context) => {
+            if (context.user) {
+                return await Meeting.findOne({ buyer: context.user._id, alert: true });
+            }
+            throw new AuthenticationError('Not logged in');
+        },
+        meetingsAlert: async (parent, { date }, context) => {
+            if (context.user) {
+                return await Meeting.find({ alertDateTime: { $lt: new Date(date) }, alert: true });
+            }
+            throw new AuthenticationError('Not logged in');
         }
     },
 
@@ -215,6 +230,14 @@ const resolvers = {
                 );
 
                 return updatedUser;
+            }
+            throw new AuthenticationError('invalid credentials');
+        },
+        addMeeting: async (parent, args, context) => {
+            if (context.user) {
+                args.buyer = context.user._id;
+                const meeting = await Meeting.create(args);
+                return meeting;
             }
             throw new AuthenticationError('invalid credentials');
         }
