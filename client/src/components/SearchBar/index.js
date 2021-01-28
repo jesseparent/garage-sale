@@ -26,8 +26,8 @@ function SearchItems() {
   }
   if(data) {
     console.log(formState.searchInput);
-    console.log("Search results are: " + data);
-    console.log(data);
+   // console.log("Search results are: " + data);
+   // console.log(data);
   }
 
   
@@ -39,11 +39,14 @@ function SearchItems() {
   });
 };
 
+
 useEffect(()=>{
-  if(data) {
+  if(data?.specificProducts?.products) {
+    console.log("I'm the data you want")
+    console.log(data.specificProducts.products);
     dispatch({
       type: UPDATE_PRODUCTS,
-      products: data.products
+      products: data.specificProducts.products
     });
   }
 }, [ data, dispatch])
