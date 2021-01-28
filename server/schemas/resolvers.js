@@ -114,11 +114,15 @@ const resolvers = {
                     { name: { $regex: search, $options: 'i' } },
                     { description: { $regex: search, $options: 'i' } },
                     { model: { $regex: search, $options: 'i' } }
+                    
+
                 ]
             };
             console.log(search);
 
             const products = await Product.find(searchQuery)
+                .populate('seller')
+                .populate('category')
                 .limit(limit)
                 .skip((page - 1) * limit)
                 .lean();
