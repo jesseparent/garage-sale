@@ -1,22 +1,27 @@
-import React from 'react';
+import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
+// import NavImg from "../../components/Nav/navLogo/Garage-sale-animation-1.svg";
 
 const Nav = () => {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="nav-links">
-          <li>
-            <a href="/chat">Messages</a>
-          </li>
-          <li>
-            <a href="/addproduct">Sell</a>
-          </li>
-          <li>
-            <a href="/" onClick={() => Auth.logout()}>Logout</a>
-          </li>
-        </ul>
+        <div className="navLogo">
+          <ul className="nav-links">
+            <li>
+              <a href="/chat">Messages</a>
+            </li>
+            <li>
+              <a href="/addproduct">Sell</a>
+            </li>
+            <li>
+              <a href="/" onClick={() => Auth.logout()}>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
       );
     } else {
       return (
@@ -34,8 +39,13 @@ const Nav = () => {
 
   return (
     <nav className="navbar">
-      <h1 className="page-title"><a href="/">Garage Sale</a></h1>
-      <h3 className="title-description">Your one stop to buy and sell locally!</h3>
+      <h1 className="page-title">
+        <a href="/">Garage Sale</a>
+        {/* <img src={NavImg} alt="for sale" /> */}
+      </h1>
+      <h3 className="title-description">
+        Your one stop to buy and sell locally!
+      </h3>
       {showNavigation()}
       <div className="burger">
         <div className="line-1"></div>
@@ -43,6 +53,6 @@ const Nav = () => {
         <div className="line-3"></div>
       </div>
     </nav>
-  )
-}
+  );
+};
 export default Nav;
