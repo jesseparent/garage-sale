@@ -107,3 +107,40 @@ mutation ($contacts: String!) {
 }
 `;
 
+export const ADD_MEETING = gql`
+mutation addMeeting($product: ID, $address: String, $name: String, $phonenumber: String, $email: String, $seller: ID, $alertDateTime: String) {
+  addMeeting(product:$product, address: $address, name: $name, phonenumber: $phonenumber, email: $email, seller: $seller, alertDateTime: $alertDateTime) {
+     _id
+    address
+    name
+    phonenumber
+    email
+    active
+    alertDateTime
+    seller {
+      _id
+      firstName
+      lastName
+    }
+    buyer{
+      _id
+      firstName
+      lastName
+    }
+    product {
+      _id
+      name
+    }
+  }
+}
+`;
+
+export const CANCEL_ALERT = gql`
+mutation cancelAlert($_id:ID!) {
+  cancelAlert(_id: $_id) {
+    _id
+    alertDateTime
+    active
+  }
+}
+`;
