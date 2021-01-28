@@ -1,62 +1,72 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useLazyQuery } from "@apollo/react-hooks";
+import { QUERY_SPECIFIC_PRODUCTS } from '../../utils/queries';
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_PRODUCTS } from '../../utils/actions';
 import {
-  InputGroup,
-  Dropdown,
-  DropdownButton,
-  FormControl,
   Button,
   Form,
   Col
 } from "react-bootstrap";
 
 function SearchItems() {
-  let searchType;
-  let searchTerm;
-  const [value, setValue] = useState('Products');
-  const [text, setText] = useState('');
-  const handleOptionSelect = (e) => {
-    setValue(e);
-    searchType = e;
-    console.log(e);
-    console.log("Searchtype = " + e);
+  const [state, dispatch] = useStoreContext();
+
+  const [formState, setFormState] = useState({
+    searchInput: ''
+  });
+
+  const [formSubmit, { loading, data }] = useLazyQuery(QUERY_SPECIFIC_PRODUCTS, {
+    variables: {search: formState.searchInput, page: 1, limit: 50}
+  });
+  
+  if(loading) {
+    console.log("loading");
   }
-  const handleTextChange = (d) => {
-    setText(d);
-    searchTerm = d;
-    console.log("SearchTerm = " + d);
+  if(data) {
+    console.log(formState.searchInput);
+   // console.log("Search results are: " + data);
+   // console.log(data);
   }
+
+  
+ const handleChange = event => {
+  const { name, value } = event.target;
+  setFormState({
+    ...formState,
+    [name]: value
+  });
+};
+
+
+useEffect(()=>{
+  if(data?.specificProducts?.products) {
+    console.log("I'm the data you want")
+    console.log(data.specificProducts.products);
+    dispatch({
+      type: UPDATE_PRODUCTS,
+      products: data.specificProducts.products
+    });
+  }
+}, [ data, dispatch])
 
   return (
     <div>
-      <Form className="center search-items">
+      <Form className="center search-items"
+      onSubmit = {e => {e.preventDefault(); formSubmit()}}>
         <Form.Row>
-          <Col xs="auto" className="my-1">
-            <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSelect" srOnly>
-              Search By
-            </Form.Label>
-            <Form.Control
-              as="select"
-              onChange={e => { console.log(e.target.value); handleOptionSelect(e.target.value) }}
-              className="mr-sm-2"
-              id="inlineFormCustomSelect"
-              custom>
-              <option value="Choose">Search By...</option>
-              <option value="Products">Products</option>
-              <option value="Categories">Categories</option>
-              <option value="Users">Users</option>
-            </Form.Control>
-          </Col>
           <Col xs="auto" className="my-1">
             <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
             <Form.Control as="input" rows={1} className="search-input" placeholder="Search For"
-              onChange={d => handleTextChange(d.target.value)}></Form.Control>
+              name = "searchInput"
+              id = "searchInput"
+              onChange={handleChange}></Form.Control>
           </Col>
           <Col xs="auto" className="my-1">
-            <Button type="submit" className="mb-2">
+            <Button variant="dark rounded-0" type="submit" className="mb-2">
               Submit
           </Button>
           </Col>
@@ -65,30 +75,6 @@ function SearchItems() {
     </div>
 
   );
-
-  /* return (
-    <div className="Search_items">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-dark rounded-0"
-          title="Category"
-          id="input-group-dropdown-1"
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item href="#" eventKey="Products">Products</Dropdown.Item>
-          <Dropdown.Item href="#" eventKey="Categories">Categories</Dropdown.Item>
-          <Dropdown.Item href="#" eventKey="Users">Users</Dropdown.Item>
-        </DropdownButton>
-        <FormControl
-          variant="outline-dark rounded-0"
-          aria-describedby="searchInput"
-          placeholder="this needs to be linked up"
-        />
-        <Button variant="dark" className="rounded-0">Search</Button>
-      </InputGroup>
-    </div>
-  ); */
 }
 
 export default SearchItems;

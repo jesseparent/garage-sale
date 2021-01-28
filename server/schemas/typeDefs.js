@@ -61,7 +61,18 @@ const typeDefs = gql`
     withUser: User
     messages: String
   }
-
+  type Meeting {
+    _id: ID
+    product: Product
+    address: String
+    name: String
+    phonenumber: String
+    email: String
+    buyer: User
+    seller: User
+    alertDateTime: String
+    active: Boolean
+  }
   type ProductResult {
     products: [Product]
     currentPage: Int
@@ -80,6 +91,9 @@ const typeDefs = gql`
     checkout(products: [ID]!): Checkout
     conversations: [Conversation]
     specificProducts(search: String!, page: Int, limit: Int): ProductResult
+    meetings: [Meeting]
+    meeting(_id: ID): Meeting
+    getActiveAlerts(date: String!): [Meeting]
   }
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
@@ -93,6 +107,8 @@ const typeDefs = gql`
     updateProduct(_id: ID!, image: String!):Product
     addConversation(user: ID!, withUser: ID!, messages: String): Conversation
     addContacts(contacts: String!): User
+    addMeeting(product: ID, address: String, name: String, phonenumber: String, email: String, seller: ID, alertDateTime: String): Meeting
+    cancelAlert(_id: ID!): Meeting
   }
 `;
 

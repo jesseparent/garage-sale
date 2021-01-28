@@ -11,11 +11,15 @@ import { Container, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import spinner from "../assets/spinner.gif";
 // import { defaultTypeResolver } from "graphql";
 
-const UserItems = () => {
+function SellerInfo() {
+  let index = 0;
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
+//   const { products } = state;
+
   const [currentUser, setCurrentUser] = useState({ products: [] });
+  
 
   const { loading, data } = useQuery(QUERY_PRODUCT_USER, {
     variables: { _id: id },
@@ -26,6 +30,7 @@ const UserItems = () => {
 
     if (!loading && data && data.user) {
       const targetUser = data.user;
+      index = 0;
       console.log("targetUser");
       console.log(targetUser);
 
@@ -40,52 +45,27 @@ const UserItems = () => {
       });
       console.log("currentUser");
       console.log(currentUser);
+      
     }
   }, [data, id, loading, setCurrentUser]);
+
   return (
     <>
       {currentUser ? (
         <div className="mainContainer">
           <Container>
-            <Container className="mh-100">
-              {currentUser.products.map((product) => (
-                <Card>
-                  <Card.Img
-                    variant="top"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                  <Card.Body>
-                    <Card.Title>{product.name}</Card.Title>
-
-                    <Card.Text>{product.description}</Card.Text>
-                  </Card.Body>
-                  <ListGroup className="">
-                    <ListGroupItem>Price: ${product.price}</ListGroupItem>
-                    <ListGroupItem>
-                      Category: {product.category.name}
-                    </ListGroupItem>
-                    <ListGroupItem>Age {product.age}</ListGroupItem>
-                    <ListGroupItem>Model {product.model}</ListGroupItem>
-                    <ListGroupItem>
-                      Condition: {product.condition}
-                    </ListGroupItem>
-
-                    <ListGroupItem>
-                      <Card.Link onClick={`/sellerinfo/${currentUser._id}`}>
-                        {currentUser.firstName} {currentUser.lastName}
-                      </Card.Link>
-                    </ListGroupItem>
-                  </ListGroup>
-                </Card>
-              ))}
-            </Container>
+              {/* <h2>User: {"sellerName"}</h2> */}
+            {currentUser.products.map((product) => (
+              <div className="seller-info" >
+                <DetailBrief num={index++} />
+              </div>
+            ))}
           </Container>
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </>
   );
-};
+}
 
-export default UserItems;
+export default SellerInfo;

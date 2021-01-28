@@ -39,9 +39,18 @@ const userSchema = new Schema({
   stripeId: {
     type: String
   },
-  reviews: [Review.schema],
-  products: [Product.schema],
-  orders: [Order.schema],
+  reviews: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Review'
+  }],
+  products: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
+  }],
+  orders: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Order'
+  }],
   contacts: {
     type: String,
   },

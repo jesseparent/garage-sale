@@ -2,12 +2,14 @@ require("dotenv").config();
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const cron = require('node-cron');
 
 const routes = require('./controllers/');
 
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 const db = require('./config/connection');
+const alertGenerator = require('./utils/alert-generator');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -17,18 +19,18 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
+// Cron
+// Run every minute
+cron.schedule('* * * * *', function () {
+  alertGenerator();
+});
+
+
 // Chat Server
 
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-// const io = require('socket.io')(5000);
-// Heroku won't actually allow us to use WebSockets
-// so we have to setup polling instead.
-// https://devcenter.heroku.com/articles/using-socket-io-with-node-js-on-heroku
-// io.configure(function () {
-//   io.set("transports", ["xhr-polling"]);
-//   io.set("polling duration", 10);
-// });
+
 io.on('connection', socket => {
   const id = socket.handshake.query.id
   socket.join(id)

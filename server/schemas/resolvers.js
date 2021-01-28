@@ -1,7 +1,7 @@
-const { AuthenticationError } = require('apollo-server-express');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { AuthenticationError } = require("apollo-server-express");
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 //need actual test account for stripe
-const { User, Product, Category, Order, Conversation } = require('../models');
+const { User, Product, Category, Order, Conversation, Meeting } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
@@ -29,16 +29,10 @@ const resolvers = {
         },
         user: async (parent, args, context) => {
             if (context.user) {
-                console.log(args)
                 let userId = (args._id) ? args._id : context.user._id;
-                const user = await User.findById(userId).populate({
-                    path: 'orders.products',
-                    populate: 'category'
-                }).populate({
-                    path: 'seller.products',
-                    populate: 'products',
-                    populate: 'reviews'
-                });
+                const user = await User.findById(userId)
+                    .populate('products')
+                    .populate({ path: 'products', populate: 'category' })
                 user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
                 user.products.sort((a, b) => b.createdAt - a.createdAt);
                 return user;
@@ -77,20 +71,20 @@ const resolvers = {
                 const product = await stripe.products.create({
                     name: products[i].name,
                     description: products[i].description,
-                    images: [`${url}/images/${products[i].image}`]
+                    images: [`${url}/images/${products[i].image}`],
                 });
 
                 const price = await stripe.prices.create({
                     product: product.id,
                     unit_amount: products[i].price * 100,
-                    currency: 'usd'
+                    currency: "usd",
                 });
 
                 line_items.push({
                     price: price.id,
-                    quantity: 1
+                    quantity: 1,
                 });
-            };
+            }
 
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
@@ -116,9 +110,10 @@ const resolvers = {
                     { model: { $regex: search, $options: 'i' } }
                 ]
             };
-            console.log(search);
 
             const products = await Product.find(searchQuery)
+                .populate('seller')
+                .populate('category')
                 .limit(limit)
                 .skip((page - 1) * limit)
                 .lean();
@@ -130,9 +125,25 @@ const resolvers = {
                 totalPages: Math.ceil(count / limit),
                 currentPage: page
             }
+        },
+        meetings: async () => {
+            return await Meeting.find();
+        },
+        meeting: async (parent, args, context) => {
+            if (context.user) {
+                let searchAlerts = { buyer: context.user._id, active: true };
+
+                return await Meeting.findOne(searchAlerts).exec();
+            }
+            throw new AuthenticationError('Not logged in');
+        },
+        getActiveAlerts: async (date) => {
+            let searchAlerts = { alertDateTime: { $lt: new Date(date) }, active: true };
+            return await Meeting.find(searchAlerts)
+                .populate('buyer')
+                .populate('seller').exec();
         }
     },
-
     Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args);
@@ -152,31 +163,35 @@ const resolvers = {
         addOrder: async (parent, { products }, context) => {
             if (context.user) {
                 const order = new Order({ products });
-                await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
+                await User.findByIdAndUpdate(context.user._id, {
+                    $push: { orders: order },
+                });
                 return order;
             }
-            throw new AuthenticationError('Not logged in');
+            throw new AuthenticationError("Not logged in");
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
-                throw new AuthenticationError('Incorrect credentials');
+                throw new AuthenticationError("Incorrect credentials");
             }
             const correctPW = await user.isCorrectPassword(password);
             if (!correctPW) {
-                throw new AuthenticationError('Incorrect credentials');
+                throw new AuthenticationError("Incorrect credentials");
             }
             const token = signToken(user);
             return { token, user };
         },
         addProduct: async (parent, args, context) => {
             if (context.user) {
-                args['seller'] = context.user._id;
+                args["seller"] = context.user._id;
                 const product = await Product.create(args);
-                await User.findByIdAndUpdate(context.user._id, { $push: { products: product } });
+                await User.findByIdAndUpdate(context.user._id, {
+                    $push: { products: product },
+                });
                 return product;
             }
-            throw new AuthenticationError('Incorrect credentials');
+            throw new AuthenticationError("Incorrect credentials");
         },
         addCategory: async (parent, args) => {
             const category = await Category.create(args);
@@ -185,25 +200,33 @@ const resolvers = {
         updateProduct: async (parent, args, context) => {
             if (context.user) {
                 //const image = args.image;
-                const product = await Product.findByIdAndUpdate(args._id,
+                const product = await Product.findByIdAndUpdate(
+                    args._id,
                     { $set: { image: args.image } },
                     { new: true }
                 );
                 return product;
             }
-            throw new AuthenticationError('invalid credentials');
+            throw new AuthenticationError("invalid credentials");
         },
         addReview: async (parent, { sellerId, reviewBody }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: sellerId },
-                    { $push: { reviews: { reviewBody, reviewer: context.user.firstName + " " + context.user.lastName } } },
+                    {
+                        $push: {
+                            reviews: {
+                                reviewBody,
+                                reviewer: context.user.firstName + " " + context.user.lastName,
+                            },
+                        },
+                    },
                     { new: true, runValidators: true }
                 );
 
                 return updatedUser;
             }
-            throw new AuthenticationError('invalid credentials');
+            throw new AuthenticationError("invalid credentials");
         },
         addConversation: async (parent, { user, withUser, messages }, context) => {
             if (context.user) {
@@ -214,7 +237,7 @@ const resolvers = {
                 );
                 return conversation;
             }
-            throw new AuthenticationError('invalid credentials');
+            throw new AuthenticationError("invalid credentials");
         },
         addContacts: async (parent, { contacts }, context) => {
             if (context.user) {
@@ -227,6 +250,21 @@ const resolvers = {
                 return updatedUser;
             }
             throw new AuthenticationError('invalid credentials');
+        },
+        addMeeting: async (parent, args, context) => {
+            if (context.user) {
+                args.buyer = context.user._id;
+                const meeting = await Meeting.create(args);
+                return meeting;
+            }
+            throw new AuthenticationError('invalid credentials');
+        },
+        cancelAlert: async (parent, args, context) => {
+            const meeting = await Meeting.findByIdAndUpdate(args._id,
+                { active: false },
+                { new: true }
+            );
+            return meeting;
         }
     }
 }
