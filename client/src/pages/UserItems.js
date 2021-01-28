@@ -9,13 +9,13 @@ import { useStoreContext } from "../utils/GlobalState";
 import { Container, Card, ListGroup, ListGroupItem } from "react-bootstrap";
 // import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
-import { defaultTypeResolver } from "graphql";
+// import { defaultTypeResolver } from "graphql";
 
 const UserItems = () => {
-  // const [state, dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
-  const [currentUser, setCurrentUser] = useState({products:[]});
+  const [currentUser, setCurrentUser] = useState({ products: [] });
 
   const { loading, data } = useQuery(QUERY_PRODUCT_USER, {
     variables: { _id: id },
@@ -40,8 +40,7 @@ const UserItems = () => {
       });
       console.log("currentUser");
       console.log(currentUser);
-      console.log("setCurrentUser");
-      console.log(setCurrentUser);
+      
     }
   }, [data, id, loading, setCurrentUser]);
   return (
@@ -50,37 +49,35 @@ const UserItems = () => {
         <div className="mainContainer">
           <Container>
             <Container className="mh-100">
-            
-            {currentUser.products.map(product => (
-              <Card>
-                {/* This will be changed later */}
-                {/* <Card.Img
-              variant="top"
-              src={targetUser.image}
-              // src={baseUrl + imgFileName}
-              alt={targetUser.name}
-            /> */}
-                <Card.Body>
-                  <Card.Title>{product.name}</Card.Title>
-                  {/* <Card.Title>Pretty Sunset</Card.Title> */}
-                  <Card.Text>{product.description}</Card.Text>
-                  {/* <Card.Text variant="">
-                This one is a pretty sunset that you can purchase. It isn't in a
-                picture form or anything like that. It is just the view.{" "}
-              </Card.Text> */}
-                </Card.Body>
-                <ListGroup className="">
-                  <ListGroupItem>Price: ${product.price}</ListGroupItem>
-                  <ListGroupItem>Category: {product.category.name}</ListGroupItem>
-                  
-                  <ListGroupItem>Model {product.model}</ListGroupItem>
-                  <ListGroupItem> {product.model}</ListGroupItem>
-                  <ListGroupItem>
-                    <Card.Link onClick={""}>Seller Info</Card.Link>
-                  </ListGroupItem>
-                </ListGroup>
-              </Card>
-            ))}
+              {currentUser.products.map((product) => (
+                <Card>
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                  <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
+
+                    <Card.Text>{product.description}</Card.Text>
+                  </Card.Body>
+                  <ListGroup className="">
+                    <ListGroupItem>Price: ${product.price}</ListGroupItem>
+                    <ListGroupItem>
+                      Category: {product.category.name}
+                    </ListGroupItem>
+                    <ListGroupItem>Age {product.age}</ListGroupItem>
+                    <ListGroupItem>Model {product.model}</ListGroupItem>
+                    <ListGroupItem>
+                      Condition: {product.condition}
+                    </ListGroupItem>
+                    <ListGroupItem>Quantity: {product.quantity}</ListGroupItem>
+                    <ListGroupItem>
+                      <Card.Link onClick={`/sellerinfo/${currentUser._id}`}>{currentUser.firstName}{currentUser.lastName}</Card.Link>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card>
+              ))}
             </Container>
           </Container>
         </div>
