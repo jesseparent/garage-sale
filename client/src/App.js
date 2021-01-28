@@ -17,6 +17,7 @@ import UserItem from './pages/UserItems';
 import SellerInfo from './pages/SellerInfo';
 import EditItem from './pages/EditItem';
 import MeetUp from './pages/MeetUp';
+import SearchResult from '../src/pages/SearchResult';
 
 
 const client = new ApolloClient({
