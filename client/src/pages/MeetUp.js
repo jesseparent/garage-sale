@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-// import { Link } from "react-router-dom";
-// import Auth from "../utils/auth";
-
-// import { useStoreContext } from "../utils/GlobalState";
-// import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
-// import { idbPromise } from '../utils/helpers';
 
 import { useMutation, useQuery } from '@apollo/react-hooks';
-// import { ADD_PRODUCT } from "../utils/mutations";
 import { QUERY_PRODUCT } from "../utils/queries";
-
+import { ADD_MEETING } from '../utils/mutations';
 import { Form, Button, Container } from "react-bootstrap";
 
 
@@ -26,61 +19,29 @@ function MeetUp(props) {
     alertTime: '',
   });
 
-  // const [addProduct] = useMutation(ADD_PRODUCT);
+  const [addMeeting] = useMutation(ADD_MEETING);
 
   const { loading, data: productData } = useQuery(QUERY_PRODUCT, { variables: { _id: id } });
 
-  useEffect(() => {
-    if (!loading) {
-      console.log(productData.product)
-    }
-  }, [loading, productData])
-  // useEffect(() => {
-
-  //   // console.log(data)
-  //   console.log(categoryData)
-
-
-
-  //   if (categoryData) {
-  //     dispatch({
-  //       type: UPDATE_CATEGORIES,
-  //       categories: categoryData.categories
-  //     });
-  //     categoryData.categories.forEach(category => {
-  //       idbPromise('categories', 'put', category);
-  //     });
-  //   } else if (!loading) {
-  //     idbPromise('categories', 'get').then(categories => {
-  //       dispatch({
-  //         type: UPDATE_CATEGORIES,
-  //         categories: categories
-  //       });
-  //     });
-  //   }
-  // }, [categoryData, loading, dispatch]);
-
   const handleFormSubmit = async event => {
     event.preventDefault();
-    //   const mutationResponse = await addProduct({
-    //     variables: {
-    //       category: formState.category,
-    //       name: formState.name,
-    //       description: formState.description,
-    //       price: parseInt(formState.price),
-    //       age: formState.age,
-    //       condition: formState.condition,
-    //       model: formState.model,
-    //       // seller: context.user._id
-    //     }
-    //   });
-    //   if (mutationResponse) {
-    //     console.log('it worked! The returned data is the line below.')
-    //     console.log(mutationResponse);
-    //     console.log(mutationResponse.data.addProduct._id)
+    const dateTime = formState.alertDate + ' ' + formState.alertTime;
+    const mutationResponse = await addMeeting({
+      variables: {
+        product: productData?.product._id,
+        address: formState.address,
+        name: formState.name,
+        phonenumber: formState.phonenumber,
+        email: formState.email,
+        seller: productData?.product.seller._id,
+        alertDateTime: dateTime,
+      }
+    });
 
-    //     props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
-    //   }
+    if (mutationResponse) {
+
+      window.location = '/';
+    }
 
   };
 
