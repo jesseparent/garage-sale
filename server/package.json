@@ -21,6 +21,8 @@
     "express-form-data": "^2.0.14",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.17",
     "socket.io": "^2.4.1",
     "stripe": "^8.131.1"
   },
