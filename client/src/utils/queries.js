@@ -165,9 +165,15 @@ export const QUERY_SPECIFIC_PRODUCTS = gql`
         name
       }
     }
-
-
   }
 }
+`;
 
+export const QUERY_ACTIVE_ALERT = gql`
+query meeting($_id: ID){
+  meeting(_id: $_id) {
+    _id
+    alertDateTime
+  }
+}
 `;
