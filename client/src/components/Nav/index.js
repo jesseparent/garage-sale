@@ -79,8 +79,13 @@ const Nav = () => {
 
   return (
     <nav className="navbar">
-      <h1 className="page-title"><a href="/">Garage Sale</a></h1>
-      <h3 className="title-description">Your one stop to buy and sell locally!</h3>
+      <h1 className="page-title">
+        <a href="/">Garage Sale</a>
+        {/* <img src={NavImg} alt="for sale" /> */}
+      </h1>
+      <h3 className="title-description">
+        Your one stop to buy and sell locally!
+      </h3>
       {showNavigation()}
       <div className="burger">
         <div className="line-1"></div>
@@ -88,6 +93,6 @@ const Nav = () => {
         <div className="line-3"></div>
       </div>
     </nav>
-  )
-}
+  );
+};
 export default Nav;

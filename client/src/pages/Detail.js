@@ -100,9 +100,8 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
                 <ListGroupItem>
-                  <Card.Link href={`/sellerinfo/${currentProduct.sellerId}`}>
-                    Seller Info
-                  </Card.Link>
+                   
+                  <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
                 </ListGroupItem>
                 <ListGroupItem>
                   <Card.Link href={`/chat/${currentProduct.sellerId}`}>Chat With Seller</Card.Link>
