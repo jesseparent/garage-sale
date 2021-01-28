@@ -54,6 +54,7 @@ function App() {
               <Route exact path="/sellerinfo/:id" component={SellerInfo} />
               {/* for now edititem has no id for testing purposes to be changed later! */}
               <Route exact path="/edititem" componet={EditItem} />
+              <Route exact path='/searchresult' component={SearchResult} />
 
               <Route exact path="/meetup/:id" component={MeetUp} />
               <Route component={NoMatch} />
