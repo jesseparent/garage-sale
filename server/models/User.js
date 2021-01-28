@@ -36,18 +36,18 @@ const userSchema = new Schema({
   emergency_number: {
     type: String,
   },
-  reviews: {
+  reviews: [{
     type: Schema.Types.ObjectId,
     ref: 'Review'
-  },
+  }],
   products: [{
     type: Schema.Types.ObjectId,
     ref: 'Product'
   }],
-  orders: {
+  orders: [{
     type: Schema.Types.ObjectId,
     ref: 'Order'
-  },
+  }],
   contacts: {
     type: String,
   },

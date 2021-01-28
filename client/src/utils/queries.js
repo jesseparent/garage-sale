@@ -135,7 +135,15 @@ export const QUERY_SPECIFIC_PRODUCTS = gql`
       description
       age
       image
+      seller {
+        lastName
+        firstName
+      }
+      category {
+        name
+      }
     }
+
 
   }
 }
