@@ -16,6 +16,7 @@ import ImageUpload from './pages/ImageUpload';
 import UserItem from './pages/UserItems';
 import SellerInfo from './pages/SellerInfo';
 import EditItem from './pages/EditItem';
+import MeetUp from './pages/MeetUp';
 
 
 const client = new ApolloClient({
@@ -53,6 +54,7 @@ function App() {
               {/* for now edititem has no id for testing purposes to be changed later! */}
               <Route exact path="/edititem" componet={EditItem} />
 
+              <Route exact path="/meetup/:id" component={MeetUp} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
