@@ -5,13 +5,19 @@ import { useStoreContext } from "../utils/GlobalState";
 
 
 import { Card, Container } from "react-bootstrap";
-import DetailBrief from "../components/DetailBrief";
+// import Detail from "../pages/Detail.js";
+import { QUERY_SPECIFIC_PRODUCTS } from '../utils/queries';
 
 function searchResults() {
+
+  useEffect(() => {
+
+    console.log()
+  })
   return (
     <div className="mainContainer">
       <Container>
-        <DetailBrief />
+        
       </Container>
     </div>
   );
