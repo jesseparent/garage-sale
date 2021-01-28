@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 import { QUERY_SPECIFIC_PRODUCTS } from '../../utils/queries';
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_PRODUCTS } from '../../utils/actions';
 import {
   Button,
   Form,
@@ -9,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 function SearchItems() {
+  const [state, dispatch] = useStoreContext();
 
   const [formState, setFormState] = useState({
     searchInput: ''
@@ -36,6 +39,14 @@ function SearchItems() {
   });
 };
 
+useEffect(()=>{
+  if(data) {
+    dispatch({
+      type: UPDATE_PRODUCTS,
+      products: data.products
+    });
+  }
+}, [ data, dispatch])
 
   return (
     <div>
