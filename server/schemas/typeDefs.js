@@ -91,8 +91,8 @@ const typeDefs = gql`
     conversations: [Conversation]
     specificProducts(search: String!, page: Int, limit: Int): ProductResult
     meetings: [Meeting]
-    meeting(_id: ID!): Meeting
-    meetingsAlert(date: String!): [Meeting]
+    meeting(_id: ID): Meeting
+    getActiveAlerts(date: String!): [Meeting]
   }
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
@@ -106,8 +106,7 @@ const typeDefs = gql`
     addConversation(user: ID!, withUser: ID!, messages: String): Conversation
     addContacts(contacts: String!): User
     addMeeting(product: ID, address: String, name: String, phonenumber: String, email: String, seller: ID, alertDateTime: String): Meeting
-    getActiveAlerts(date: String!): [Meeting]
-    cancelMeeting(id: ID!): User
+    cancelAlert(_id: ID!): Meeting
   }
 `;
 

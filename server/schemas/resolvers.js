@@ -29,7 +29,6 @@ const resolvers = {
         },
         user: async (parent, args, context) => {
             if (context.user) {
-                console.log(args)
                 let userId = (args._id) ? args._id : context.user._id;
                 const user = await User.findById(userId).populate({
                     path: 'orders.products',
@@ -116,7 +115,6 @@ const resolvers = {
                     { model: { $regex: search, $options: 'i' } }
                 ]
             };
-            console.log(search);
 
             const products = await Product.find(searchQuery)
                 .limit(limit)
@@ -136,13 +134,16 @@ const resolvers = {
         },
         meeting: async (parent, args, context) => {
             if (context.user) {
-                return await Meeting.findOne({ buyer: context.user._id, alert: true });
+                let searchAlerts = { buyer: context.user._id, active: true };
+
+                return await Meeting.findOne(searchAlerts).exec();
             }
             throw new AuthenticationError('Not logged in');
         },
-        meetingsAlert: async (parent, { date }, context) => {
+        getActiveAlerts: async (parent, { date }, context) => {
             if (context.user) {
-                return await Meeting.find({ alertDateTime: { $lt: new Date(date) }, alert: true });
+                let searchAlerts = { alertDateTime: { $lt: new Date(date) }, active: true };
+                return await Meeting.find(searchAlerts).exec();
             }
             throw new AuthenticationError('Not logged in');
         }
@@ -240,6 +241,13 @@ const resolvers = {
                 return meeting;
             }
             throw new AuthenticationError('invalid credentials');
+        },
+        cancelAlert: async (parent, args, context) => {
+            const meeting = await Meeting.findByIdAndUpdate(args._id,
+                { active: false },
+                { new: true }
+            );
+            return meeting;
         }
     }
 }
