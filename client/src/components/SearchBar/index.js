@@ -1,37 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 import { QUERY_SPECIFIC_PRODUCTS } from '../../utils/queries';
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_PRODUCTS } from '../../utils/actions';
 import {
-  InputGroup,
-  Dropdown,
-  DropdownButton,
-  FormControl,
   Button,
   Form,
   Col
 } from "react-bootstrap";
 
 function SearchItems() {
-  let searchTerm;
-  const [text, setText] = useState('');
+  const [state, dispatch] = useStoreContext();
+
+  const [formState, setFormState] = useState({
+    searchInput: ''
+  });
+
+  const [formSubmit, { loading, data }] = useLazyQuery(QUERY_SPECIFIC_PRODUCTS, {
+    variables: {search: formState.searchInput, page: 1, limit: 50}
+  });
   
-  const handleTextChange = (d) => {
-    setText(d);
-    searchTerm = d;
-    console.log("SearchTerm = " + d);
+  if(loading) {
+    console.log("loading");
   }
+  if(data) {
+    console.log(formState.searchInput);
+    console.log("Search results are: " + data);
+    console.log(data);
+  }
+
+  
+ const handleChange = event => {
+  const { name, value } = event.target;
+  setFormState({
+    ...formState,
+    [name]: value
+  });
+};
+
+useEffect(()=>{
+  if(data) {
+    dispatch({
+      type: UPDATE_PRODUCTS,
+      products: data.products
+    });
+  }
+}, [ data, dispatch])
 
   return (
     <div>
-      <Form className="center search-items">
+      <Form className="center search-items"
+      onSubmit = {e => {e.preventDefault(); formSubmit()}}>
         <Form.Row>
           <Col xs="auto" className="my-1">
             <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
             <Form.Control as="input" rows={1} className="search-input" placeholder="Search For"
-              onChange={d => handleTextChange(d.target.value)}></Form.Control>
+              name = "searchInput"
+              id = "searchInput"
+              onChange={handleChange}></Form.Control>
           </Col>
           <Col xs="auto" className="my-1">
             <Button variant="dark rounded-0" type="submit" className="mb-2">
@@ -43,30 +72,6 @@ function SearchItems() {
     </div>
 
   );
-
-  /* return (
-    <div className="Search_items">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          as={InputGroup.Prepend}
-          variant="outline-dark rounded-0"
-          title="Category"
-          id="input-group-dropdown-1"
-          onSelect={handleSelect}
-        >
-          <Dropdown.Item href="#" eventKey="Products">Products</Dropdown.Item>
-          <Dropdown.Item href="#" eventKey="Categories">Categories</Dropdown.Item>
-          <Dropdown.Item href="#" eventKey="Users">Users</Dropdown.Item>
-        </DropdownButton>
-        <FormControl
-          variant="outline-dark rounded-0"
-          aria-describedby="searchInput"
-          placeholder="this needs to be linked up"
-        />
-        <Button variant="dark" className="rounded-0">Search</Button>
-      </InputGroup>
-    </div>
-  ); */
 }
 
 export default SearchItems;
