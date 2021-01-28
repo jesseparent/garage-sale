@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
-import { useStoreContext } from "../utils/GlobalState";
-
-import { QUERY_ALL_PRODUCTS } from '../utils/queries';
-import { QUERY_PRODUCTS } from '../utils/queries';
-import { Card, } from 'react-bootstrap'
+// import React, { useEffect, useState } from "react";
+// import { Link, useParams } from "react-router-dom";
+// import { useQuery } from "@apollo/react-hooks";
+// import { useStoreContext } from "../utils/GlobalState";
 
 
-function searchResults(){
+// import { Card, Container } from "react-bootstrap";
+// // import Detail from "../pages/Detail.js";
+// import { QUERY_SPECIFIC_PRODUCTS } from '../utils/queries';
 
-    return (
-<div className="mainContainer">
+// function searchResults() {
+//   const [state, dispatch] = useStoreContext();
 
-</div>
+//   const [formState, setFormState] = useState({
+//     searchResult: ''
+//   });
 
-    )
-}
+//   useEffect(() => {
 
+//     console.log()
+//   })
+//   return (
+//     <div className="mainContainer">
+//       <Container fluid >
+        
+//       </Container>
+//     </div>
+//   );
+// }
 
-    
-
-
+// export default searchResults;

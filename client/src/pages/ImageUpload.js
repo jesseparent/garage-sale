@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { CloudinaryContext } from "cloudinary-react";
 import { fetchPhotos, openUploadWidget } from "../utils/CloudinaryService";
-import '../index.css';
+import "../index.css";
 
 import { useParams } from "react-router-dom";
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from "@apollo/react-hooks";
 import { UPDATE_PRODUCT } from "../utils/mutations";
+import { Button, Container } from "react-bootstrap";
 
 function ImageUpload(props) {
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState([]);
 
   const { id } = useParams();
 
@@ -16,59 +17,64 @@ function ImageUpload(props) {
 
   let uploadComplete = 0;
 
-
-  const beginUpload = tag => {
+  const beginUpload = (tag) => {
     const uploadOptions = {
       cloudName: "toomanyphotos",
       // tags: [tag],
-      sources: ['local'],
-      uploadPreset: "tficxpf5"
+      sources: ["local"],
+      uploadPreset: "tficxpf5",
     };
 
     openUploadWidget(uploadOptions, (error, photos) => {
-      
-
       if (!error) {
         if (photos.event == "close" && uploadComplete == 1) {
-          props.history.push('/product/' + id);
+          props.history.push("/product/" + id);
         }
         // console.log('!error')
         // console.log(photos);
-        if (photos.event === 'success') {
+        if (photos.event === "success") {
           // setImages([...images, photos.info.public_id])
 
-          const baseURL = 'https://res.cloudinary.com/toomanyphotos/image/upload/'
+          const baseURL =
+            "https://res.cloudinary.com/toomanyphotos/image/upload/";
           uploadComplete = 1;
 
-          // console.log('uploadcomplete update')   
+          // console.log('uploadcomplete update')
           // console.log(uploadComplete)
 
           updateProduct({
             variables: {
               _id: id,
-              image: baseURL + photos.info.public_id + '.' + photos.info.format,
-            }
-          });       
-         
+              image: baseURL + photos.info.public_id + "." + photos.info.format,
+            },
+          });
         }
       } else {
-        console.log('Photo upload error! Specific details can be found below.')
+        console.log("Photo upload error! Specific details can be found below.");
         console.log(error);
       }
-    })
-  }
+    });
+  };
 
   return (
-    <CloudinaryContext cloudName="toomanyphotos">
-      <div>
-        <section>
-          {/* {images.map(i => <img src={i} alt="" />)} */}
-          <button onClick={() => beginUpload()}>Upload Image</button>
-        </section>
-      </div>
-
-      
-    </CloudinaryContext>
+    <Container fluid className="mainContainer">
+      <CloudinaryContext cloudName="toomanyphotos">
+        <div>
+          <section className="photo-upload">
+            {/* {images.map(i => <img src={i} alt="" />)} */}
+            <Button
+              variant="dark"
+              className="rounded-0"
+              onClick={() => beginUpload()}
+            >
+              Upload Image
+            </Button> 
+            
+            </section>
+            <h2>*Images can only be .gif or .jpeg</h2>
+        </div>
+      </CloudinaryContext>
+    </Container>
   );
 }
 
