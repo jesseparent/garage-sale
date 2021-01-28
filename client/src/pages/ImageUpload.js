@@ -48,12 +48,12 @@ function ImageUpload(props) {
           console.log("success")
           console.log(photos)
 
-          // updateProduct({
-          //   variables: {
-          //     _id: id,
-          //     image: baseURL + photos.info.public_id + '.' + photos.info.format,
-          //   }
-          // });       
+          updateProduct({
+            variables: {
+              _id: id,
+              image: baseURL + photos.info.public_id + '.' + photos.info.format,
+            }
+          });       
          
         }
       } else {

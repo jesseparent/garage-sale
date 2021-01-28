@@ -36,6 +36,9 @@ const userSchema = new Schema({
   emergency_number: {
     type: String,
   },
+  stripeId: {
+    type: String
+  },
   reviews: [Review.schema],
   products: [Product.schema],
   orders: [Order.schema],

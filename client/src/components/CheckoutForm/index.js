@@ -1,9 +1,15 @@
 import React from 'react';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
+import { useStoreContext } from "../../utils/GlobalState";
+
 import CardSection from '../CardSection';
 
 export default function CheckoutForm() {
+  const [state, dispatch] = useStoreContext();
+
+  console.log(state.clientSecret)
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -18,11 +24,11 @@ export default function CheckoutForm() {
       return;
     }
 
-    const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
+    const result = await stripe.confirmCardPayment(state.clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: 'Jenny Rosen',
+          name: 'Test Name',
         },
       }
     });
@@ -33,6 +39,7 @@ export default function CheckoutForm() {
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
+        console.log("success")
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the

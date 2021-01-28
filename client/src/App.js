@@ -14,8 +14,8 @@ import AddProduct from './pages/AddProduct';
 import Detail from './pages/Detail';
 import ImageUpload from './pages/ImageUpload';
 import UserItem from './pages/UserItems';
-import StripeOnboard from './pages/StripeOnboard'
-import StripePayment from './pages/StripePayment'
+import StripeOnboard from './components/StripeOnboard'
+import StripePayment from './components/StripePayment'
 
 
 const client = new ApolloClient({

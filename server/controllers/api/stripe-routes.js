@@ -8,14 +8,17 @@ router.post("/onboard-user", async (req, res) => {
     const account = await stripe.accounts.create({ type: "express" });
     // req.session.accountID = account.id;
 
+    // this account id should be handled on the back end in the future. 
+    // This is fast for the sake of the demo but bad for security.
     console.log(account.id)
+    const accountId = account.id;
 
     const origin = `${req.headers.origin}`;
     const accountLinkURL = await generateAccountLink(account.id, origin);
 
     console.log(accountLinkURL)
 
-    res.send({url: accountLinkURL});
+    res.send({url: accountLinkURL, id: accountId});
   } catch (err) {
     res.status(500).send({
       error: err.message
@@ -39,12 +42,6 @@ router.get('/test', async (req, res) => {
   res.json(dog);
 })
 
-// get secret needed for payment
-router.get('/secret', async (req, res) => {
-  const intent = // ... Fetch or create the PaymentIntent
-    res.json({ client_secret: intent.client_secret });
-});
-
 // crete payment intent
 router.post("/create-payment-intent", async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
@@ -53,10 +50,10 @@ router.post("/create-payment-intent", async (req, res) => {
     currency: 'usd',
     // application_fee_amount: 10,
     transfer_data: {
-      destination: 'acct_1IESIoDEpJxpq9uq',
+      destination: 'acct_1IEhtrReev0uktPO',
     },
   });
-  res.json(paymentIntent)
+  res.json({client_secret: paymentIntent.client_secret})
 });
 
 // called on some form of refresh of the page on runtime
