@@ -5,15 +5,20 @@ import { useStoreContext } from "../utils/GlobalState";
 
 import { QUERY_ALL_PRODUCTS } from '../utils/queries';
 import { QUERY_PRODUCTS } from '../utils/queries';
+import { Card, } from 'react-bootstrap'
 
-const searchResults(){
 
-    const { id } = useParams();
+function searchResults(){
 
-    const { loading, data } = useQuery(QUERY_ALL_PRODUCTS, {
-        variables: { _id: id },
-    });
+    return (
+<div className="mainContainer">
 
+</div>
+
+    )
 }
 
-export default searchResults;
+
+    
+
+

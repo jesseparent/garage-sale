@@ -104,9 +104,10 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
                 <ListGroupItem>
-                  <Card.Link onClick={`/sellerinfo/${currentProduct.sellerId}`}>
+                  {/* <Card.Link to={`/sellerinfo/${currentProduct.sellerId}`}>
                     Seller Info
-                  </Card.Link>
+                  </Card.Link> */}
+                  <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
                 </ListGroupItem>
               </ListGroup>
               <Card.Body>
