@@ -137,12 +137,11 @@ const resolvers = {
             }
             throw new AuthenticationError('Not logged in');
         },
-        getActiveAlerts: async (parent, { date }, context) => {
-            if (context.user) {
-                let searchAlerts = { alertDateTime: { $lt: new Date(date) }, active: true };
-                return await Meeting.find(searchAlerts).exec();
-            }
-            throw new AuthenticationError('Not logged in');
+        getActiveAlerts: async (date) => {
+            let searchAlerts = { alertDateTime: { $lt: new Date(date) }, active: true };
+            return await Meeting.find(searchAlerts)
+                .populate('buyer')
+                .populate('seller').exec();
         }
     },
     Mutation: {
