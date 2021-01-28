@@ -12,7 +12,6 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { QUERY_PRODUCT } from "../utils/queries";
 
 import { Form, Button, Container } from "react-bootstrap";
-import TimePicker from 'react-bootstrap-time-picker';
 
 
 function MeetUp(props) {
