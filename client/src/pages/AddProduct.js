@@ -109,6 +109,7 @@ function AddProduct(props) {
 
             {/* load categories and populate the category dropdown */}
       {state.categories.length ? (
+        
         <Form.Group>
           <Form.Label>Choose a category:</Form.Label>
           <Form.Control

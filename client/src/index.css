@@ -71,13 +71,14 @@ h2 {
     right: 0px;
     height: 92vh;
     top: 8vh;
-    background-color: rgb(33, 33, 70);
+    background-color: var(--navbar);
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 30%;
     transform: translate(100%);
     transition: transform 0.5s ease-in;
+    z-index: 6;
   }
   .nav-links li {
     opacity: 0;
@@ -117,19 +118,17 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 }
 
 input.form-control {
   width: 300px !important;
 }
 
-.searchContainer {
-  /* padding: 40px; */
-  /* display: block; */
-}
-.SearchItems {
+
+/* .SearchItems {
   padding-top: 50px;
-}
+} */
 
 /* featured container  */
 .featured-container {
@@ -142,14 +141,15 @@ input.form-control {
   justify-content: center;
 }
 .featured-items {
+  
   padding-top: 10px;
   font-size: 50%;
   display: flex;
   border: 2px solid black;
   width: 250px;
-  height: 100%;
+  /* height: 100%; */
   background: rgb(116, 101, 72);
-  margin: 10px 10px;
+  margin: 5px 5px;
   transition: 1s;
 }
 .featured-items:hover {
@@ -160,7 +160,14 @@ input.form-control {
 
 .item-img {
   width: 100px;
+  
 }
+.brief-img {
+  width: 200px;
+  height: 180px;
+  object-fit: cover;
+}
+
 
 .signup-container,
 .login-container,
@@ -168,4 +175,16 @@ input.form-control {
 .mainContainer {
   background: var(--background-color);
   width: 100%;
+}
+.errorPage {
+  padding: 50px;
+  margin-left: 333px;
+  display: block;
+  
+  align-items: center;
+}
+.errorImg {
+    width: 100%;
+    height: 100vh;
+   
 }
