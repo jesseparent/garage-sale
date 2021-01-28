@@ -109,10 +109,7 @@ export function ConversationsProvider({ id, chatWithUserId, children }) {
 
     if (data && data.conversations) {
       for (let i = 0; i < data.conversations.length; i++) {
-        console.log(data.conversations[i].withUser._id)
-        console.log(chatWithUserId)
         if (chatWithUserId === data.conversations[i].withUser._id) foundSeller = true;
-        console.log(foundSeller)
         let recipients = [data.conversations[i].withUser._id];
         let messages = JSON.parse(data.conversations[i].messages);
         let conversationObj = { recipients, messages };
@@ -121,7 +118,6 @@ export function ConversationsProvider({ id, chatWithUserId, children }) {
 
       // Don't delete the new conversation with the seller
       if (chatWithUserId && !foundSeller) {
-        console.log('preserve conversation')
         for (let i = 0; i < conversations.length; i++) {
           if (conversations[i].recipients.includes(chatWithUserId)) {
             dbConversations.push(conversations[i]);

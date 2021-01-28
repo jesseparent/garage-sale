@@ -67,10 +67,6 @@ function Detail() {
     }
   }, [products, data, loading, dispatch, id]);
 
-  const chatWithSeller = () => {
-    window.location = "/chat/" + currentProduct.sellerId;
-  };
-
   return (
     <>
       {currentProduct ? (
@@ -104,14 +100,18 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
                 <ListGroupItem>
-                  <Card.Link onClick={`/sellerinfo/${currentProduct.sellerId}`}>
+                  <Card.Link href={`/sellerinfo/${currentProduct.sellerId}`}>
                     Seller Info
                   </Card.Link>
                 </ListGroupItem>
+                <ListGroupItem>
+                  <Card.Link href={`/chat/${currentProduct.sellerId}`}>Chat With Seller</Card.Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
+                </ListGroupItem>
               </ListGroup>
-              <Card.Body>
-                <Card.Link onClick={chatWithSeller}>Chat With Seller</Card.Link>
-              </Card.Body>
+
             </Card>
           </Container>
         </div>
