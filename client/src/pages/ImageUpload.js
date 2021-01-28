@@ -29,26 +29,31 @@ function ImageUpload(props) {
       
 
       if (!error) {
-        if (photos.event == "close" && uploadComplete == 1) {
-          props.history.push('/product/' + id);
-        }
-        // console.log('!error')
-        // console.log(photos);
+        // if (photos.event == "close" && uploadComplete == 1) {
+        //   props.history.push('/product/' + id);
+        // }
+
+        console.log('!error')
+        console.log(photos);
+
         if (photos.event === 'success') {
           // setImages([...images, photos.info.public_id])
 
           const baseURL = 'https://res.cloudinary.com/toomanyphotos/image/upload/'
           uploadComplete = 1;
 
-          // console.log('uploadcomplete update')   
-          // console.log(uploadComplete)
+          console.log('uploadcomplete update')   
+          console.log(uploadComplete)
 
-          updateProduct({
-            variables: {
-              _id: id,
-              image: baseURL + photos.info.public_id + '.' + photos.info.format,
-            }
-          });       
+          console.log("success")
+          console.log(photos)
+
+          // updateProduct({
+          //   variables: {
+          //     _id: id,
+          //     image: baseURL + photos.info.public_id + '.' + photos.info.format,
+          //   }
+          // });       
          
         }
       } else {

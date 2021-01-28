@@ -56,6 +56,13 @@ h2 {
   transition: all 0.3 ease;
 }
 
+
+
+/* stripe styling */
+.stripeCardField {
+  width: 50%
+}
+
 @media screen and (max-width: 1024px) {
   .nav-links {
     width: 50%;

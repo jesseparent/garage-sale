@@ -14,6 +14,8 @@ import AddProduct from './pages/AddProduct';
 import Detail from './pages/Detail';
 import ImageUpload from './pages/ImageUpload';
 import UserItem from './pages/UserItems';
+import StripeOnboard from './pages/StripeOnboard'
+import StripePayment from './pages/StripePayment'
 
 
 const client = new ApolloClient({
@@ -47,6 +49,8 @@ function App() {
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
+              <Route exact path="/stripeOnboard" component={StripeOnboard} />
+              <Route exact path="/stripePayment" component={StripePayment} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
