@@ -123,6 +123,8 @@ const resolvers = {
       console.log(search);
 
       const products = await Product.find(searchQuery)
+        .populate('seller')
+        .populate('category')
         .limit(limit)
         .skip((page - 1) * limit)
         .lean();
