@@ -31,8 +31,8 @@ function generateAccountLink(accountID, origin) {
   return stripe.accountLinks.create({
     type: "account_onboarding",
     account: accountID,
-    refresh_url: `${origin}/onboard-user/refresh`,
-    return_url: `${origin}/success.html`,
+    refresh_url: `${origin}onboard-user/refresh`,
+    return_url: `${origin}`,
   }).then((link) => link.url);
 }
 
@@ -44,13 +44,17 @@ router.get('/test', async (req, res) => {
 
 // crete payment intent
 router.post("/create-payment-intent", async (req, res) => {
+  console.log('stripe api req:')
+  console.log(req)
+  // console.log(req.body.destination)
   const paymentIntent = await stripe.paymentIntents.create({
     payment_method_types: ['card'],
-    amount: 100,
+    amount: req.body.price,
     currency: 'usd',
     // application_fee_amount: 10,
     transfer_data: {
-      destination: 'acct_1IEhtrReev0uktPO',
+      // destination: 'acct_1IEhtrReev0uktPO',
+      destination: req.body.id,
     },
   });
   res.json({client_secret: paymentIntent.client_secret})

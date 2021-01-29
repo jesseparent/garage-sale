@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+
+import { useQuery } from "@apollo/react-hooks";
+import { useParams } from "react-router-dom";
+import { QUERY_PRODUCT_USER } from "../../utils/queries";
 
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_CLIENT_SECRET } from '../../utils/actions';
@@ -14,26 +18,36 @@ const stripePromise = loadStripe("pk_test_51IBOzADVroZQGKJNBHuaS1Tth2sbnwkctCTXE
 
 
 
-function StripePayment() {
+function StripePayment(props) {
   const [state, dispatch] = useStoreContext();
+  const { id, price } = useParams();
+
+  const { loading, error, data } = useQuery(QUERY_PRODUCT_USER, {
+    variables: { _id: id },
+  });
+
+  useEffect(() => {
+
+    if(!loading) {
+      console.log('data');
+      console.log(data.user)
+    }
+
+  }, [ data, loading, dispatch, id, price]);
+
 
   const getTest = async => {
-    // fetch("/api/stripe/test", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data);
-    //   });
+
+    console.log(data.user.stripeId)
+
+    const reqData = {id: data.user.stripeId , price: price}
 
     fetch("/api/stripe/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      }
+      },
+      body: JSON.stringify(reqData),
     })
       .then(response => response.json())
       .then(data => {
@@ -67,8 +81,9 @@ function StripePayment() {
 
   return (
     <Elements stripe={stripePromise}>
+      {/* <p>cost: {price}</p> */}
+      <button onClick={() => getTest()}>Payment Intent</button>
       <CheckoutForm />
-      <button onClick={() => getTest()}>test</button>
     </Elements>
   );
 };

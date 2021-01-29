@@ -42,9 +42,11 @@ function StripeOnboard(props) {
   //   // Call stripe.confirmCardPayment() with the client secret.
   // });
 
+  setupStripe()
+
   return (
     <div>
-      <button onClick={() => setupStripe()}>Setup payouts with Stripe</button>
+      {/* <button onClick={() => setupStripe()}>Setup payouts with Stripe</button> */}
     </div>
   );
 }
