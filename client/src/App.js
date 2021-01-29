@@ -8,19 +8,19 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import ChatApp from "./chat/components/ChatApp";
-import DetailBrief from './components/DetailBrief';
+import DetailBrief from "./components/DetailBrief";
 import { StoreProvider } from "./utils/GlobalState";
-import AddProduct from './pages/AddProduct';
-import Detail from './pages/Detail';
-import ImageUpload from './pages/ImageUpload';
-import UserItem from './pages/UserItems';
-import StripeOnboard from './components/StripeOnboard'
-import StripePayment from './components/StripePayment'
-import SellerInfo from './pages/SellerInfo';
-import EditItem from './pages/EditItem';
-import MeetUp from './pages/MeetUp';
-import SearchResult from '../src/pages/SearchResult';
-
+import AddProduct from "./pages/AddProduct";
+import Detail from "./pages/Detail";
+import ImageUpload from "./pages/ImageUpload";
+import UserItem from "./pages/UserItems";
+import StripeOnboard from "./components/StripeOnboard";
+import StripePayment from "./components/StripePayment";
+import SellerInfo from "./pages/SellerInfo";
+import EditItem from "./pages/EditItem";
+import MeetUp from "./pages/MeetUp";
+import SearchResults from "./pages/SearchResults";
+import FeaturedItems from "./components/FeaturedItems";
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -35,7 +35,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -54,11 +53,15 @@ function App() {
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
               <Route exact path="/stripeOnboard" component={StripeOnboard} />
-              <Route exact path="/stripePayment/:id/:price" component={StripePayment} />
+              <Route
+                exact
+                path="/stripePayment/:id/:price"
+                component={StripePayment}
+              />
               <Route exact path="/sellerinfo/:id" component={SellerInfo} />
               <Route exact path="/edititem" component={EditItem} />
-              <Route exact path='/searchresult' component={SearchResult} />
-
+              <Route exact path="/searchresults" component={SearchResults} />
+              <Route exact path="/featureditems" component={FeaturedItems} />
               <Route exact path="/meetup/:id" component={MeetUp} />
               <Route component={NoMatch} />
             </Switch>
