@@ -2,7 +2,7 @@ import React from 'react';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 
 import { useStoreContext } from "../../utils/GlobalState";
-
+import { Container, Form, Button } from 'react-bootstrap'
 import CardSection from '../CardSection';
 
 export default function CheckoutForm() {
@@ -51,9 +51,15 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Container >
+    <Form className="stripe-cc" onSubmit={handleSubmit}>
       <CardSection />
-      <button disabled={!stripe}>Confirm order</button>
-    </form>
+      <Button 
+      variant="dark"
+      id="stripe-confirm-button"
+      className="rounded-0"
+      disabled={!stripe}>Confirm order</Button>
+    </Form>
+    </Container>
   );
 }
