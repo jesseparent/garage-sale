@@ -150,6 +150,16 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        addStripeId: async (parent, { stripeId }, context) => {
+            if (context.user) {
+                const user = await User.findByIdAndUpdate(context.user._id, 
+                    { $set: { stripeId } },
+                    { new: true }
+                    );
+                return user;
+            }
+            throw new AuthenticationError('Not logged in');
+        },
         addOrder: async (parent, { products }, context) => {
             if (context.user) {
                 const order = new Order({ products });

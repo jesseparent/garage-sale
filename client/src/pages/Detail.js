@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
 import { UPDATE_PRODUCTS } from "../utils/actions";
-import { QUERY_PRODUCTS } from "../utils/queries";
+import { QUERY_PRODUCTS, QUERY_USER } from "../utils/queries";
 import SellerInfo from "../pages/SellerInfo";
 
 import { idbPromise } from "../utils/helpers";
@@ -42,6 +42,7 @@ function Detail() {
         sellerFirst: targetProduct.seller.firstName,
         sellerLast: targetProduct.seller.lastName,
         sellerId: targetProduct.seller._id,
+        stripeId: targetProduct.seller.stripeId
       });
     }
     // retrieved from server
@@ -107,6 +108,9 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>
                   <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
+                </ListGroupItem>
+                <ListGroupItem>
+                <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
                 </ListGroupItem>
               </ListGroup>
 

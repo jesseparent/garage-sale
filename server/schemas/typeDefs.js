@@ -35,6 +35,7 @@ const typeDefs = gql`
     emergency_name: String
     emergency_number: String
     contacts: String
+    stripeId: ID
   }
   type Review {
     _id: ID
@@ -96,6 +97,7 @@ const typeDefs = gql`
   }
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    addStripeId(stripeId: ID!): User
     login(email: String!, password: String!): Auth
     addOrder(products: [ID]!): Order
     addProduct(category: String!, name: String!, description: String, price: Int, age: String!, condition: String!, model: String): Product
