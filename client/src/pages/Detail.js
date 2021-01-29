@@ -33,7 +33,6 @@ function Detail() {
         _id: targetProduct._id,
         age: targetProduct.age,
         categoryName: targetProduct.category.name,
-        quantity: targetProduct.quantity,
         condition: targetProduct.condition,
         description: targetProduct.description,
         image: targetProduct.image,
@@ -71,14 +70,14 @@ function Detail() {
     <>
       {currentProduct ? (
         <div className="mainContainer">
-          <Container>
+          <Container fluid>
             <Link to="/">← Back to Products</Link>
 
             <Card style={{ width: "40rem" }}>
               <Card.Img
+              // style={{  }}
                 variant="top"
                 src={currentProduct.image}
-                // src={baseUrl + imgFileName}
                 alt={currentProduct.name}
               />
               <Card.Body>

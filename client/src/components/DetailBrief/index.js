@@ -12,8 +12,7 @@ import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
 
 function DetailBrief(props) {
   const [state, dispatch] = useStoreContext();
-  // const { id } = useParams();
-  // const id = "601068b2eb5e4109e312bf97"
+
 
   const [currentProduct, setCurrentProduct] = useState({});
 
@@ -22,10 +21,9 @@ function DetailBrief(props) {
   const { products } = state;
 
   useEffect(() => {
-    // console.log(id);
-    // already in global store
+   
     if (products.length) {
-      // const targetProduct = products.find((product) => product._id === props.id);
+     
       const targetProduct = products[props.num];
       console.log(props.num);
       console.log("targetProduct");

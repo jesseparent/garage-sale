@@ -1,31 +1,67 @@
-// import React, { useEffect, useState } from "react";
-// import { Link, useParams } from "react-router-dom";
-// import { useQuery } from "@apollo/react-hooks";
-// import { useStoreContext } from "../utils/GlobalState";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { useStoreContext } from "../utils/GlobalState";
+import { idbPromise } from "../utils/helpers";
+import { Card, Container } from "react-bootstrap";
+import SearchBar from "../components/SearchBar";
+import { QUERY_SPECIFIC_PRODUCTS } from "../utils/queries";
+import { UPDATE_PRODUCTS } from "../utils/actions";
+// import { idbPromise } from "../utils/helpers";
 
+const searchResults = () => {
+  // const [state, dispatch] = useStoreContext();
+  const { id } = useParams();
 
-// import { Card, Container } from "react-bootstrap";
-// // import Detail from "../pages/Detail.js";
-// import { QUERY_SPECIFIC_PRODUCTS } from '../utils/queries';
+  const [currentSearch, setCurrentSearch] = useState({
+    searchResult: [],
+  });
+  const { loading, data } = useQuery(QUERY_SPECIFIC_PRODUCTS, {
+    variables: { _id: id },
+  });
 
-// function searchResults() {
-//   const [state, dispatch] = useStoreContext();
+  const { search } = state;
 
-//   const [formState, setFormState] = useState({
-//     searchResult: ''
-//   });
+  useEffect(() => {
+    console.log(data);
 
-//   useEffect(() => {
+    if (!loading && data && search.user) {
+      const targetResult = data.search;
 
-//     console.log()
-//   })
-//   return (
-//     <div className="mainContainer">
-//       <Container fluid >
-        
-//       </Container>
-//     </div>
-//   );
-// }
+      console.log("targetResult");
+      console.log(targetResult);
 
-// export default searchResults;
+      setCurrentSearch({
+        _id: targetResult._id,
+        name: targetResult.name,
+        description: targetResult.description,
+        age: targetResult.age,
+        image: targetResult.image,
+        // sellerId: seller.targetResult._id,
+        // sellerFirstName: seller.targetResult.firstName,
+        // sellerLastName: seller.targetResult.lastName,
+        categoryName: category.targetResult.name,
+      });
+      console.log("currentSearch");
+      console.log(currentSearch);
+    }
+  }, [data, loading, id, setCurrentSearch]);
+  return (
+    <>
+      {currentSearch ? (
+        <div className="mainContainer">
+          <Container fluid>
+            {currentSearch.search.map((targetResult) => (
+              <Card>
+                <Card.Img variant="top" src={targetResult.image} />
+              </Card>
+            ))}
+          </Container>
+        </div>
+      ) : null}
+      {loading ? <img src={spinner} alt="loading" /> : null}
+    </>
+  );
+};
+
+export default searchResults;
