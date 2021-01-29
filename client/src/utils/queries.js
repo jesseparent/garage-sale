@@ -42,6 +42,7 @@ export const QUERY_PRODUCTS = gql`
         _id
         firstName
         lastName
+        stripeId
       }
     }
   }
@@ -89,6 +90,7 @@ export const QUERY_USER = gql`
       }
     }
     contacts
+    stripeId
   }
 }
 `;
@@ -100,6 +102,7 @@ query user($_id: ID)
     _id
     firstName
     lastName
+    stripeId
     products {
       _id
       age

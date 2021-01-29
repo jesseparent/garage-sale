@@ -4,27 +4,26 @@
 // import { useStoreContext } from "../utils/GlobalState";
 // import { idbPromise } from "../utils/helpers";
 // import { Card, Container } from "react-bootstrap";
-// import spinner from "../assets/spinner.gif";
 // import SearchBar from "../components/SearchBar";
 // import { QUERY_SPECIFIC_PRODUCTS } from "../utils/queries";
 // import { UPDATE_PRODUCTS } from "../utils/actions";
 // // import { idbPromise } from "../utils/helpers";
 
-// const SearchResults = () => {
-//   const [state, dispatch] = useStoreContext();
+// const searchResults = () => {
+//   // const [state, dispatch] = useStoreContext();
 //   const { id } = useParams();
 
 //   const [currentSearch, setCurrentSearch] = useState({
 //     searchResult: [],
 //   });
-//   // const { loading, data } = useQuery(QUERY_SPECIFIC_PRODUCTS, {
-//   //   variables: { _id: id },
-//   // });
+//   const { loading, data } = useQuery(QUERY_SPECIFIC_PRODUCTS, {
+//     variables: { _id: id },
+//   });
 
 //   const { search } = state;
 
 //   useEffect(() => {
-//     console.log(search);
+//     console.log(data);
 
 //     if (!loading && data && search.user) {
 //       const targetResult = data.search;
@@ -41,12 +40,12 @@
 //         // sellerId: seller.targetResult._id,
 //         // sellerFirstName: seller.targetResult.firstName,
 //         // sellerLastName: seller.targetResult.lastName,
-//         // categoryName: category.targetResult.name,
+//         categoryName: category.targetResult.name,
 //       });
 //       console.log("currentSearch");
 //       console.log(currentSearch);
 //     }
-//   }, [data, loading, id, setCurrentSearch, state]);
+//   }, [data, loading, id, setCurrentSearch]);
 //   return (
 //     <>
 //       {currentSearch ? (
@@ -65,4 +64,4 @@
 //   );
 // };
 
-// export default SearchResults;
+// export default searchResults;
