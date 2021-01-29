@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DetailBrief from "../components/DetailBrief";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_PRODUCT_USER } from "../utils/queries";
-// import { QUERY_PRODUCTS } from "../utils/queries";
-import { useStoreContext } from "../utils/GlobalState";
 
 import { Container, Card, ListGroup, ListGroupItem } from "react-bootstrap";
-// import { idbPromise } from "../utils/helpers";
 import spinner from "../assets/spinner.gif";
-// import { defaultTypeResolver } from "graphql";
 
 const UserItems = () => {
-  const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
   const [currentUser, setCurrentUser] = useState({ products: [] });
@@ -22,13 +16,8 @@ const UserItems = () => {
   });
 
   useEffect(() => {
-    console.log(data);
-
     if (!loading && data && data.user) {
       const targetUser = data.user;
-      console.log("targetUser");
-      console.log(targetUser);
-
       // if (targetUser){
       setCurrentUser({
         _id: targetUser._id,
@@ -38,8 +27,6 @@ const UserItems = () => {
 
         // Contacts?????
       });
-      console.log("currentUser");
-      console.log(currentUser);
     }
   }, [data, id, loading, setCurrentUser]);
   return (

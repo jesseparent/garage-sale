@@ -10,7 +10,6 @@ export default function NewConversationModal({ closeModal }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(selectedContactIds)
     createConversation(selectedContactIds)
     closeModal()
   }

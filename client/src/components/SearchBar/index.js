@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useQuery, useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { QUERY_SPECIFIC_PRODUCTS } from '../../utils/queries';
 import { useStoreContext } from '../../utils/GlobalState';
 import { UPDATE_PRODUCTS } from '../../utils/actions';
@@ -18,51 +17,47 @@ function SearchItems() {
   });
 
   const [formSubmit, { loading, data }] = useLazyQuery(QUERY_SPECIFIC_PRODUCTS, {
-    variables: {search: formState.searchInput, page: 1, limit: 50}
+    variables: { search: formState.searchInput, page: 1, limit: 50 }
   });
-  
-  if(loading) {
+
+  if (loading) {
     console.log("loading");
   }
-  if(data) {
+  if (data) {
     console.log(formState.searchInput);
-   // console.log("Search results are: " + data);
-   // console.log(data);
   }
 
-  
- const handleChange = event => {
-  const { name, value } = event.target;
-  setFormState({
-    ...formState,
-    [name]: value
-  });
-};
 
-
-useEffect(()=>{
-  if(data?.specificProducts?.products) {
-    console.log("I'm the data you want")
-    console.log(data.specificProducts.products);
-    dispatch({
-      type: UPDATE_PRODUCTS,
-      products: data.specificProducts.products
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value
     });
-  }
-}, [ data, dispatch])
+  };
+
+
+  useEffect(() => {
+    if (data?.specificProducts?.products) {
+      dispatch({
+        type: UPDATE_PRODUCTS,
+        products: data.specificProducts.products
+      });
+    }
+  }, [data, dispatch])
 
   return (
     <div>
       <Form className="center search-items"
-      onSubmit = {e => {e.preventDefault(); formSubmit()}}>
+        onSubmit={e => { e.preventDefault(); formSubmit() }}>
         <Form.Row>
           <Col xs="auto" className="my-1">
             <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSearch" srOnly>
               Search For
             </Form.Label>
             <Form.Control as="input" rows={1} className="search-input" placeholder="Search For"
-              name = "searchInput"
-              id = "searchInput"
+              name="searchInput"
+              id="searchInput"
               onChange={handleChange}></Form.Control>
           </Col>
           <Col xs="auto" className="my-1">
