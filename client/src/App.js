@@ -14,6 +14,8 @@ import AddProduct from './pages/AddProduct';
 import Detail from './pages/Detail';
 import ImageUpload from './pages/ImageUpload';
 import UserItem from './pages/UserItems';
+import StripeOnboard from './components/StripeOnboard'
+import StripePayment from './components/StripePayment'
 import SellerInfo from './pages/SellerInfo';
 import EditItem from './pages/EditItem';
 import MeetUp from './pages/MeetUp';
@@ -51,6 +53,8 @@ function App() {
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
+              <Route exact path="/stripeOnboard" component={StripeOnboard} />
+              <Route exact path="/stripePayment/:id/:price" component={StripePayment} />
               <Route exact path="/sellerinfo/:id" component={SellerInfo} />
               <Route exact path="/edititem" component={EditItem} />
               <Route exact path='/searchresult' component={SearchResult} />
