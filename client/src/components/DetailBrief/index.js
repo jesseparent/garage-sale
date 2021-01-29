@@ -22,14 +22,10 @@ function DetailBrief(props) {
   const { products } = state;
 
   useEffect(() => {
-    // console.log(id);
     // already in global store
     if (products.length) {
       // const targetProduct = products.find((product) => product._id === props.id);
       const targetProduct = products[props.num];
-      console.log(props.num);
-      console.log("targetProduct");
-      console.log(targetProduct);
 
       if (targetProduct) {
         setCurrentProduct({
@@ -100,7 +96,7 @@ function DetailBrief(props) {
           </Link>
         </Container>
       ) : // </div>
-      null}
+        null}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </>
   );

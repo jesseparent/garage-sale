@@ -69,8 +69,9 @@ export function ConversationsProvider({ id, chatWithUserId, children }) {
 
       // Create the sender as a contact if they aren't already (as long as the logged in user isn't the sender)
       let contactExists = contacts.find(o => o.id === sender);
-
-      if (!contactExists && senderName) {
+      let und;
+      let undefinedName = und + ' ' + und;
+      if (!contactExists && senderName && senderName !== undefinedName) {
         createContact(sender, senderName);
       }
 
@@ -90,7 +91,10 @@ export function ConversationsProvider({ id, chatWithUserId, children }) {
   useEffect(() => {
     // Don't create conversation with yourself
     if (chatUserData && chatUserData.user && id !== chatUserData.user._id) {
-      createContact(chatUserData.user._id, chatUserData.user.firstName + ' ' + chatUserData.user.lastName);
+      let fullName = chatUserData.user.firstName + ' ' + chatUserData.user.lastName;
+      let und;
+      let undefinedName = und + ' ' + und;
+      if (fullName !== undefinedName) createContact(chatUserData.user._id, fullName);
       // Don't create a duplicate conversation with the seller
       let conversationDoesntExist = true;
       for (let i = 0; i < conversations.length; i++) {

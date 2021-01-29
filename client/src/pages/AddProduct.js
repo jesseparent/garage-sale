@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import Auth from "../utils/auth";
 
 import { useStoreContext } from "../utils/GlobalState";
-import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../utils/actions';
+import { UPDATE_CATEGORIES } from '../utils/actions';
 import { idbPromise } from '../utils/helpers';
 
 import { useMutation } from '@apollo/react-hooks';
@@ -34,12 +32,6 @@ function AddProduct(props) {
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
   useEffect(() => {
-
-    // console.log(data)
-    console.log(categoryData)
-
-
-
     if (categoryData) {
       dispatch({
         type: UPDATE_CATEGORIES,
@@ -68,14 +60,10 @@ function AddProduct(props) {
         price: parseInt(formState.price),
         age: formState.age,
         condition: formState.condition,
-        model: formState.model,
-        // seller: context.user._id
+        model: formState.model
       }
     });
     if (mutationResponse) {
-      console.log('it worked! The returned data is the line below.')
-      console.log(mutationResponse);
-      console.log(mutationResponse.data.addProduct._id)
 
       props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
     }
@@ -88,7 +76,6 @@ function AddProduct(props) {
       ...formState,
       [name]: value
     });
-    // console.log(formState);
   };
 
   return (
@@ -107,29 +94,29 @@ function AddProduct(props) {
             />
           </Form.Group>
 
-            {/* load categories and populate the category dropdown */}
-      {state.categories.length ? (
-        
-        <Form.Group>
-          <Form.Label>Choose a category:</Form.Label>
-          <Form.Control
-              as="select"
-              id="category"
-              name="category"
-              onChange={handleChange}
-            >
-              
+          {/* load categories and populate the category dropdown */}
+          {state.categories.length ? (
+
+            <Form.Group>
+              <Form.Label>Choose a category:</Form.Label>
+              <Form.Control
+                as="select"
+                id="category"
+                name="category"
+                onChange={handleChange}
+              >
+
                 {state.categories.map(category => (
                   <option value={category._id}>{category.name}</option>
                 ))}
-            
-            </Form.Control>
+
+              </Form.Control>
             </Form.Group>
-      ) : (
-        <h3>There are no categories!!! This wont work without this.</h3>
-      )}
-      { loading ? 
-      <h3>loading...</h3>: null}
+          ) : (
+              <h3>There are no categories!!! This wont work without this.</h3>
+            )}
+          {loading ?
+            <h3>loading...</h3> : null}
 
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description:</Form.Label>
