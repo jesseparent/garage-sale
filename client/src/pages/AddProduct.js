@@ -15,7 +15,7 @@ import { Form, Button, Container } from "react-bootstrap";
 function AddProduct(props) {
   const [state, dispatch] = useStoreContext();
 
-  const { categories } = state;
+  // const { categories } = state;
 
   const [formState, setFormState] = useState({
     category: '',
@@ -37,6 +37,13 @@ function AddProduct(props) {
         type: UPDATE_CATEGORIES,
         categories: categoryData.categories
       });
+
+      // set default category on succesfull fetch of the category list
+      setFormState({
+        ...formState,
+        category: categoryData.categories[0]._id
+      });
+
       categoryData.categories.forEach(category => {
         idbPromise('categories', 'put', category);
       });
