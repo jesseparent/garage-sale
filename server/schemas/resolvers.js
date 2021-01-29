@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+const stripe = require("stripe")("sk_test_51IBOzADVroZQGKJNSykLKMTUywHXvgItBizO05PC8n1updChkoh0wGWEHxUYY2TzosE4EsdIGaJf8NXL36dHk3wu006pA5CDWD");
 //need actual test account for stripe
 const { User, Product, Category, Order, Conversation, Meeting } = require('../models');
 const { signToken } = require('../utils/auth');
@@ -152,10 +152,10 @@ const resolvers = {
         },
         addStripeId: async (parent, { stripeId }, context) => {
             if (context.user) {
-                const user = await User.findByIdAndUpdate(context.user._id, 
+                const user = await User.findByIdAndUpdate(context.user._id,
                     { $set: { stripeId } },
                     { new: true }
-                    );
+                );
                 return user;
             }
             throw new AuthenticationError('Not logged in');
