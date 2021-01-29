@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -28,19 +27,16 @@ function StripePayment(props) {
 
   useEffect(() => {
 
-    if(!loading) {
-      console.log('data');
+    if (!loading) {
       console.log(data.user)
     }
 
-  }, [ data, loading, dispatch, id, price]);
+  }, [data, loading, dispatch, id, price]);
 
 
   const getTest = async => {
 
-    console.log(data.user.stripeId)
-
-    const reqData = {id: data.user.stripeId , price: price}
+    const reqData = { id: data.user.stripeId, price: price }
 
     fetch("/api/stripe/create-payment-intent", {
       method: "POST",
@@ -51,12 +47,8 @@ function StripePayment(props) {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log('data')
-        // console.log(data);
 
         var clientSecret = data.client_secret;
-        // console.log('clientsecret')
-        // console.log(clientSecret);
 
         // Call stripe.confirmCardPayment() with the client secret.
         dispatch({
@@ -64,8 +56,6 @@ function StripePayment(props) {
           clientSecret: clientSecret
         });
 
-        // console.log('current global state');
-        // console.log(state);
       });
   }
 

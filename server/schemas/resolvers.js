@@ -152,10 +152,10 @@ const resolvers = {
         },
         addStripeId: async (parent, { stripeId }, context) => {
             if (context.user) {
-                const user = await User.findByIdAndUpdate(context.user._id, 
+                const user = await User.findByIdAndUpdate(context.user._id,
                     { $set: { stripeId } },
                     { new: true }
-                    );
+                );
                 return user;
             }
             throw new AuthenticationError('Not logged in');

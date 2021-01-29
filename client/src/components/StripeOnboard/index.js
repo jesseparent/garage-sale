@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ADD_PRODUCT, ADD_STRIPE_ID } from "../../utils/mutations";
+import React from "react";
+import { ADD_STRIPE_ID } from "../../utils/mutations";
 import { useMutation } from '@apollo/react-hooks';
 
 function StripeOnboard(props) {
@@ -15,7 +15,6 @@ function StripeOnboard(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.url) {
 
           // this account id should be handled on the back end in the future. 

@@ -51,7 +51,6 @@ function MeetUp(props) {
       ...formState,
       [name]: value
     });
-    console.log(formState);
   };
 
   return (
