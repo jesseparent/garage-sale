@@ -13,9 +13,6 @@ const StoreProvider = ({ value = [], ...props }) => {
     currentCategory: '',
     clientSecret: ''
   });
-  // use this to confirm it works!
-  console.log('console.log from GlobalState')
-  console.log(state);
   return <Provider value={[state, dispatch]} {...props} />;
 };
 

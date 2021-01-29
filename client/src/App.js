@@ -53,12 +53,10 @@ function App() {
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
-              {/* both stripe pages are here for testing for now */}
               <Route exact path="/stripeOnboard" component={StripeOnboard} />
               <Route exact path="/stripePayment/:id/:price" component={StripePayment} />
               <Route exact path="/sellerinfo/:id" component={SellerInfo} />
-              {/* for now edititem has no id for testing purposes to be changed later! */}
-              <Route exact path="/edititem" componet={EditItem} />
+              <Route exact path="/edititem" component={EditItem} />
               <Route exact path='/searchresult' component={SearchResult} />
 
               <Route exact path="/meetup/:id" component={MeetUp} />

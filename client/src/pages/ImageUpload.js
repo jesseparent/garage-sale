@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CloudinaryContext } from "cloudinary-react";
-import { fetchPhotos, openUploadWidget } from "../utils/CloudinaryService";
+import { openUploadWidget } from "../utils/CloudinaryService";
 import "../index.css";
 
 import { useParams } from "react-router-dom";
@@ -9,7 +9,6 @@ import { UPDATE_PRODUCT } from "../utils/mutations";
 import { Button, Container } from "react-bootstrap";
 
 function ImageUpload(props) {
-  const [images, setImages] = useState([]);
 
   const { id } = useParams();
 
@@ -27,23 +26,14 @@ function ImageUpload(props) {
 
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
-        if (photos.event == "close" && uploadComplete == 1) {
+        if (photos.event === "close" && uploadComplete === 1) {
           props.history.push("/product/" + id);
         }
-        // console.log('!error')
-        // console.log(photos);
         if (photos.event === "success") {
-          // setImages([...images, photos.info.public_id])
 
           const baseURL =
             "https://res.cloudinary.com/toomanyphotos/image/upload/";
           uploadComplete = 1;
-
-          // console.log('uploadcomplete update')   
-          // console.log(uploadComplete)
-
-          // console.log("success")
-          // console.log(photos)
 
           updateProduct({
             variables: {
@@ -64,17 +54,16 @@ function ImageUpload(props) {
       <CloudinaryContext cloudName="toomanyphotos">
         <div>
           <section className="photo-upload">
-            {/* {images.map(i => <img src={i} alt="" />)} */}
             <Button
               variant="dark"
               className="rounded-0"
               onClick={() => beginUpload()}
             >
               Upload Image
-            </Button> 
-            
-            </section>
-            <h2>*Images can only be .gif or .jpeg</h2>
+            </Button>
+
+          </section>
+          <h2>*Images can only be .gif or .jpeg</h2>
         </div>
       </CloudinaryContext>
     </Container>

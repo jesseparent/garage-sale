@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
 import { UPDATE_PRODUCTS } from "../utils/actions";
-import { QUERY_PRODUCTS, QUERY_USER } from "../utils/queries";
+import { QUERY_PRODUCTS } from "../utils/queries";
 import SellerInfo from "../pages/SellerInfo";
 
 import { idbPromise } from "../utils/helpers";
@@ -25,9 +25,6 @@ function Detail() {
     // already in global store
     if (products.length) {
       const targetProduct = products.find((product) => product._id === id);
-
-      console.log("targetProduct");
-      console.log(targetProduct);
 
       setCurrentProduct({
         _id: targetProduct._id,
@@ -100,7 +97,7 @@ function Detail() {
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
                 <ListGroupItem>
-                   
+
                   <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
                 </ListGroupItem>
                 <ListGroupItem>
@@ -110,7 +107,7 @@ function Detail() {
                   <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
                 </ListGroupItem>
                 <ListGroupItem>
-                <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
+                  <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
                 </ListGroupItem>
               </ListGroup>
 

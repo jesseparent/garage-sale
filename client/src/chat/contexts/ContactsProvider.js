@@ -26,8 +26,7 @@ export function ContactsProvider({ children }) {
     })
   }
   useEffect(() => {
-    console.log(data)
-    if (data && data.user && data.user.contacts) {
+    if (data?.user?.contacts) {
       setContacts(JSON.parse(data.user.contacts));
     }
   }, [data, setContacts]);
