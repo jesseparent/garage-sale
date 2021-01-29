@@ -39,8 +39,11 @@ function ImageUpload(props) {
             "https://res.cloudinary.com/toomanyphotos/image/upload/";
           uploadComplete = 1;
 
-          // console.log('uploadcomplete update')
+          // console.log('uploadcomplete update')   
           // console.log(uploadComplete)
+
+          // console.log("success")
+          // console.log(photos)
 
           updateProduct({
             variables: {

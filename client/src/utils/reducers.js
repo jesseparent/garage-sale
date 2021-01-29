@@ -8,7 +8,8 @@ import {
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,
   CLEAR_CART,
-  TOGGLE_CART
+  TOGGLE_CART,
+  UPDATE_CLIENT_SECRET
 } from './actions';
 
 export const reducer = (state, action) => {
@@ -67,6 +68,12 @@ export const reducer = (state, action) => {
           }
           return product;
         })
+      };
+
+    case UPDATE_CLIENT_SECRET:
+      return {
+        ...state,
+        clientSecret: action.clientSecret
       };
 
     case CLEAR_CART:

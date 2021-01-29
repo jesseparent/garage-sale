@@ -24,6 +24,18 @@ export const ADD_USER = gql`
   }
 `;
 
+export const ADD_STRIPE_ID = gql`
+mutation addStripeId($stripeId: ID!){
+  addStripeId(stripeId: $stripeId){
+    _id
+    firstName
+    lastName
+    email
+    stripeId
+  }
+}
+`
+
 export const ADD_PRODUCT = gql`
 mutation addProduct($category: String!, $name: String!, $description: String, $price: Int, $age: String!, $condition: String!, $model: String) {
   addProduct(category: $category, name: $name, description: $description, price: $price, age: $age, condition: $condition, model: $model) {

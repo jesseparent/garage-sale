@@ -56,6 +56,9 @@ const Nav = () => {
             <a href="/chat">Messages</a>
           </li>
           <li>
+            <a href="/stripeonboard">Set Up Stripe</a>
+          </li>
+          <li>
             <a href="/addproduct">Sell</a>
           </li>
           <li>
