@@ -4,7 +4,7 @@ const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const cron = require('node-cron');
 
-const routes = require('./controllers/');
+const apiRoutes = require('./controllers/api');
 
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
@@ -53,7 +53,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // turn on api routes
-app.use(routes);
+app.use('/api/stripe', apiRoutes);
 
 // Serve up static assets
 app.use('/images', express.static(path.join(__dirname, '../client/images')));
