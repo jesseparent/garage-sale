@@ -5,7 +5,7 @@ import { useStoreContext } from "../../utils/GlobalState";
 
 import CardSection from '../CardSection';
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
   const [state, dispatch] = useStoreContext();
 
   console.log(state.clientSecret)
