@@ -26,18 +26,25 @@ const SearchResults = () => {
   console.log("State");
   console.log(state);
 useEffect(()=> {
+  let i = 0;
     console.log("products array")
-    console.log(products);
+    console.log(products[i]);
 
     if (state.products.length = 0){
-      
-       setCurrentSearch(state.products)
+      console.log("state and products");
+      console.log(state.products)
+      let i = 0;
+      const targetResult = products[i];
+      console.log("targetResult")
+      console.log(targetResult)
+       if(targetResult){
+        setCurrentSearch({
+          search: state.products[i]
+        })
+       }
        
 
-      } else {
-        
-
-      }
+      } 
     }, [products, state])
 //   useEffect(() => {
 //     console.log(data);
