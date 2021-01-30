@@ -11,6 +11,8 @@ import { QUERY_CATEGORIES } from "../utils/queries";
 
 import { Form, Button, Container } from "react-bootstrap";
 
+import ImageUpload from '../components/ImageUpload'
+
 
 function AddProduct(props) {
   const [state, dispatch] = useStoreContext();
@@ -25,6 +27,8 @@ function AddProduct(props) {
     age: '',
     condition: '',
     model: '',
+    submit: 0,
+    productId: ''
   });
 
   const [addProduct] = useMutation(ADD_PRODUCT);
@@ -71,8 +75,13 @@ function AddProduct(props) {
       }
     });
     if (mutationResponse) {
+      setFormState({
+        ...formState,
+        submit: 1,
+        productId: mutationResponse.data.addProduct._id
+      });
 
-      props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
+      // props.history.push('/imageupload/' + mutationResponse.data.addProduct._id);
     }
 
   };
@@ -184,7 +193,9 @@ function AddProduct(props) {
            </Button>
         </Form>
       </Container>
+      <ImageUpload submit= {formState.submit} id= {formState.productId}/>
     </div >
+    
   );
 
 }
