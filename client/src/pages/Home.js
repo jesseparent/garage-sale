@@ -1,36 +1,31 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
-import DetailBrief from "../components/DetailBrief";
+
 import { useStoreContext } from "../utils/GlobalState.js";
-
-
-
-
+import FeaturedItems from "../components/FeaturedItems";
+import SearchResults from "./SearchResults";
 
 const Home = () => {
-
-  const [ state ] = useStoreContext();
+  const [state] = useStoreContext();
   const { products } = state;
+
+  if (state.products.length === 0) {
+    return (
+<FeaturedItems />
+    )
+  }
 
   return (
     <div className="mainContainer">
       <Container className="searchContainer">
         <SearchBar />
       </Container>
-      <Container className="brief-container">
-        <h2>Featured Items</h2>
-        <div className="featured-container">
-          <div className="featured-items">
-            <DetailBrief num={products.length - 1 }/>
-          </div>
-          <div className="featured-items">
-            <DetailBrief num={products.length - 2}/>
-          </div>
-          <div className="featured-items">
-            <DetailBrief num={products.length - 3}/>
-          </div>
-        </div>
+      <Container className="featuredContainer">
+        <FeaturedItems />
+      </Container>
+      <Container className="searchResultContainer">
+        <SearchResults />
       </Container>
     </div>
   );

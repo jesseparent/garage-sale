@@ -1,9 +1,10 @@
 /**
-* Use the CSS tab above to style your Element's container.
-*/
-import React from 'react';
-import {CardElement} from '@stripe/react-stripe-js';
-import './CardSectionStyles.css'
+ * Use the CSS tab above to style your Element's container.
+ */
+import React from "react";
+import { CardElement } from "@stripe/react-stripe-js";
+import "./CardSectionStyles.css";
+import { Container, Card } from "react-bootstrap";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -25,11 +26,15 @@ const CARD_ELEMENT_OPTIONS = {
 
 function CardSection() {
   return (
-    <label className = {'stripeCardField'}>
-      Card details
-      <CardElement options={CARD_ELEMENT_OPTIONS} />
-    </label>
+    <Container>
+      <Card>
+      <Card.Text className={"stripeCardField"}>
+        Card details
+        <CardElement options={CARD_ELEMENT_OPTIONS} />
+      </Card.Text>
+      </Card>
+    </Container>
   );
-};
+}
 
 export default CardSection;
