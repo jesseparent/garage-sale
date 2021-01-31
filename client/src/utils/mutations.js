@@ -83,6 +83,23 @@ mutation($_id: ID!, $image: String!) {
 }
 `;
 
+export const UPDATE_PRODUCT_VISABILITY = gql`
+mutation($_id: ID!, $visible: Boolean!) {
+  updateProductVisability(_id: $_id, visible:$visible ){
+    _id
+    name
+    description
+    image
+    price
+    age
+    seller {
+      _id
+    }
+    visible
+  }
+}
+`;
+
 export const ADD_REVIEW = gql`
 mutation addReview($sellerId: ID!,$reviewBody: String!) {
   addReview(sellerId: $sellerId, reviewBody: $reviewBody) {
