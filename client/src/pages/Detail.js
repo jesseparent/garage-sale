@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
+import Auth from "../utils/auth";
 
 import { UPDATE_PRODUCTS } from "../utils/actions";
 import { QUERY_PRODUCTS } from "../utils/queries";
@@ -64,6 +65,29 @@ function Detail() {
     }
   }, [products, data, loading, dispatch, id]);
 
+  function showLoggedIn() {
+    if (Auth.loggedIn()) {
+      return (
+        <div>
+          <ListGroupItem>
+            <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
+          </ListGroupItem>
+          <ListGroupItem>
+            <Card.Link href={`/chat/${currentProduct.sellerId}`}>Chat With Seller</Card.Link>
+          </ListGroupItem>
+          <ListGroupItem>
+            <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
+          </ListGroupItem>
+          <ListGroupItem>
+            <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
+          </ListGroupItem>
+        </div>
+      );
+    }
+  }
+
+
+
   return (
     <>
       {currentProduct ? (
@@ -96,19 +120,9 @@ function Detail() {
                   Condition: {currentProduct.condition}
                 </ListGroupItem>
                 <ListGroupItem>Model: {currentProduct.model}</ListGroupItem>{" "}
-                <ListGroupItem>
 
-                  <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Card.Link href={`/chat/${currentProduct.sellerId}`}>Chat With Seller</Card.Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
-                </ListGroupItem>
-                <ListGroupItem>
-                  <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
-                </ListGroupItem>
+                {showLoggedIn()}
+
               </ListGroup>
 
             </Card>
