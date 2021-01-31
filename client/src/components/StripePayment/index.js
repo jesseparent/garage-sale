@@ -29,35 +29,43 @@ function StripePayment(props) {
 
     if (!loading) {
       console.log(data.user)
+
+      const reqData = { id: data.user.stripeId, price: price }
+
+      fetch("/api/stripe/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqData),
+      })
+        .then(response => response.json())
+        .then(data => {
+
+          var clientSecret = data.client_secret;
+
+          // Call stripe.confirmCardPayment() with the client secret.
+          dispatch({
+            type: UPDATE_CLIENT_SECRET,
+            clientSecret: clientSecret
+          });
+
+          console.log("clientsecret")
+          console.log(state.clientSecret);
+
+        });
+    } else if (error) {
+      console.log('user fetch error:')
+      console.log(error)
     }
 
-  }, [data, loading, dispatch, id, price]);
+  }, [error, data, loading, dispatch, price, state]);
 
 
-  const getTest = async => {
+  // const getTest = async => {
 
-    const reqData = { id: data.user.stripeId, price: price }
 
-    fetch("/api/stripe/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(reqData),
-    })
-      .then(response => response.json())
-      .then(data => {
-
-        var clientSecret = data.client_secret;
-
-        // Call stripe.confirmCardPayment() with the client secret.
-        dispatch({
-          type: UPDATE_CLIENT_SECRET,
-          clientSecret: clientSecret
-        });
-
-      });
-  }
+  // }
 
 
 
@@ -71,8 +79,8 @@ function StripePayment(props) {
 
   return (
     <Elements stripe={stripePromise}>
-      {/* <p>cost: {price}</p> */}
-      <button onClick={() => getTest()}>Payment Intent</button>
+      <p>cost: ${price}</p>
+      {/* <button onClick={() => getTest()}>Payment Intent</button> */}
       <CheckoutForm />
     </Elements>
   );
