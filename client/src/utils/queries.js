@@ -152,8 +152,8 @@ export const QUERY_CONVERSATIONS = gql`
 `;
 
 export const QUERY_SPECIFIC_PRODUCTS = gql`
-  query specificProducts($search: String!, $page: Int, $limit:Int) {
-  specificProducts(search:$search, page: $page, limit: $limit) {
+  query specificProducts($searchType: String!, $searchTerm:String!, $page: Int, $limit:Int) {
+  specificProducts(searchType:$searchType, searchTerm: $searchTerm, page: $page, limit: $limit) {
     currentPage
     products {
       name
