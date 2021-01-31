@@ -127,15 +127,15 @@ const resolvers = {
                     currentPage: page
                 }
             } else if (searchType === 'Users') {
-                const searchQuery = {
+                const userSearchQuery = {
                     $or: [
                         { lastName: { $regex: searchTerm, $options: 'i' } },
                         { firstName: { $regex: searchTerm, $options: 'i' } }
                     ]
                 };
     
-                const users = await User.find(searchQuery)
-                    .populate('products')
+                const users = await User.find(userSearchQuery);
+                    /* .populate('products')
                     .populate({ 
                         path: 'products',
                         populate: {
@@ -145,16 +145,31 @@ const resolvers = {
                      })
                     .limit(limit)
                     .skip((page - 1) * limit)
-                    .lean();
+                    .lean(); */
     
-                const count = await User.countDocuments(searchQuery);
+               // const count = await User.countDocuments(searchQuery);
                 console.log(users);
-    
-                return {
-                    users,
-                    totalPages: Math.ceil(count / limit),
-                    currentPage: page
-                }
+                const userId = users[0]._id;
+
+                const productSearchQuery = {
+                    'seller' : {
+                        _id:userId
+                    }
+                };
+                const products = await Product.find(productSearchQuery)
+                .populate('seller')
+                .populate('category').limit(limit)
+                .skip((page -1) * limit)
+                .lean();
+
+            const count = await Product.countDocuments(productSearchQuery);
+            console.log(products);
+            
+            return {
+                products,
+                totalPages: Math.ceil(count / limit),
+                currentPage: page
+            }
             } else if (searchType === 'Categories') {
                 let cat = [];
                  cat = await Category.find({name: {$regex: searchTerm, $options: 'i'}});
