@@ -73,8 +73,10 @@ const typeDefs = gql`
     alertDateTime: String
     active: Boolean
   }
-  type ProductResult {
+
+  type Result {
     products: [Product]
+    users: [User]
     currentPage: Int
     totalPages: Int
   }
@@ -90,7 +92,7 @@ const typeDefs = gql`
     orders: [Order]
     checkout(products: [ID]!): Checkout
     conversations: [Conversation]
-    specificProducts(search: String!, page: Int, limit: Int): ProductResult
+    specificProducts(searchType: String!, searchTerm: String!, page: Int, limit: Int): Result
     meetings: [Meeting]
     meeting(_id: ID): Meeting
     getActiveAlerts(date: String!): [Meeting]
