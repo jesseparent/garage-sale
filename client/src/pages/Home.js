@@ -11,24 +11,25 @@ const Home = () => {
   const { products } = state;
 
   function bottomSection() {
-    if (products.length === 0) {
+    if (!state.searchHappens) {
       return (
         <div>
-           <FeaturedItems />
+          <FeaturedItems />
         </div>
-      )
+      );
     } else {
       return (
         <div>
-          Something was searched 
+          
+          <SearchResults />
         </div>
-      )
+      );
     }
   }
   useEffect(() => {
     console.log("products");
     console.log(products);
-  }, [ products ]);
+  }, [products]);
 
   return (
     <div className="mainContainer">

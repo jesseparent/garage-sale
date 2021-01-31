@@ -48,6 +48,7 @@ function SearchItems() {
     if (data?.specificProducts?.products) {
       dispatch({
         type: UPDATE_PRODUCTS,
+        searchHappens: true,
         products: data.specificProducts.products
       });
     }
