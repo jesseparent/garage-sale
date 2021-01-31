@@ -203,19 +203,6 @@ const resolvers = {
             return await Meeting.find(searchAlerts)
                 .populate('buyer')
                 .populate('seller').exec();
-        },
-        productsByUsers: async() => {
-            if (context.user) {
-                const query = {
-                    'seller' : {
-                        _id: context.user._id
-                    }
-                };
-                return await Product.find(query)
-                .populate('category');
-            } else {
-                throw new AuthenticationError('invalid credentials');
-            }
         }
     },
     Mutation: {

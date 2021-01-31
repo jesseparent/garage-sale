@@ -62,6 +62,9 @@ const Nav = () => {
             <a href="/addproduct">Sell</a>
           </li>
           <li>
+            <a href="/useritems">Dashboard</a>
+          </li>
+          <li>
             <a href="/" onClick={() => Auth.logout()}>Logout</a>
           </li>
         </ul>
