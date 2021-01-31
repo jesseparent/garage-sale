@@ -73,9 +73,17 @@ useEffect(()=> {
   return (
     <>
       {currentSearch ? (
-        <div className="mainContainer">
+//       <div>
 
-          <h1>Please Render Here!</h1>
+// {products.length > 0 &&
+//   <h2>
+//     You have {products.length} unread messages.
+//   </h2>
+// }
+// </div>
+        <div className="mainContainer">
+{/* {state.products.length && state.products[1]} */}
+          <h1>Please Render Here! </h1>
           {/* <Container fluid>
             {currentSearch.search.map((targetResult) => (
               <Card>
