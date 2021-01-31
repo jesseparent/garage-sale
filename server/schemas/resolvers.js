@@ -120,7 +120,6 @@ const resolvers = {
                     .lean().populate('category.name');
     
                 const count = await Product.countDocuments(searchQuery);
-                console.log(products);
     
                 return {
                     products,
