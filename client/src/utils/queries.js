@@ -156,6 +156,7 @@ export const QUERY_SPECIFIC_PRODUCTS = gql`
   specificProducts(searchType:$searchType, searchTerm: $searchTerm, page: $page, limit: $limit) {
     currentPage
     products {
+      _id
       name
       description
       age

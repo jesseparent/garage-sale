@@ -3,7 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { useStoreContext } from "../utils/GlobalState";
 
-import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import {
+  Card,
+  CardDeck,
+  Container,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import spinner from "../assets/spinner.gif";
 import FeaturedItems from "../components/FeaturedItems";
@@ -39,46 +45,51 @@ const SearchResults = () => {
       }
     }
   }, [products, state]);
- 
+
   return (
     <>
       {currentSearch ? (
         <div className="mainContainer">
-          <Container className="brief-container">
+          <Container className="search-result">
             <h1>Search Happens!</h1>
             <div>
-              
-            {products.map((products) =>(
-             <Card>
-             <Card.Img
-               variant="top"
-               src={products.image}
-               alt={products.name}
-             />
-             <Card.Body>
-               <Card.Title>{products.name}</Card.Title>
+              {products.map((products) => (
+                <CardDeck>
+                  <Link to={`/product/${products._id}`}>
+                  <Card className="searchCard">
+                    <Card.Img
+                      variant="top"
+                      src={products.image}
+                      alt={products.name}
+                    />
+                    <Card.Body>
+                      <Card.Title>{products.name}</Card.Title>
 
-               <Card.Text>{products.description}</Card.Text>
-             </Card.Body>
-             <ListGroup className="">
-               <ListGroupItem>Price: ${products.price}</ListGroupItem>
-               <ListGroupItem>
-                 Category: {products.category.name}
-               </ListGroupItem>
-               <ListGroupItem>Age {products.age}</ListGroupItem>
-               <ListGroupItem>Model {products.model}</ListGroupItem>
-               <ListGroupItem>
-                 Condition: {products.condition}
-               </ListGroupItem>
+                      <Card.Text>{products.description}</Card.Text>
+                    </Card.Body>
+                    <ListGroup className="">
+                      <ListGroupItem>Price: ${products.price}</ListGroupItem>
+                      <ListGroupItem>
+                        Category: {products.category.name}
+                      </ListGroupItem>
+                      <ListGroupItem>Age {products.age}</ListGroupItem>
+                      <ListGroupItem>Model {products.model}</ListGroupItem>
+                      <ListGroupItem>
+                        Condition: {products.condition}
+                      </ListGroupItem>
 
-               <ListGroupItem>
-                 <Card.Link onClick={`/sellerinfo/${products.seller._id}`}>
-                   {products.seller.firstName} {products.seller.lastName}
-                 </Card.Link>
-               </ListGroupItem>
-             </ListGroup>
-           </Card>
-            ))}
+                      <ListGroupItem>
+                        <Card.Link
+                          onClick={`/sellerinfo/${products.seller._id}`}
+                        >
+                          {products.seller.firstName} {products.seller.lastName}
+                        </Card.Link>
+                      </ListGroupItem>
+                    </ListGroup>
+                  </Card>
+                  </Link>
+                </CardDeck>
+              ))}
             </div>
           </Container>
         </div>

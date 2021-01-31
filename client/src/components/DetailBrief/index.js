@@ -71,7 +71,7 @@ function DetailBrief(props) {
       {currentProduct ? (
         // <div className="mainContainer mh-100">
         <Container className="brief-container">
-          <Link to={`/product/${currentProduct._id}`}>
+          <Link to={`/product/${currentProduct.id}`}>
             <Card>
               <Card.Img
                 className="brief-img"

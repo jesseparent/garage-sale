@@ -56,11 +56,9 @@ h2 {
   transition: all 0.3 ease;
 }
 
-
-
 /* stripe styling */
 .stripeCardField {
-  width: 50%
+  width: 50%;
 }
 
 @media screen and (max-width: 1024px) {
@@ -122,7 +120,7 @@ h2 {
 
 /* Search Area CSS  */
 .center,
-.photo-upload  {
+.photo-upload {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,7 +199,7 @@ input.form-control {
   max-width: 100%;
   max-height: 20%;
 }
-.payment-intent{
+.payment-intent {
   padding: 40px;
   display: flex;
   flex-direction: row;
@@ -214,7 +212,15 @@ input.form-control {
   justify-content: center;
   /* align-items: center; */
 }
-#stripe-confirm-button{
- margin: 40px;
+#stripe-confirm-button {
+  margin: 40px;
 }
 
+.searchCard {
+  display: flex;
+  justify-content: space-around;
+  
+  margin: 20px;
+  max-width: 200px;
+  /* max-height: 400px; */
+}
