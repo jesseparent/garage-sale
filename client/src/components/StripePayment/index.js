@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { QUERY_PRODUCT_USER } from "../../utils/queries";
 
 import { useStoreContext } from "../../utils/GlobalState";
-import { UPDATE_CLIENT_SECRET } from '../../utils/actions';
+import { UPDATE_CLIENT_SECRET, UPDATE_PRODUCT_ID } from '../../utils/actions';
 
 import CheckoutForm from '../CheckoutForm';
 
@@ -28,7 +28,7 @@ function StripePayment(props) {
   useEffect(() => {
 
     if (!loading) {
-      console.log(data.user)
+      // console.log(data.user)
 
       const reqData = { id: data.user.stripeId, price: price }
 
@@ -46,22 +46,23 @@ function StripePayment(props) {
 
           // Call Write client secret and productId to globalstate 
           // for the checkout form to use
+
           dispatch({
             type: UPDATE_CLIENT_SECRET,
-            clientSecret: clientSecret,
-            productId: productId
+            clientSecret: clientSecret
           });
 
-          console.log("clientsecret")
-          console.log(state.clientSecret);
-
+          dispatch({
+            type: UPDATE_PRODUCT_ID,
+            productId: productId
+          });
         });
     } else if (error) {
       console.log('user fetch error:')
       console.log(error)
     }
 
-  }, [error, data, loading, dispatch, price, state]);
+  }, [error, data, loading, dispatch, price]);
 
 
   // const getTest = async => {

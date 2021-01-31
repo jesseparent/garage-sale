@@ -284,6 +284,18 @@ const resolvers = {
             }
             throw new AuthenticationError("invalid credentials");
         },
+        updateProductVisability: async (parent, args, context) => {
+            if (context.user) {
+                //const image = args.image;
+                const product = await Product.findByIdAndUpdate(
+                    args._id,
+                    {  visible: args.visible },
+                    { new: true }
+                );
+                return product;
+            }
+            throw new AuthenticationError("invalid credentials");
+        },
         addReview: async (parent, { sellerId, reviewBody }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
