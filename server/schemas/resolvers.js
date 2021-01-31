@@ -137,15 +137,49 @@ const resolvers = {
     
                 const users = await User.find(searchQuery)
                     .populate('products')
+                    .populate({ 
+                        path: 'products',
+                        populate: {
+                          path: 'category',
+                          model: 'Category'
+                        } 
+                     })
                     .limit(limit)
                     .skip((page - 1) * limit)
-                    .lean().populate('product.category.name');
+                    .lean();
     
                 const count = await User.countDocuments(searchQuery);
                 console.log(users);
     
                 return {
                     users,
+                    totalPages: Math.ceil(count / limit),
+                    currentPage: page
+                }
+            } else if (searchType === 'Categories') {
+                let cat = [];
+                 cat = await Category.find({name: {$regex: searchTerm, $options: 'i'}});
+                 catId = cat[0]._id;
+
+                const searchQuery = {
+                    
+                        'category': {
+                            _id: catId
+                        }
+                    
+                }
+                const products = await Product.find(searchQuery)
+                    .populate('seller')
+                    .populate('category')
+                    .limit(limit)
+                    .skip((page -1) * limit)
+                    .lean();
+
+                const count = await Product.countDocuments(searchQuery);
+                console.log(products);
+                
+                return {
+                    products,
                     totalPages: Math.ceil(count / limit),
                     currentPage: page
                 }
