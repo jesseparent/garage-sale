@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar";
 
 import { useStoreContext } from "../utils/GlobalState.js";
 import FeaturedItems from "../components/FeaturedItems";
-import SearchResults from "./SearchResults";
+import SearchContainer from "../components/SearchContainer";
 
 const Home = () => {
   const [state] = useStoreContext();
@@ -20,7 +20,7 @@ const Home = () => {
     } else {
       return (
         <div>
-          <SearchResults />
+          <SearchContainer />
         </div>
       );
     }

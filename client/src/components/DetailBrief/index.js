@@ -23,8 +23,10 @@ function DetailBrief(props) {
   useEffect(() => {
     // already in global store
     if (products.length) {
+      
      
       const targetProduct = products[props.num];
+      
 
       if (targetProduct) {
         setCurrentProduct({
@@ -42,6 +44,8 @@ function DetailBrief(props) {
           sellerLast: targetProduct.seller.lastName,
           sellerId: targetProduct.seller.sellerId,
         });
+        console.log("currentProduct " + targetProduct.name)
+        console.log(currentProduct)
       }
     }
     // retrieved from server
@@ -71,7 +75,7 @@ function DetailBrief(props) {
       {currentProduct ? (
         // <div className="mainContainer mh-100">
         <Container className="brief-container">
-          <Link to={`/product/${currentProduct.id}`}>
+          <Link to={`/product/${currentProduct._id}`}>
             <Card>
               <Card.Img
                 className="brief-img"

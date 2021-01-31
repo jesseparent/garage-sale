@@ -51,10 +51,11 @@ const SearchResults = () => {
       {currentSearch ? (
         <div className="mainContainer">
           
-          <Container>
-            <h1>Search Happens!</h1>
+          <Container className="search-container">
+           
             <div>
               {products.map((product) => (
+                <Link to={`/product/${currentSearch._id}`}>
                 <Card className="searchCard">
                   <Card.Img
                     variant="top"
@@ -84,7 +85,9 @@ const SearchResults = () => {
                     </ListGroupItem>
                   </ListGroup>
                 </Card>
+                </Link>
               ))}
+             
             </div>
           </Container>
         </div>

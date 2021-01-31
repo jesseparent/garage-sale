@@ -21,6 +21,9 @@ import EditItem from "./pages/EditItem";
 import MeetUp from "./pages/MeetUp";
 import SearchResults from "./pages/SearchResults";
 import FeaturedItems from "./components/FeaturedItems";
+import SearchContainer from "./components/SearchContainer";
+import SearchBrief from "./components/SearchBrief";
+
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -49,6 +52,7 @@ function App() {
               <Route exact path="/chat" component={ChatApp} />
               <Route exact path="/product/:id" component={Detail} />
               <Route exact path="/detailbrief" component={DetailBrief} />
+              <Route exact path="/searchbrief" component={SearchBrief} />
               <Route exact path="/addproduct" component={AddProduct} />
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
@@ -63,6 +67,11 @@ function App() {
               <Route exact path="/searchresults" component={SearchResults} />
               <Route exact path="/featureditems" component={FeaturedItems} />
               <Route exact path="/meetup/:id" component={MeetUp} />
+              <Route
+                exact
+                path="/searchcontainer"
+                component={SearchContainer}
+              />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>
