@@ -20,7 +20,6 @@ const Home = () => {
     } else {
       return (
         <div>
-          
           <SearchResults />
         </div>
       );

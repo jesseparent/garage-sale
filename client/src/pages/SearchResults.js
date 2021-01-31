@@ -50,45 +50,40 @@ const SearchResults = () => {
     <>
       {currentSearch ? (
         <div className="mainContainer">
-          <Container className="search-result">
+          
+          <Container>
             <h1>Search Happens!</h1>
             <div>
-              {products.map((products) => (
-                <CardDeck>
-                  <Link to={`/product/${products._id}`}>
-                  <Card className="searchCard">
-                    <Card.Img
-                      variant="top"
-                      src={products.image}
-                      alt={products.name}
-                    />
-                    <Card.Body>
-                      <Card.Title>{products.name}</Card.Title>
+              {products.map((product) => (
+                <Card className="searchCard">
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                  <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
 
-                      <Card.Text>{products.description}</Card.Text>
-                    </Card.Body>
-                    <ListGroup className="">
-                      <ListGroupItem>Price: ${products.price}</ListGroupItem>
-                      <ListGroupItem>
-                        Category: {products.category.name}
-                      </ListGroupItem>
-                      <ListGroupItem>Age {products.age}</ListGroupItem>
-                      <ListGroupItem>Model {products.model}</ListGroupItem>
-                      <ListGroupItem>
-                        Condition: {products.condition}
-                      </ListGroupItem>
+                    <Card.Text>{product.description}</Card.Text>
+                  </Card.Body>
+                  <ListGroup className="">
+                    <ListGroupItem>Price: ${product.price}</ListGroupItem>
+                    <ListGroupItem>
+                      Category: {product.category.name}
+                    </ListGroupItem>
+                    <ListGroupItem>Age {product.age}</ListGroupItem>
+                    <ListGroupItem>Model {product.model}</ListGroupItem>
+                    <ListGroupItem>
+                      Condition: {product.condition}
+                    </ListGroupItem>
 
-                      <ListGroupItem>
-                        <Card.Link
-                          onClick={`/sellerinfo/${products.seller._id}`}
-                        >
-                          {products.seller.firstName} {products.seller.lastName}
-                        </Card.Link>
-                      </ListGroupItem>
-                    </ListGroup>
-                  </Card>
-                  </Link>
-                </CardDeck>
+                    <ListGroupItem>
+                      <Link to={`/sellerinfo/${product.seller._id}`}>
+                        {product.seller.firstName} {product.seller.lastName}
+                      </Link>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card>
               ))}
             </div>
           </Container>
