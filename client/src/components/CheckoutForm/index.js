@@ -8,6 +8,8 @@ import CardSection from '../CardSection';
 export default function CheckoutForm(props) {
   const [state, dispatch] = useStoreContext();
 
+  // const [deleteProduct] = useMutation(DELETE_PRODUCT);
+
   const [currentState, setCurrentState] = useState({ success: 0 });
 
   console.log(state.clientSecret)
@@ -46,7 +48,10 @@ export default function CheckoutForm(props) {
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
-        console.log("success!")
+        // console.log("success!")
+
+        // call mutation to delete product from database now that it has been sold.
+        // in the future this will instead add a value that flags that it was sold.
 
         // Show a success message to your customer
         setCurrentState({

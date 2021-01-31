@@ -19,7 +19,7 @@ const stripePromise = loadStripe("pk_test_51IBOzADVroZQGKJNBHuaS1Tth2sbnwkctCTXE
 
 function StripePayment(props) {
   const [state, dispatch] = useStoreContext();
-  const { id, price } = useParams();
+  const { productId, id, price } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCT_USER, {
     variables: { _id: id },
@@ -44,10 +44,12 @@ function StripePayment(props) {
 
           var clientSecret = data.client_secret;
 
-          // Call stripe.confirmCardPayment() with the client secret.
+          // Call Write client secret and productId to globalstate 
+          // for the checkout form to use
           dispatch({
             type: UPDATE_CLIENT_SECRET,
-            clientSecret: clientSecret
+            clientSecret: clientSecret,
+            productId: productId
           });
 
           console.log("clientsecret")

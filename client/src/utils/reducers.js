@@ -73,7 +73,8 @@ export const reducer = (state, action) => {
     case UPDATE_CLIENT_SECRET:
       return {
         ...state,
-        clientSecret: action.clientSecret
+        clientSecret: action.clientSecret,
+        productId: action.productId
       };
 
     case CLEAR_CART:
