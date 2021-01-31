@@ -93,6 +93,7 @@ const typeDefs = gql`
     checkout(products: [ID]!): Checkout
     conversations: [Conversation]
     specificProducts(searchType: String!, searchTerm: String!, page: Int, limit: Int): Result
+    productsByUser(_id: ID!) : [Product]
     meetings: [Meeting]
     meeting(_id: ID): Meeting
     getActiveAlerts(date: String!): [Meeting]

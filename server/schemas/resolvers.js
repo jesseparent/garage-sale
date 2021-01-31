@@ -135,20 +135,6 @@ const resolvers = {
                 };
     
                 const users = await User.find(userSearchQuery);
-                    /* .populate('products')
-                    .populate({ 
-                        path: 'products',
-                        populate: {
-                          path: 'category',
-                          model: 'Category'
-                        } 
-                     })
-                    .limit(limit)
-                    .skip((page - 1) * limit)
-                    .lean(); */
-    
-               // const count = await User.countDocuments(searchQuery);
-                console.log(users);
                 const userId = users[0]._id;
 
                 const productSearchQuery = {
@@ -217,6 +203,19 @@ const resolvers = {
             return await Meeting.find(searchAlerts)
                 .populate('buyer')
                 .populate('seller').exec();
+        },
+        productsByUsers: async() => {
+            if (context.user) {
+                const query = {
+                    'seller' : {
+                        _id: context.user._id
+                    }
+                };
+                return await Product.find(query)
+                .populate('category');
+            } else {
+                throw new AuthenticationError('invalid credentials');
+            }
         }
     },
     Mutation: {
