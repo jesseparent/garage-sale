@@ -102,29 +102,56 @@ const resolvers = {
             throw new AuthenticationError('Not logged in');
         },
         specificProducts: async (parent, args) => {
-            const { search = null, page = 1, limit = 20 } = args;
-            const searchQuery = {
-                $or: [
-                    { name: { $regex: search, $options: 'i' } },
-                    { description: { $regex: search, $options: 'i' } },
-                    { model: { $regex: search, $options: 'i' } }
-                ]
-            };
-
-            const products = await Product.find(searchQuery)
-                .populate('seller')
-                .populate('category')
-                .limit(limit)
-                .skip((page - 1) * limit)
-                .lean();
-
-            const count = await Product.countDocuments(searchQuery);
-
-            return {
-                products,
-                totalPages: Math.ceil(count / limit),
-                currentPage: page
+            const { searchType = null, searchTerm = null, page = 1, limit = 20 } = args;
+            if(searchType === 'Products') {
+                const searchQuery = {
+                    $or: [
+                        { name: { $regex: searchTerm, $options: 'i' } },
+                        { description: { $regex: searchTerm, $options: 'i' } },
+                        { model: { $regex: searchTerm, $options: 'i' } }
+                    ]
+                };
+    
+                const products = await Product.find(searchQuery)
+                    .populate('seller')
+                    .populate('category')
+                    .limit(limit)
+                    .skip((page - 1) * limit)
+                    .lean().populate('category.name');
+    
+                const count = await Product.countDocuments(searchQuery);
+                console.log(products);
+    
+                return {
+                    products,
+                    totalPages: Math.ceil(count / limit),
+                    currentPage: page
+                }
+            } else if (searchType === 'Users') {
+                const searchQuery = {
+                    $or: [
+                        { lastName: { $regex: searchTerm, $options: 'i' } },
+                        { firstName: { $regex: searchTerm, $options: 'i' } }
+                    ]
+                };
+    
+                const users = await User.find(searchQuery)
+                    .populate('products')
+                    .limit(limit)
+                    .skip((page - 1) * limit)
+                    .lean().populate('product.category.name');
+    
+                const count = await User.countDocuments(searchQuery);
+                console.log(users);
+    
+                return {
+                    users,
+                    totalPages: Math.ceil(count / limit),
+                    currentPage: page
+                }
             }
+            return 'I got nothing';
+            
         },
         meetings: async () => {
             return await Meeting.find();
