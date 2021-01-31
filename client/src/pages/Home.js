@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 
@@ -10,23 +10,32 @@ const Home = () => {
   const [state] = useStoreContext();
   const { products } = state;
 
-  if (state.products.length === 0) {
-    return (
-<FeaturedItems />
-    )
+  function bottomSection() {
+    if (products.length === 0) {
+      return (
+        <div>
+           <FeaturedItems />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          Something was searched 
+        </div>
+      )
+    }
   }
+  useEffect(() => {
+    console.log("products");
+    console.log(products);
+  }, [ products ]);
 
   return (
     <div className="mainContainer">
       <Container className="searchContainer">
         <SearchBar />
       </Container>
-      <Container className="featuredContainer">
-        <FeaturedItems />
-      </Container>
-      <Container className="searchResultContainer">
-        <SearchResults />
-      </Container>
+      {bottomSection()}
     </div>
   );
 };

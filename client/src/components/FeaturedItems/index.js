@@ -1,35 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import DetailBrief from "../DetailBrief";
-import { useStoreContext } from "../../utils/GlobalState";
-
-
-
-
-
+import { useQuery } from "@apollo/react-hooks";
+// import { useStoreContext } from "../../utils/GlobalState";
+import spinner from "../../assets/spinner.gif";
+import { QUERY_PRODUCTS } from "../../utils/queries";
 
 function FeaturedItems() {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
+  const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const [ state ] = useStoreContext();
-  const { products } = state;
+  useEffect(() => {
+    console.log("data");
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="mainContainer">
-      <Container className="brief-container">
-        <h2>Featured Items</h2>
-        <div className="featured-container">
-          <div className="featured-items">
-            <DetailBrief num={products.length - 1} />
+      {loading ? (
+        <img src={spinner} alt="loading" />
+      ) : (
+        <Container className="brief-container">
+          <h2>Featured Items</h2>
+          <div className="featured-container">
+            <div className="featured-items">
+              <DetailBrief num={data.products.length - 1} />
+            </div>
+            <div className="featured-items">
+              <DetailBrief num={data.products.length - 2} />
+            </div>
+            <div className="featured-items">
+              <DetailBrief num={data.products.length - 3} />
+            </div>
           </div>
-          <div className="featured-items">
-            <DetailBrief num={products.length - 2} />
-          </div>
-          <div className="featured-items">
-            <DetailBrief num={products.length - 3} />
-          </div>
-        </div>
-      </Container>
+        </Container>
+      )}
     </div>
   );
 }

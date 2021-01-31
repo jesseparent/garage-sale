@@ -84,13 +84,7 @@ useEffect(()=> {
         <div className="mainContainer">
 {/* {state.products.length && state.products[1]} */}
           <h1>Please Render Here! </h1>
-          {/* <Container fluid>
-            {currentSearch.search.map((targetResult) => (
-              <Card>
-                <Card.Img variant="top" src={targetResult.image} />
-              </Card>
-            ))}
-          </Container> */}
+        
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}
