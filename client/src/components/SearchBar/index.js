@@ -31,8 +31,8 @@ function SearchItems() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Search Type: " + searchFormState.searchType);
-  console.log("Search Input: " + searchFormState.searchInput);
-    formSubmit({variables: { searchType: searchFormState.searchType, searchTerm: searchFormState.searchInput, page: 1, limit: 50 }});
+    console.log("Search Input: " + searchFormState.searchInput);
+    formSubmit({ variables: { searchType: searchFormState.searchType, searchTerm: searchFormState.searchInput, page: 1, limit: 50 } });
   }
 
   const handleChange = event => {
@@ -48,6 +48,7 @@ function SearchItems() {
     if (data?.specificProducts?.products) {
       dispatch({
         type: UPDATE_PRODUCTS,
+        searchHappens: true,
         products: data.specificProducts.products
       });
     }
@@ -57,14 +58,14 @@ function SearchItems() {
     <div>
       <Form className="center search-items" onSubmit={handleSubmit}>
         <Form.Row>
-        <Col xs="auto" className="my-1">
+          <Col xs="auto" className="my-1">
             <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomerSelect" srOnly>
               Search By
             </Form.Label>
             <Form.Control
               as="select"
               className="mr-sm-2"
-              name = "searchType"
+              name="searchType"
               id="searchType"
               onChange={handleChange}
               custom>

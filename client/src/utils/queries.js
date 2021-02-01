@@ -160,6 +160,7 @@ export const QUERY_SPECIFIC_PRODUCTS = gql`
       description
       age
       image
+      pId
       seller {
         lastName
         firstName
