@@ -125,6 +125,27 @@ const resolvers = {
                     .limit(limit)
                     .skip((page - 1) * limit)
                     .lean().populate('category.name');
+                console.log("products");
+
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
 
                 const count = await Product.countDocuments(searchQuery);
 
@@ -170,8 +191,27 @@ const resolvers = {
                     .skip((page - 1) * limit)
                     .lean();
 
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
+
                 const count = await Product.countDocuments(productSearchQuery);
-                console.log(products);
 
                 return {
                     products,
@@ -197,8 +237,27 @@ const resolvers = {
                     .skip((page - 1) * limit)
                     .lean();
 
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
+
                 const count = await Product.countDocuments(searchQuery);
-                console.log(products);
 
                 return {
                     products,
