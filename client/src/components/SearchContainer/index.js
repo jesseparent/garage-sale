@@ -24,7 +24,7 @@ function SearchContainer() {
       <h2>Search Happens!</h2>
       {products.length ? (
         <Container className="brief-container">
-          <div className="featured-container">
+          <div className="search-container">
             {products.map(product => (
               <div className="featured-items">
               <SearchBrief product={product}/>

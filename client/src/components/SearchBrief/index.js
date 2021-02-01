@@ -24,15 +24,16 @@ const SearchResultsBrief = ({product}) => {
   return (
     <>
       
-        <div className="mainContainer">
+        <div >
           
-          <Container className="search-container">
+          <Container className="brief-container">
            
-            <div>
+            <div >
             
                 <Link to={`/product/${product._id}`}>
-                <Card className="searchCard">
+                <Card >
                   <Card.Img
+                  className="brief-img"
                     variant="top"
                     src={product.image}
                     alt={product.name}
@@ -42,7 +43,7 @@ const SearchResultsBrief = ({product}) => {
 
                     <Card.Text>{product.description}</Card.Text>
                   </Card.Body>
-                  <ListGroup className="">
+                  <ListGroup >
                     <ListGroupItem>Price: ${product.price}</ListGroupItem>
                     <ListGroupItem>
                       Category: {product.category.name}
@@ -52,9 +53,10 @@ const SearchResultsBrief = ({product}) => {
                     
 
                     <ListGroupItem>
-                      <Link to={`/sellerinfo/${product.seller._id}`}>
+                      {/* <Link to={`/sellerinfo/${product.seller._id}`}>
                         {product.seller.firstName} {product.seller.lastName}
-                      </Link>
+                      </Link> */}
+                      {product.seller.firstName} {product.seller.lastName}
                     </ListGroupItem>
                   </ListGroup>
                 </Card>

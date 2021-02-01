@@ -88,7 +88,7 @@ function DetailBrief(props) {
 
                 <Card.Text>{currentProduct.description}</Card.Text>
               </Card.Body>
-              <ListGroup className="">
+              <ListGroup >
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
                 <ListGroupItem>
                   Category: {currentProduct.categoryName}

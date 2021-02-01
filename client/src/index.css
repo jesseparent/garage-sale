@@ -141,9 +141,11 @@ input.form-control {
 }
 
 /* featured container  */
-.featured-container {
+.featured-container, 
+.search-container {
   height: 500px;
-  width: 90%;
+  width: 100%;
+  min-width: 300px;
   padding: 2%;
   background: rgb(97, 66, 66);
   margin: 100px auto;
@@ -156,6 +158,9 @@ input.form-control {
   display: flex;
   border: 2px solid black;
   width: 250px;
+  padding-bottom: 32%; 
+  /* margin-bottom: 2%;  */
+  position: relative;
   /* height: 100%; */
   background: rgb(116, 101, 72);
   margin: 5px 5px;
@@ -170,16 +175,36 @@ input.form-control {
 .item-img {
   width: 100px;
 }
+.brief-img, 
 .brief-img {
   width: 200px;
   height: 180px;
   object-fit: cover;
+}
+.card {
+  display: flex;
+  flex: 0 32%;
+  /* min-width: 800px; */
+  height: 100%;
+  
+  text-align: center;
+}
+.brief-container{
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 200px;
+  width: 32%;
+  padding-bottom: 32%; 
+  margin-bottom: 2%; 
+  position: relative;
 }
 
 .signup-container,
 .login-container,
 .searchContainer,
 .mainContainer {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
   background: var(--background-color);
   width: 100%;
 }
@@ -216,12 +241,7 @@ input.form-control {
   margin: 40px;
 }
 .img-top{
-  
+  height: 200px;
+  width: 200px;
 }
-.searchCard {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px;
-  /* max-width: 75%; */
-  max-height: 30%;
-}
+
