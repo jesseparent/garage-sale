@@ -25,9 +25,9 @@ function SearchContainer() {
       {state.products.length ? (
         <Container className="brief-container">
           <div className="featured-container">
-            {products.map(products => (
+            {products.map(product => (
               <div className="featured-items">
-              <SearchBrief>{state.products}</SearchBrief>
+              <SearchBrief product={product}/>
               </div>
             ))}
           </div>

@@ -15,47 +15,22 @@ import spinner from "../../assets/spinner.gif";
 import FeaturedItems from "../../utils/GlobalState";
 // import { idbPromise } from "../utils/helpers";
 
-const SearchResultsBrief = () => {
-  const [state, dispatch] = useStoreContext();
-  const { id } = useParams();
+const SearchResultsBrief = ({product}) => {
 
-  const [currentSearch, setCurrentSearch] = useState({
-    searchResult: [],
-  });
-
-  const { products } = state;
-  console.log("State");
-  console.log(state);
-  useEffect(() => {
-    let i = 0;
-    console.log("products array");
-    console.log(products[i]);
-
-    if ((state.products.length = 0)) {
-      console.log("state and products");
-      console.log(state.products);
-      let i = 0;
-      const targetResult = products[i];
-      console.log("targetResult");
-      console.log(targetResult);
-      if (targetResult) {
-        setCurrentSearch({
-          search: state.products[i],
-        });
-      }
-    }
-  }, [products, state]);
+  console.log('searchBrief products')
+  console.log(product)
+  
 
   return (
     <>
-      {currentSearch ? (
+      
         <div className="mainContainer">
           
           <Container className="search-container">
            
             <div>
-              {products.map((product) => (
-                <Link to={`/product/${currentSearch._id}`}>
+            
+                <Link to={`/product/${product._id}`}>
                 <Card className="searchCard">
                   <Card.Img
                     variant="top"
@@ -84,12 +59,12 @@ const SearchResultsBrief = () => {
                   </ListGroup>
                 </Card>
                 </Link>
-              ))}
+            
              
             </div>
           </Container>
         </div>
-      ) : null}
+      
       {/* {loading ? <img src={spinner} alt="loading" /> : null} */}
     </>
   );
