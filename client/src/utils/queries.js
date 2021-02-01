@@ -169,7 +169,7 @@ export const QUERY_SPECIFIC_PRODUCTS = gql`
         model
         condition
         image
-        _id
+
         seller {
           _id
           lastName
