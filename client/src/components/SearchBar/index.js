@@ -72,7 +72,6 @@ function SearchItems() {
               <option value="Choose">Search By...</option>
               <option value="Products">Products</option>
               <option value="Categories">Categories</option>
-              <option value="Users">Users</option>
             </Form.Control>
           </Col>
           <Col xs="auto" className="my-1">
