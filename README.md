@@ -54,9 +54,9 @@ As an authenticated user looking to buy an item:
 
 ## Screenshots
 
-![Welcome Page Screenshot](./screenshots/welcome.png)
-![Dashboard Screenshot](./screenshots/dashboard.png)
-![Admin Console Screenshot](./screenshots/admin.png)
+![Home Page Screenshot](./screenshots/homepage.jpg)
+![Item for Sale Screenshot](./screenshots/itemforsale.jpg)
+![Chat Screenshot](./screenshots/chat.jpg)
 ![Ticket Form Screenshot](./screenshots/ticket.png)
 
 ## Technologies
