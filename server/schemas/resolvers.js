@@ -11,7 +11,7 @@ const resolvers = {
             return await Category.find();
         },
         products: async (parent, { category, name }) => {
-            const params = { visible: true };
+            const params = { visible: true && null };
             if (category) {
                 params.category = category;
             };
@@ -107,7 +107,7 @@ const resolvers = {
                 const searchQuery = {
                     $and: [
                         {
-                            visible: true
+                            visible: true && null
                         },
                         {
                             $or: [
@@ -159,7 +159,7 @@ const resolvers = {
                 const userId = users[0]._id;
 
                 const productSearchQuery = {
-                    visible: true,
+                    visible: true && null,
                     'seller': {
                         _id: userId
                     }
@@ -184,7 +184,7 @@ const resolvers = {
                 catId = cat[0]._id;
 
                 const searchQuery = {
-                    visible: true,
+                    visible: true && null,
                     'category': {
                         _id: catId
                     }
