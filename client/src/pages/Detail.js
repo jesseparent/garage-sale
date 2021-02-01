@@ -22,8 +22,6 @@ function Detail() {
 
   const { products } = state;
 
-  console.log(products);
-
   useEffect(() => {
     // already in global store
     if (products.length) {
