@@ -1,80 +1,98 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { useStoreContext } from "../../utils/GlobalState.js";
+import { useStoreContext } from "../../utils/GlobalState";
 
-import { UPDATE_PRODUCTS } from "../../utils/actions.js";
-import { QUERY_PRODUCTS } from "../../utils/queries";
-
-import { idbPromise } from "../../utils/helpers.js";
+import {
+  Card,
+  CardDeck,
+  Container,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
+// import SearchBar from "../components/SearchBar";
 import spinner from "../../assets/spinner.gif";
-import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import FeaturedItems from "../../utils/GlobalState";
+// import { idbPromise } from "../utils/helpers";
 
-function SearchBrief(props) {
+const SearchResultsBrief = () => {
   const [state, dispatch] = useStoreContext();
+  const { id } = useParams();
 
-
-  const [searchBrief, setSearchBrief] = useState({
-   searchResult: [] ,
+  const [currentSearch, setCurrentSearch] = useState({
+    searchResult: [],
   });
 
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
-
   const { products } = state;
-
+  console.log("State");
+  console.log(state);
   useEffect(() => {
-    // already in global store
-    if (products.length) {
-      
-     
-      const searchResults = products[props.num];
-      
+    let i = 0;
+    console.log("products array");
+    console.log(products[i]);
 
-      if (searchResults) {
-        setSearchBrief({
-          
+    if ((state.products.length = 0)) {
+      console.log("state and products");
+      console.log(state.products);
+      let i = 0;
+      const targetResult = products[i];
+      console.log("targetResult");
+      console.log(targetResult);
+      if (targetResult) {
+        setCurrentSearch({
+          search: state.products[i],
         });
-        console.log("searchBrief " + searchResults.name)
-        console.log(searchBrief)
       }
     }
-   
-    
-  }, [products, data, loading, dispatch]);
+  }, [products, state]);
 
   return (
     <>
-      {searchBrief ? (
-        // <div className="mainContainer mh-100">
-        <Container className="brief-container">
-          <Link to={`/product/${searchBrief._id}`}>
-            <Card>
-              <Card.Img
-                className="brief-img"
-                variant="top"
-                src={searchBrief.image}
-                alt={searchBrief.name}
-              />
-              <Card.Body>
-                <Card.Title>{searchBrief.name}</Card.Title>
+      {currentSearch ? (
+        <div className="mainContainer">
+          
+          <Container className="search-container">
+           
+            <div>
+              {products.map((product) => (
+                <Link to={`/product/${currentSearch._id}`}>
+                <Card className="searchCard">
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    alt={product.name}
+                  />
+                  <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
 
-                <Card.Text>{searchBrief.description}</Card.Text>
-              </Card.Body>
-              <ListGroup className="">
-                <ListGroupItem>Price: ${searchBrief.price}</ListGroupItem>
-                <ListGroupItem>
-                  Category: {searchBrief.categoryName}
-                </ListGroupItem>
-                <ListGroupItem>Model: {searchBrief.model}</ListGroupItem>
-              </ListGroup>
-            </Card>
-          </Link>
-        </Container>
-      ) : // </div>
-        null}
-      {loading ? <img src={spinner} alt="loading" /> : null}
+                    <Card.Text>{product.description}</Card.Text>
+                  </Card.Body>
+                  <ListGroup className="">
+                    <ListGroupItem>Price: ${product.price}</ListGroupItem>
+                    <ListGroupItem>
+                      Category: {product.category.name}
+                    </ListGroupItem>
+                    
+                    <ListGroupItem>Model {product.model}</ListGroupItem>
+                    
+
+                    <ListGroupItem>
+                      <Link to={`/sellerinfo/${product.seller._id}`}>
+                        {product.seller.firstName} {product.seller.lastName}
+                      </Link>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card>
+                </Link>
+              ))}
+             
+            </div>
+          </Container>
+        </div>
+      ) : null}
+      {/* {loading ? <img src={spinner} alt="loading" /> : null} */}
     </>
   );
-}
+};
 
-export default SearchBrief;
+export default SearchResultsBrief;
