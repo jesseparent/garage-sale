@@ -14,29 +14,29 @@ function SearchContainer() {
   const [state] = useStoreContext();
   const { products } = state;
 
-  useEffect(()=> {
-    console.log("state")
-    console.log(state)
-  },[state])
+  useEffect(() => {
+    console.log("state");
+    console.log(state);
+  }, [state]);
 
   return (
     <div>
       <h2>Search Happens!</h2>
-      {state.products.length ? (
+      {products.length ? (
         <Container className="brief-container">
           <div className="featured-container">
-            {products.map(products => (
+            {products.map(product => (
               <div className="featured-items">
-              <SearchBrief>{state.products}</SearchBrief>
+                <SearchBrief>{state.products}</SearchBrief>
               </div>
             ))}
           </div>
         </Container>
-      ): (
+      ) : (
         <h3>No Search results</h3>
       )}
     </div>
-  )
+  );
 }
 
 export default SearchContainer;
