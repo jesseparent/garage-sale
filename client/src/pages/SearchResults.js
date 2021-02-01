@@ -35,7 +35,7 @@ const SearchResults = () => {
           
           <Container className="search-container">
            <h1>Search isn't </h1>
-            {/* <div>
+            <div>
               {products.map((product) => (
                 <Link to={`/product/${product._id}`}>
                 <Card className="searchCard">
@@ -70,7 +70,7 @@ const SearchResults = () => {
                 </Link>
               ))}
              
-            </div> */}
+            </div>
           </Container>
         </div>
      
