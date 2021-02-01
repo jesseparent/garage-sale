@@ -11,7 +11,7 @@ const resolvers = {
             return await Category.find();
         },
         products: async (parent, { category, name }) => {
-            const params = {};
+            const params = { visible: true && null };
             if (category) {
                 params.category = category;
             };
@@ -103,24 +103,31 @@ const resolvers = {
         },
         specificProducts: async (parent, args) => {
             const { searchType = null, searchTerm = null, page = 1, limit = 20 } = args;
-            if(searchType === 'Products') {
+            if (searchType === 'Products') {
                 const searchQuery = {
-                    $or: [
-                        { name: { $regex: searchTerm, $options: 'i' } },
-                        { description: { $regex: searchTerm, $options: 'i' } },
-                        { model: { $regex: searchTerm, $options: 'i' } }
+                    $and: [
+                        {
+                            visible: true && null
+                        },
+                        {
+                            $or: [
+                                { name: { $regex: searchTerm, $options: 'i' } },
+                                { description: { $regex: searchTerm, $options: 'i' } },
+                                { model: { $regex: searchTerm, $options: 'i' } }
+                            ]
+                        }
                     ]
                 };
-    
+
                 const products = await Product.find(searchQuery)
                     .populate('seller')
                     .populate('category')
                     .limit(limit)
                     .skip((page - 1) * limit)
                     .lean().populate('category.name');
-    
+
                 const count = await Product.countDocuments(searchQuery);
-    
+
                 return {
                     products,
                     totalPages: Math.ceil(count / limit),
@@ -133,65 +140,66 @@ const resolvers = {
                         { firstName: { $regex: searchTerm, $options: 'i' } }
                     ]
                 };
-    
+
                 const users = await User.find(userSearchQuery);
-                    /* .populate('products')
-                    .populate({ 
-                        path: 'products',
-                        populate: {
-                          path: 'category',
-                          model: 'Category'
-                        } 
-                     })
-                    .limit(limit)
-                    .skip((page - 1) * limit)
-                    .lean(); */
-    
-               // const count = await User.countDocuments(searchQuery);
+                /* .populate('products')
+                .populate({ 
+                    path: 'products',
+                    populate: {
+                      path: 'category',
+                      model: 'Category'
+                    } 
+                 })
+                .limit(limit)
+                .skip((page - 1) * limit)
+                .lean(); */
+
+                // const count = await User.countDocuments(searchQuery);
                 console.log(users);
                 const userId = users[0]._id;
 
                 const productSearchQuery = {
-                    'seller' : {
-                        _id:userId
+                    visible: true && null,
+                    'seller': {
+                        _id: userId
                     }
                 };
                 const products = await Product.find(productSearchQuery)
-                .populate('seller')
-                .populate('category').limit(limit)
-                .skip((page -1) * limit)
-                .lean();
+                    .populate('seller')
+                    .populate('category').limit(limit)
+                    .skip((page - 1) * limit)
+                    .lean();
 
-            const count = await Product.countDocuments(productSearchQuery);
-            console.log(products);
-            
-            return {
-                products,
-                totalPages: Math.ceil(count / limit),
-                currentPage: page
-            }
+                const count = await Product.countDocuments(productSearchQuery);
+                console.log(products);
+
+                return {
+                    products,
+                    totalPages: Math.ceil(count / limit),
+                    currentPage: page
+                }
             } else if (searchType === 'Categories') {
                 let cat = [];
-                 cat = await Category.find({name: {$regex: searchTerm, $options: 'i'}});
-                 catId = cat[0]._id;
+                cat = await Category.find({ name: { $regex: searchTerm, $options: 'i' } });
+                catId = cat[0]._id;
 
                 const searchQuery = {
-                    
-                        'category': {
-                            _id: catId
-                        }
-                    
+                    visible: true && null,
+                    'category': {
+                        _id: catId
+                    }
+
                 }
                 const products = await Product.find(searchQuery)
                     .populate('seller')
                     .populate('category')
                     .limit(limit)
-                    .skip((page -1) * limit)
+                    .skip((page - 1) * limit)
                     .lean();
 
                 const count = await Product.countDocuments(searchQuery);
                 console.log(products);
-                
+
                 return {
                     products,
                     totalPages: Math.ceil(count / limit),
@@ -199,7 +207,7 @@ const resolvers = {
                 }
             }
             return 'I got nothing';
-            
+
         },
         meetings: async () => {
             return await Meeting.find();
@@ -278,6 +286,18 @@ const resolvers = {
                 const product = await Product.findByIdAndUpdate(
                     args._id,
                     { $set: { image: args.image } },
+                    { new: true }
+                );
+                return product;
+            }
+            throw new AuthenticationError("invalid credentials");
+        },
+        updateProductVisability: async (parent, args, context) => {
+            if (context.user) {
+                //const image = args.image;
+                const product = await Product.findByIdAndUpdate(
+                    args._id,
+                    { visible: args.visible },
                     { new: true }
                 );
                 return product;

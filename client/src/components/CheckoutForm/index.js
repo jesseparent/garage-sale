@@ -5,8 +5,14 @@ import { useStoreContext } from "../../utils/GlobalState";
 
 import CardSection from '../CardSection';
 
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_PRODUCT_VISABILITY } from "../../utils/mutations";
+
+
 export default function CheckoutForm(props) {
   const [state, dispatch] = useStoreContext();
+
+  const [updateProductVisability] = useMutation(UPDATE_PRODUCT_VISABILITY);
 
   const [currentState, setCurrentState] = useState({ success: 0 });
 
@@ -46,28 +52,45 @@ export default function CheckoutForm(props) {
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
-        console.log("success!")
+        // console.log("success!")
 
-        // Show a success message to your customer
+        //add a value that flags that it was sold.
+
+        const mutationResponse = await updateProductVisability({
+          variables: {
+            _id: state.productId,
+            visible: false
+          }
+        });
+        if (mutationResponse) {
+          // console.log('mutationResponse')
+          // console.log(mutationResponse)
+
+          // Show a success message to your customer
         setCurrentState({
           success: 1
         })
         // set timer for redirect back to home
         setTimeout(redirect, 5000);
+        }
       }
     }
   };
 
 
-  // function for testing redirect and render change
+  // function for testing
   // const setSuccess = () => {
-  //   console.log('clicked')
+  //   console.log('state')
+  //   console.log(state)
 
-  //   setCurrentState({
-  //     success: 1
-  //   })
 
-  //   setTimeout(redirect, 5000);
+  //   // console.log('clicked')
+
+  //   // setCurrentState({
+  //   //   success: 1
+  //   // })
+
+  //   // setTimeout(redirect, 5000);
   // }
 
   return (

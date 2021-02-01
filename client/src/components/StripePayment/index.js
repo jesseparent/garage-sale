@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { QUERY_PRODUCT_USER } from "../../utils/queries";
 
 import { useStoreContext } from "../../utils/GlobalState";
-import { UPDATE_CLIENT_SECRET } from '../../utils/actions';
+import { UPDATE_CLIENT_SECRET, UPDATE_PRODUCT_ID } from '../../utils/actions';
 
 import CheckoutForm from '../CheckoutForm';
 
@@ -19,7 +19,7 @@ const stripePromise = loadStripe("pk_test_51IBOzADVroZQGKJNBHuaS1Tth2sbnwkctCTXE
 
 function StripePayment(props) {
   const [state, dispatch] = useStoreContext();
-  const { id, price } = useParams();
+  const { productId, id, price } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCT_USER, {
     variables: { _id: id },
@@ -28,7 +28,7 @@ function StripePayment(props) {
   useEffect(() => {
 
     if (!loading) {
-      console.log(data.user)
+      // console.log(data.user)
 
       const reqData = { id: data.user.stripeId, price: price }
 
@@ -44,22 +44,25 @@ function StripePayment(props) {
 
           var clientSecret = data.client_secret;
 
-          // Call stripe.confirmCardPayment() with the client secret.
+          // Call Write client secret and productId to globalstate 
+          // for the checkout form to use
+
           dispatch({
             type: UPDATE_CLIENT_SECRET,
             clientSecret: clientSecret
           });
 
-          console.log("clientsecret")
-          console.log(state.clientSecret);
-
+          dispatch({
+            type: UPDATE_PRODUCT_ID,
+            productId: productId
+          });
         });
     } else if (error) {
       console.log('user fetch error:')
       console.log(error)
     }
 
-  }, [error, data, loading, dispatch, price, state]);
+  }, [error, data, loading, dispatch, price]);
 
 
   // const getTest = async => {

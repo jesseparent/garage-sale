@@ -18,6 +18,7 @@ const typeDefs = gql`
     condition: String
     model: String
     seller: User
+    visible: Boolean
   }
   type Order {
     _id: ID
@@ -107,6 +108,7 @@ const typeDefs = gql`
     deleteProduct(_id: ID!): Product
     addCategory(name: String!): Category
     updateProduct(_id: ID!, image: String!):Product
+    updateProductVisability(_id: ID!, visible: Boolean!): Product
     addConversation(user: ID!, withUser: ID!, messages: String): Conversation
     addContacts(contacts: String!): User
     addMeeting(product: ID, address: String, name: String, phonenumber: String, email: String, seller: ID, alertDateTime: String): Meeting

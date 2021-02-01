@@ -48,6 +48,10 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  visible: {
+    type: Boolean,
+    default: true
   }
 });
 
