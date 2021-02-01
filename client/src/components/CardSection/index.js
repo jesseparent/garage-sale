@@ -27,7 +27,7 @@ const CARD_ELEMENT_OPTIONS = {
 function CardSection() {
   return (
     <Container>
-      <Card>
+      <Card className={"stripeCardField2"}>
       <Card.Text className={"stripeCardField"}>
         Card details
         <CardElement options={CARD_ELEMENT_OPTIONS} />
