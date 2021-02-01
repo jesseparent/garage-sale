@@ -7,6 +7,7 @@ const typeDefs = gql`
   }
   type Product {
     _id: ID
+    pId: ID
     name: String
     createdAt: String
     description: String
@@ -103,7 +104,7 @@ const typeDefs = gql`
     addStripeId(stripeId: ID!): User
     login(email: String!, password: String!): Auth
     addOrder(products: [ID]!): Order
-    addProduct(category: String!, name: String!, description: String, price: Int, age: String!, condition: String!, model: String): Product
+    addProduct(category: String!, name: String!, description: String, price: Int, age: String!, condition: String!, model: String, visible: Boolean!): Product
     addReview(sellerId: ID!, reviewBody: String!): User
     deleteProduct(_id: ID!): Product
     addCategory(name: String!): Category

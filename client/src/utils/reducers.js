@@ -19,6 +19,7 @@ export const reducer = (state, action) => {
     case UPDATE_PRODUCTS:
       return {
         ...state,
+        searchHappens: action.searchHappens,
         products: [...action.products]
       };
 

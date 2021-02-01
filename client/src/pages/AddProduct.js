@@ -71,7 +71,8 @@ function AddProduct(props) {
         price: parseInt(formState.price),
         age: formState.age,
         condition: formState.condition,
-        model: formState.model
+        model: formState.model,
+        visible: true
       }
     });
     if (mutationResponse) {

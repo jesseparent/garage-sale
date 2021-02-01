@@ -57,14 +57,15 @@ As an authenticated user looking to buy an item:
 ![Home Page Screenshot](./screenshots/homepage.jpg)
 ![Item for Sale Screenshot](./screenshots/itemforsale.jpg)
 ![Chat Screenshot](./screenshots/chat.jpg)
-![Ticket Form Screenshot](./screenshots/ticket.png)
 
 ## Technologies
 
 - MongoDB
 - Nongoose
+- GraphQL
 - nodeJS
 - express
+- JWT
 - nodemailer
 - gmail SMTP Server
 - bcrypt

@@ -11,7 +11,7 @@ const resolvers = {
             return await Category.find();
         },
         products: async (parent, { category, name }) => {
-            const params = { visible: true && null };
+            const params = { visible: true || null };
             if (category) {
                 params.category = category;
             };
@@ -107,7 +107,7 @@ const resolvers = {
                 const searchQuery = {
                     $and: [
                         {
-                            visible: true && null
+                            visible: true || null
                         },
                         {
                             $or: [
@@ -125,6 +125,27 @@ const resolvers = {
                     .limit(limit)
                     .skip((page - 1) * limit)
                     .lean().populate('category.name');
+                console.log("products");
+
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
 
                 const count = await Product.countDocuments(searchQuery);
 
@@ -159,7 +180,7 @@ const resolvers = {
                 const userId = users[0]._id;
 
                 const productSearchQuery = {
-                    visible: true && null,
+                    visible: true || null,
                     'seller': {
                         _id: userId
                     }
@@ -170,8 +191,27 @@ const resolvers = {
                     .skip((page - 1) * limit)
                     .lean();
 
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
+
                 const count = await Product.countDocuments(productSearchQuery);
-                console.log(products);
 
                 return {
                     products,
@@ -184,7 +224,7 @@ const resolvers = {
                 catId = cat[0]._id;
 
                 const searchQuery = {
-                    visible: true && null,
+                    visible: true || null,
                     'category': {
                         _id: catId
                     }
@@ -197,8 +237,27 @@ const resolvers = {
                     .skip((page - 1) * limit)
                     .lean();
 
+                // Copy array and change _id to pId
+                let productsManipulated = []
+                for (let i = 0; i < products.length; i++) {
+                    let prodCopy = { ...products[i] };
+                    let pId = prodCopy._id;
+                    prodCopy.pId = pId;
+                    productsManipulated.push(prodCopy);
+                }
+
+                // Delete current contents of product array
+                let popLength = products.length;
+                for (let i = 0; i < popLength; i++) {
+                    products.pop();
+                }
+
+                // Populate product array with manipulated array
+                for (let i = 0; i < productsManipulated.length; i++) {
+                    products.push(productsManipulated[i]);
+                }
+
                 const count = await Product.countDocuments(searchQuery);
-                console.log(products);
 
                 return {
                     products,
