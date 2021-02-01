@@ -22,6 +22,8 @@ function Detail() {
 
   const { products } = state;
 
+  console.log(products);
+
   useEffect(() => {
     // already in global store
     if (products.length) {
@@ -79,7 +81,7 @@ function Detail() {
             <Card.Link href={`/meetup/${currentProduct._id}`}>Meet With Seller</Card.Link>
           </ListGroupItem>
           <ListGroupItem>
-            <Card.Link href={`/stripepayment/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
+            <Card.Link href={`/stripepayment/${currentProduct._id}/${currentProduct.sellerId}/${currentProduct.price}`}>Purchase</Card.Link>
           </ListGroupItem>
         </div>
       );

@@ -20,7 +20,7 @@ const stripePromise = loadStripe(
 
 function StripePayment(props) {
   const [state, dispatch] = useStoreContext();
-  const { id, price } = useParams();
+  const { productId, id, price } = useParams();
 
   const { loading, error, data } = useQuery(QUERY_PRODUCT_USER, {
     variables: { _id: id },
