@@ -12,8 +12,7 @@ import { Card, Container, ListGroup, ListGroupItem } from "react-bootstrap";
 
 function DetailBrief(props) {
   const [state, dispatch] = useStoreContext();
-  // const { id } = useParams();
-  // const id = "601068b2eb5e4109e312bf97"
+
 
   const [currentProduct, setCurrentProduct] = useState({});
 
@@ -24,12 +23,15 @@ function DetailBrief(props) {
   useEffect(() => {
     // already in global store
     if (products.length) {
-      // const targetProduct = products.find((product) => product._id === props.id);
+      
+     
       const targetProduct = products[props.num];
+      console.log("target Product")
+      console.log(targetProduct)
 
       if (targetProduct) {
         setCurrentProduct({
-          _id: targetProduct.pId,
+          _id: targetProduct._id,
           age: targetProduct.age,
           categoryName: targetProduct.category?.name,
           quantity: targetProduct.quantity,
@@ -43,6 +45,8 @@ function DetailBrief(props) {
           sellerLast: targetProduct.seller.lastName,
           sellerId: targetProduct.seller.sellerId,
         });
+        console.log("currentProduct " + targetProduct.name)
+        console.log(currentProduct)
       }
     }
     // retrieved from server
@@ -85,7 +89,7 @@ function DetailBrief(props) {
 
                 <Card.Text>{currentProduct.description}</Card.Text>
               </Card.Body>
-              <ListGroup className="">
+              <ListGroup >
                 <ListGroupItem>Price: ${currentProduct.price}</ListGroupItem>
                 <ListGroupItem>
                   Category: {currentProduct.categoryName}

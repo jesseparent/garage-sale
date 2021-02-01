@@ -1,55 +1,32 @@
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
-import DetailBrief from "../components/DetailBrief";
+
 import { useStoreContext } from "../utils/GlobalState.js";
-
-
-
-
+import FeaturedItems from "../components/FeaturedItems";
+import SearchContainer from "../components/SearchContainer";
 
 const Home = () => {
-
   const [state] = useStoreContext();
   const { products } = state;
 
-  const searchResults = () => {
-    if (state.searchHappens) {
+  function bottomSection() {
+    if (!state.searchHappens) {
       return (
-        <Container className="brief-container">
-          <h2>Search Results</h2>
-          <div className="featured-container">
-            {products.map((product, i) =>
-              <div className="featured-items">
-                <DetailBrief num={i} />
-              </div>
-            )}
-          </div>
-        </Container>
-      )
-    }
-    else {
+        <div>
+          <FeaturedItems />
+        </div>
+      );
+    } else {
       return (
-        <Container className="brief-container">
-          <h2>Featured Items</h2>
-          <div className="featured-container">
-            <div className="featured-items">
-              <DetailBrief num={products.length - 1} />
-            </div>
-            <div className="featured-items">
-              <DetailBrief num={products.length - 2} />
-            </div>
-            <div className="featured-items">
-              <DetailBrief num={products.length - 3} />
-            </div>
-          </div>
-        </Container>
-      )
+        <div>
+          <SearchContainer />
+        </div>
+      );
     }
   }
-
   useEffect(() => {
-    console.log("Home test");
+    console.log("products");
     console.log(products);
   }, [products]);
 
@@ -58,7 +35,7 @@ const Home = () => {
       <Container className="searchContainer">
         <SearchBar />
       </Container>
-      {searchResults()}
+      {bottomSection()}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DetailBrief from "../components/DetailBrief";
+import Detail from "../pages/Detail";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_PRODUCT_USER } from "../utils/queries";
 import { useStoreContext } from "../utils/GlobalState";
@@ -45,7 +45,7 @@ function SellerInfo() {
             {/* <h2>User: {"sellerName"}</h2> */}
             {currentUser.products.map((product) => (
               <div className="seller-info" >
-                <DetailBrief num={index++} />
+                <Detail num={index++} />
               </div>
             ))}
           </Container>

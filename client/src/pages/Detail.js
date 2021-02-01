@@ -25,13 +25,12 @@ function Detail() {
   useEffect(() => {
     // already in global store
     if (products.length) {
-      const targetProduct = products.find((product) => product._id === id);
+      const targetProduct = products.find((product) => (product?._id === id || product?.pId === id));
 
       setCurrentProduct({
-        _id: targetProduct._id,
+        _id: (targetProduct.pId )?targetProduct.pId: targetProduct._id,
         age: targetProduct.age,
         categoryName: targetProduct.category.name,
-        quantity: targetProduct.quantity,
         condition: targetProduct.condition,
         description: targetProduct.description,
         image: targetProduct.image,
@@ -93,14 +92,14 @@ function Detail() {
     <>
       {currentProduct ? (
         <div className="mainContainer">
-          <Container>
+          <Container fluid>
             <Link to="/">← Back to Products</Link>
 
             <Card style={{ width: "40rem" }}>
               <Card.Img
+              // style={{  }}
                 variant="top"
                 src={currentProduct.image}
-                // src={baseUrl + imgFileName}
                 alt={currentProduct.name}
               />
               <Card.Body>

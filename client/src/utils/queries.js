@@ -1,18 +1,17 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const QUERY_PRODUCT = gql`
-  query product($_id: ID!)
-  {
+  query product($_id: ID!) {
     product(_id: $_id) {
-        image
-        _id
+      image
+      _id
+      name
+      description
+      model
+      category {
         name
-        description
-        model
-        category {
-          name
-          _id
-        }
+        _id
+      }
       seller {
         _id
         firstName
@@ -38,7 +37,7 @@ export const QUERY_PRODUCTS = gql`
         _id
         name
       }
-      seller{
+      seller {
         _id
         firstName
         lastName
@@ -64,72 +63,70 @@ export const QUERY_ALL_PRODUCTS = gql`
 `;
 
 export const QUERY_CATEGORIES = gql`
-{
-  categories {
-    _id
-    name
+  {
+    categories {
+      _id
+      name
+    }
   }
-}
 `;
 
 export const QUERY_USER = gql`
-{
-  user {
-    firstName
-    lastName
-    orders {
-      _id
-      purchaseDate
-      products {
+  {
+    user {
+      firstName
+      lastName
+      orders {
         _id
-        name
-        description
-        price
-        quantity
-        image
+        purchaseDate
+        products {
+          _id
+          name
+          description
+          price
+          quantity
+          image
+        }
       }
+      contacts
+      stripeId
     }
-    contacts
-    stripeId
   }
-}
 `;
 
 export const QUERY_PRODUCT_USER = gql`
-query user($_id: ID)
-{
-  user(_id: $_id) {
-    _id
-    firstName
-    lastName
-    stripeId
-    products {
+  query user($_id: ID) {
+    user(_id: $_id) {
       _id
-      age
-      model
-      condition
-      name
-      image
-      description
-      price
-      quantity
-      category {
+      firstName
+      lastName
+      stripeId
+      products {
+        _id
+        age
+        model
+        condition
         name
+        image
+        description
+        price
+        quantity
+        category {
+          name
+        }
       }
     }
   }
-}
 `;
 
 export const QUERY_CHAT_USER = gql`
-query user($_id: ID)
-{
-  user(_id: $_id) {
-    _id
-    firstName
-    lastName
+  query user($_id: ID) {
+    user(_id: $_id) {
+      _id
+      firstName
+      lastName
+    }
   }
-}
 `;
 
 export const QUERY_CHECKOUT = gql`
@@ -143,7 +140,7 @@ export const QUERY_CHECKOUT = gql`
 export const QUERY_CONVERSATIONS = gql`
   query conversations {
     conversations {
-      withUser{
+      withUser {
         _id
       }
       messages
@@ -152,32 +149,43 @@ export const QUERY_CONVERSATIONS = gql`
 `;
 
 export const QUERY_SPECIFIC_PRODUCTS = gql`
-  query specificProducts($searchType: String!, $searchTerm:String!, $page: Int, $limit:Int) {
-  specificProducts(searchType:$searchType, searchTerm: $searchTerm, page: $page, limit: $limit) {
-    currentPage
-    products {
-      name
-      description
-      age
-      image
-      pId
-      seller {
-        lastName
-        firstName
-      }
-      category {
+  query specificProducts(
+    $searchType: String!
+    $searchTerm: String!
+    $page: Int
+    $limit: Int
+  ) {
+    specificProducts(
+      searchType: $searchType
+      searchTerm: $searchTerm
+      page: $page
+      limit: $limit
+    ) {
+      currentPage
+      products {
         name
+        description
+        age
+        image
+        pId
+        seller {
+          lastName
+          firstName
+        }
+
+        category {
+          name
+        }
       }
     }
   }
-}
 `;
 
 export const QUERY_ACTIVE_ALERT = gql`
-query meeting($_id: ID){
-  meeting(_id: $_id) {
-    _id
-    alertDateTime
+  query meeting($_id: ID) {
+    meeting(_id: $_id) {
+      _id
+      alertDateTime
+    }
   }
-}
 `;

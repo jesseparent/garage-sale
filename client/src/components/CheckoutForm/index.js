@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
 import { useStoreContext } from "../../utils/GlobalState";
-
+import { Container, Form, Button } from 'react-bootstrap'
 import CardSection from '../CardSection';
 
 import { useMutation } from '@apollo/react-hooks';
@@ -94,18 +94,15 @@ export default function CheckoutForm(props) {
   // }
 
   return (
-    <div>
-
-      {currentState.success === 1 ? (
-        <h3>Purchase Successful! Redirecting to home page in 5 seconds...</h3>
-      ) :
-        <form onSubmit={handleSubmit}>
-          <CardSection />
-          <button disabled={!stripe}>Confirm order</button>
-          {/* button for testing redirect and render change uncomment to use*/}
-          {/* <button onClick={() => setSuccess()}>Success = 1</button> */}
-        </form>
-      }
-    </div>
+    <Container >
+    <Form className="stripe-cc" onSubmit={handleSubmit}>
+      <CardSection />
+      <Button 
+      variant="dark"
+      id="stripe-confirm-button"
+      className="rounded-0"
+      disabled={!stripe}>Confirm order</Button>
+    </Form>
+    </Container>
   );
 }
