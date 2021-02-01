@@ -25,10 +25,10 @@ function Detail() {
   useEffect(() => {
     // already in global store
     if (products.length) {
-      const targetProduct = products.find((product) => product._id === id);
+      const targetProduct = products.find((product) => (product?._id === id || product?.pId === id));
 
       setCurrentProduct({
-        _id: targetProduct._id,
+        _id: (targetProduct.pId )?targetProduct.pId: targetProduct._id,
         age: targetProduct.age,
         categoryName: targetProduct.category.name,
         condition: targetProduct.condition,

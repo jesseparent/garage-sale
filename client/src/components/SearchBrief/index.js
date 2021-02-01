@@ -30,7 +30,7 @@ const SearchResultsBrief = ({product}) => {
            
             <div >
             
-                <Link to={`/product/${product._id}`}>
+                <Link to={`/product/${product.pId}`}>
                 <Card >
                   <Card.Img
                   className="brief-img"

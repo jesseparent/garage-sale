@@ -26,11 +26,12 @@ function DetailBrief(props) {
       
      
       const targetProduct = products[props.num];
-      
+      console.log("target Product")
+      console.log(targetProduct)
 
       if (targetProduct) {
         setCurrentProduct({
-          _id: targetProduct.pId,
+          _id: targetProduct._id,
           age: targetProduct.age,
           categoryName: targetProduct.category?.name,
           quantity: targetProduct.quantity,

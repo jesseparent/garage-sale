@@ -149,32 +149,30 @@ export const QUERY_CONVERSATIONS = gql`
 `;
 
 export const QUERY_SPECIFIC_PRODUCTS = gql`
-  query specificProducts($searchType: String!, $searchTerm:String!, $page: Int, $limit:Int) {
-  specificProducts(searchType:$searchType, searchTerm: $searchTerm, page: $page, limit: $limit) {
-    currentPage
-    products {
-      name
-      description
-      age
-      image
-      pId
-      seller {
-        lastName
-        firstName
-      }
-      category {
+  query specificProducts(
+    $searchType: String!
+    $searchTerm: String!
+    $page: Int
+    $limit: Int
+  ) {
+    specificProducts(
+      searchType: $searchType
+      searchTerm: $searchTerm
+      page: $page
+      limit: $limit
+    ) {
+      currentPage
+      products {
         name
         description
         age
-        model
-        condition
         image
-
+        pId
         seller {
-          _id
           lastName
           firstName
         }
+
         category {
           name
         }
