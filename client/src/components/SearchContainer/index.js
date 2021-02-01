@@ -14,10 +14,10 @@ function SearchContainer() {
   const [state] = useStoreContext();
   const { products } = state;
 
-  useEffect(() => {
-    console.log("state");
-    console.log(state);
-  }, [state]);
+  // useEffect(()=> {
+  //   console.log("state")
+  //   console.log(products)
+  // },[state])
 
   return (
     <div>
