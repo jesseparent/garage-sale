@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import spinner from "../assets/spinner.gif";
-import FeaturedItems from "../components/FeaturedItems";
+// import FeaturedItems from "../components/FeaturedItems";
 // import { idbPromise } from "../utils/helpers";
 
 const SearchResults = () => {
