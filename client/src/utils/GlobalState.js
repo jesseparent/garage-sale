@@ -14,6 +14,7 @@ const StoreProvider = ({ value = [], ...props }) => {
     clientSecret: '',
     searchHappens: false,
 
+    productId: ''
   });
   return <Provider value={[state, dispatch]} {...props} />;
 };

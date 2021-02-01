@@ -57,11 +57,7 @@ function App() {
               <Route exact path="/imageupload/:id" component={ImageUpload} />
               <Route exact path="/useritems/:id" component={UserItem} />
               <Route exact path="/stripeOnboard" component={StripeOnboard} />
-              <Route
-                exact
-                path="/stripePayment/:id/:price"
-                component={StripePayment}
-              />
+              <Route exact path="/stripePayment/:productId/:id/:price" component={StripePayment} />
               <Route exact path="/sellerinfo/:id" component={SellerInfo} />
               <Route exact path="/edititem" component={EditItem} />
               <Route exact path="/searchresults" component={SearchResults} />

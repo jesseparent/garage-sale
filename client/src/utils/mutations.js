@@ -37,8 +37,8 @@ mutation addStripeId($stripeId: ID!){
 `
 
 export const ADD_PRODUCT = gql`
-mutation addProduct($category: String!, $name: String!, $description: String, $price: Int, $age: String!, $condition: String!, $model: String) {
-  addProduct(category: $category, name: $name, description: $description, price: $price, age: $age, condition: $condition, model: $model) {
+mutation addProduct($category: String!, $name: String!, $description: String, $price: Int, $age: String!, $condition: String!, $model: String, $visible: Boolean!) {
+  addProduct(category: $category, name: $name, description: $description, price: $price, age: $age, condition: $condition, model: $model, visible: $visible) {
    _id
   name
   price
@@ -51,6 +51,7 @@ mutation addProduct($category: String!, $name: String!, $description: String, $p
   seller {
     _id
   }
+  visible
   }
 }
 `;
@@ -79,6 +80,23 @@ mutation($_id: ID!, $image: String!) {
     category{
       _id
     }
+  }
+}
+`;
+
+export const UPDATE_PRODUCT_VISABILITY = gql`
+mutation($_id: ID!, $visible: Boolean!) {
+  updateProductVisability(_id: $_id, visible:$visible ){
+    _id
+    name
+    description
+    image
+    price
+    age
+    seller {
+      _id
+    }
+    visible
   }
 }
 `;
