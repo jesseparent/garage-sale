@@ -69,9 +69,9 @@ function Detail() {
     if (Auth.loggedIn()) {
       return (
         <div>
-          <ListGroupItem>
+          {/* <ListGroupItem>
             <Link to={`/sellerinfo/${currentProduct.sellerId}`}>Seller Info</Link>
-          </ListGroupItem>
+          </ListGroupItem> */}
           <ListGroupItem>
             <Card.Link href={`/chat/${currentProduct.sellerId}`}>Chat With Seller</Card.Link>
           </ListGroupItem>
